@@ -10,56 +10,55 @@
 
 package hanto;
 
-import hanto.common.*;
+import hanto.common.HantoGame;
+import hanto.common.HantoGameID;
+import hanto.common.HantoPlayerColor;
 
 /**
- * This is a singleton class that provides a factory to create an instance of any version
- * of a Hanto game.
+ * This is a singleton class that provides a factory to create an instance of any version of a Hanto
+ * game.
  * 
  * @author gpollice
  * @version Feb 5, 2013
  */
-public class HantoGameFactory
-{
+public class HantoGameFactory {
 	private static final HantoGameFactory instance = new HantoGameFactory();
-	
+
 	/**
 	 * Default private descriptor.
 	 */
-	private HantoGameFactory()
-	{
+	private HantoGameFactory() {
 		// Empty, but the private constructor is necessary for the singleton.
 	}
 
 	/**
 	 * @return the instance
 	 */
-	public static HantoGameFactory getInstance()
-	{
+	public static HantoGameFactory getInstance() {
 		return instance;
 	}
-	
+
 	/**
-	 * Create the specified Hanto game version with the Blue player moving
-	 * first.
+	 * Create the specified Hanto game version with the Blue player moving first.
+	 * 
 	 * @param gameId the version desired.
 	 * @return the game instance
 	 */
-	public static HantoGame makeHantoGame(HantoGameID gameId)
-	{
+	public HantoGame makeHantoGame(HantoGameID gameId) {
 		return makeHantoGame(gameId, HantoPlayerColor.BLUE);
 	}
-	
+
 	/**
 	 * Factory method that returns the appropriately configured Hanto game.
+	 * 
 	 * @param gameId the version desired.
 	 * @param movesFirst the player color that moves first
 	 * @return the game instance
 	 */
-	public static HantoGame makeHantoGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
+	public HantoGame makeHantoGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
 		HantoGame game = null;
 		switch (gameId) {
-			// to be filled in
+		// to be filled in
 		}
 		return game;
 	}
