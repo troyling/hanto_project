@@ -68,6 +68,8 @@ public class AlphaHantoGameTest {
 			e.printStackTrace();
 		}
 
+		assertEquals(newAlphaHantoGame.getPieceAt(bottom).getColor(), HantoPlayerColor.RED);
+		assertEquals(newAlphaHantoGame.getPieceAt(bottom).getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(nextMove, MoveResult.DRAW);
 	}
 }

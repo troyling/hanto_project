@@ -24,6 +24,12 @@ public class HantoGamePiece implements HantoPiece {
 	private final HantoPlayerColor color;
 	private final HantoPieceType type;
 
+	/**
+	 * Constructor for a Hanto Game piece.
+	 * 
+	 * @param color
+	 * @param type
+	 */
 	public HantoGamePiece(HantoPlayerColor color, HantoPieceType type) {
 		this.color = color;
 		this.type = type;

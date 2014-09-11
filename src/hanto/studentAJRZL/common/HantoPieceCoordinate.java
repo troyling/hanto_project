@@ -22,6 +22,12 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	private final int x;
 	private final int y;
 
+	/**
+	 * Constructor for the Hanto Piece Coordinates.
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public HantoPieceCoordinate(int x, int y) {
 		this.x = x;
 		this.y = y;

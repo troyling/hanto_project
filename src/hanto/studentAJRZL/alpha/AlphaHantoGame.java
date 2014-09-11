@@ -20,6 +20,7 @@ import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.HantoGamePiece;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class for the Alpha Hanto Game instances.
@@ -30,8 +31,13 @@ import java.util.HashMap;
 public class AlphaHantoGame implements HantoGame {
 
 	private HantoPlayerColor color;
-	private HashMap<HantoCoordinate, HantoGamePiece> board = new HashMap<HantoCoordinate, HantoGamePiece>();
+	private Map<HantoCoordinate, HantoGamePiece> board = new HashMap<HantoCoordinate, HantoGamePiece>();
 
+	/**
+	 * Constructor for the Alpha Hanto game.
+	 * 
+	 * @param color
+	 */
 	public AlphaHantoGame(HantoPlayerColor color) {
 		this.color = color;
 	}
@@ -39,20 +45,16 @@ public class AlphaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
-		MoveResult result = null;
 		board.put(to, new HantoGamePiece(color, pieceType));
 		switch (color) {
 			case BLUE:
-				result = MoveResult.OK;
 				color = HantoPlayerColor.RED;
-				break;
+				return MoveResult.OK;
 			case RED:
-				result = MoveResult.DRAW;
-				break;
+				return MoveResult.DRAW;
 			default:
-				break;
+				throw new HantoException("Invalid piece.");
 		}
-		return result;
 	}
 
 	@Override
