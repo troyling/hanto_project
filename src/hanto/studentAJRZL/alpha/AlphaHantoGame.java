@@ -45,16 +45,27 @@ public class AlphaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
+		if (!pieceType.equals(HantoPieceType.BUTTERFLY)) {
+			throw new HantoException("Invalid piece.");
+		}
+		MoveResult result = null;
 		board.put(to, new HantoGamePiece(color, pieceType));
 		switch (color) {
 			case BLUE:
 				color = HantoPlayerColor.RED;
-				return MoveResult.OK;
+				result = MoveResult.OK;
+				break;
 			case RED:
-				return MoveResult.DRAW;
+				if (!((Math.abs(to.getX()) <= 1 && Math.abs(to.getY()) <= 1) && to.getX() != to
+						.getY())) {
+					throw new HantoException("Invalid move.");
+				}
+				result = MoveResult.DRAW;
+				break;
 			default:
-				throw new HantoException("Invalid piece.");
+				break;
 		}
+		return result;
 	}
 
 	@Override
