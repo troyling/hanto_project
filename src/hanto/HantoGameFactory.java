@@ -13,6 +13,7 @@ package hanto;
 import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
+import hanto.studentAJRZL.alpha.AlphaHantoGame;
 
 /**
  * This is a singleton class that provides a factory to create an instance of any version of a Hanto
@@ -22,7 +23,7 @@ import hanto.common.HantoPlayerColor;
  * @version Feb 5, 2013
  */
 public class HantoGameFactory {
-	private static final HantoGameFactory instance = new HantoGameFactory();
+	private static final HantoGameFactory INSTANCE = new HantoGameFactory();
 
 	/**
 	 * Default private descriptor.
@@ -35,7 +36,7 @@ public class HantoGameFactory {
 	 * @return the instance
 	 */
 	public static HantoGameFactory getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	/**
@@ -58,7 +59,11 @@ public class HantoGameFactory {
 	public HantoGame makeHantoGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
 		HantoGame game = null;
 		switch (gameId) {
-		// to be filled in
+			case ALPHA_HANTO:
+				game = new AlphaHantoGame(movesFirst);
+				break;
+			default:
+				break;
 		}
 		return game;
 	}
