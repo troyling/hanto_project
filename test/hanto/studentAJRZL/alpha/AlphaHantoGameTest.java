@@ -221,10 +221,10 @@ public class AlphaHantoGameTest {
 	}
 
 	/**
-	 * Test that an illegal move throws an exception.
+	 * Test that an illegal red move throws an exception.
 	 */
 	@Test
-	public void testThatIllegalMoveThrowsException() {
+	public void testThatIllegalRedMoveThrowsException() {
 		MoveResult firstMove = null;
 		try {
 			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
@@ -240,6 +240,18 @@ public class AlphaHantoGameTest {
 		try {
 			newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(1,
 					1));
+		} catch (HantoException e) {
+			exception.expectMessage("Invalid move.");
+		}
+	}
+
+	/**
+	 * Test that an illegal red move throws an exception.
+	 */
+	@Test
+	public void testThatIllegalBlueMoveThrowsException() {
+		try {
+			newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottom);
 		} catch (HantoException e) {
 			exception.expectMessage("Invalid move.");
 		}

@@ -46,18 +46,26 @@ public class AlphaHantoGame implements HantoGame {
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
 		if (!pieceType.equals(HantoPieceType.BUTTERFLY)) {
+			// The piece must be a butterfly.
 			throw new HantoException("Invalid piece.");
 		}
 		MoveResult result = null;
+		// Put the piece on the appropriate spot on the board.
 		board.put(to, new HantoGamePiece(color, pieceType));
 		switch (color) {
 			case BLUE:
+				if (to.getX() != 0 || to.getY() != 0) {
+					// The blue piece must be placed at the origin.
+					throw new HantoException("Invalid move.");
+				}
+				// Change the color to red since it will be red's turn.
 				color = HantoPlayerColor.RED;
 				result = MoveResult.OK;
 				break;
 			case RED:
 				if (!((Math.abs(to.getX()) <= 1 && Math.abs(to.getY()) <= 1) && to.getX() != to
 						.getY())) {
+					// Throw an exception if the red piece is not placed in a valid space.
 					throw new HantoException("Invalid move.");
 				}
 				result = MoveResult.DRAW;
