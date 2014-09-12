@@ -10,6 +10,9 @@
 
 package hanto.studentAJRZL.beta;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
@@ -17,10 +20,17 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentAJRZL.common.HantoGamePiece;
+import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 public class BetaHantoGame implements HantoGame {
 	
 	private HantoPlayerColor currentPlayColor;
+	private HantoCoordinate blueButterflyCoordiate;
+	private HantoCoordinate redButterflyCoordiate;
+	private int turn = 0;
+	
+	private Map<HantoCoordinate, HantoPiece> board = new HashMap<HantoCoordinate, HantoPiece>();
 	
 	/**
 	 * Constructor for beta hanto game
@@ -34,6 +44,50 @@ public class BetaHantoGame implements HantoGame {
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 		
+		if (board.get(to) != null) {
+			throw new HantoException("Can't place a piece on an occupied tile.");
+		} 
+		
+		HantoPiece newPiece = new HantoGamePiece(currentPlayColor, pieceType);
+		
+		board.put(to, newPiece);
+		
+		// store the butterflies coordinate
+		switch (newPiece.getColor()) {
+			case BLUE:
+				blueButterflyCoordiate = to;
+				break;
+			case RED:
+				redButterflyCoordiate = to;
+				break;
+			default:
+				throw new HantoException("Invalid color.");
+		}
+		
+		alterPlayerColor();
+		
+		return checkGameStatus();	
+	}
+	
+	private MoveResult checkGameStatus() {
+		MoveResult result = MoveResult.OK;
+		
+		
+		
+		return result;
+	}
+
+	void alterPlayerColor() throws HantoException {
+		switch (currentPlayColor) {
+			case BLUE:
+				currentPlayColor = HantoPlayerColor.RED;
+				break;
+			case RED:
+				currentPlayColor = HantoPlayerColor.BLUE;
+				break;
+			default:
+				throw new HantoException("Invalid player color");
+		}
 	}
 
 	@Override
