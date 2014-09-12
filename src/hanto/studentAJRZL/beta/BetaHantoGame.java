@@ -72,8 +72,6 @@ public class BetaHantoGame implements HantoGame {
 	private MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 		
-		
-		
 		return result;
 	}
 

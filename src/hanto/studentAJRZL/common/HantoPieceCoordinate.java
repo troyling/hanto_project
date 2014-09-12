@@ -11,6 +11,9 @@ package hanto.studentAJRZL.common;
 
 import hanto.common.HantoCoordinate;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * Class for the coordinates of the game.
  * 
@@ -41,5 +44,18 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	@Override
 	public int getY() {
 		return y;
+	}
+	
+	public Collection<HantoCoordinate> getAdjacentCoordinates() {
+		Collection<HantoCoordinate> adjacentCoordinates = new ArrayList<HantoCoordinate>();
+		
+		adjacentCoordinates.add(new HantoPieceCoordinate(x - 1, y));
+		adjacentCoordinates.add(new HantoPieceCoordinate(x + 1, y));
+		adjacentCoordinates.add(new HantoPieceCoordinate(x, y - 1));
+		adjacentCoordinates.add(new HantoPieceCoordinate(x, y + 1));
+		adjacentCoordinates.add(new HantoPieceCoordinate(x - 1, y + 1));
+		adjacentCoordinates.add(new HantoPieceCoordinate(x + 1, y - 1));
+		
+		return adjacentCoordinates;
 	}
 }
