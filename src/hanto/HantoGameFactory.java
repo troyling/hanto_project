@@ -14,6 +14,7 @@ import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
 import hanto.studentAJRZL.alpha.AlphaHantoGame;
+import hanto.studentAJRZL.beta.BetaHantoGame;
 
 /**
  * This is a singleton class that provides a factory to create an instance of any version of a Hanto
@@ -61,6 +62,9 @@ public class HantoGameFactory {
 		switch (gameId) {
 			case ALPHA_HANTO:
 				game = new AlphaHantoGame(movesFirst);
+				break;
+			case BETA_HANTO:
+				game = new BetaHantoGame(movesFirst);
 				break;
 			default:
 				break;
