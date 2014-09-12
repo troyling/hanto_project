@@ -54,25 +54,18 @@ public class AlphaHantoGameTest {
 		MoveResult firstMove = null;
 		try {
 			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
+			HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
+			assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
+			assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(firstMove, MoveResult.OK);
+			MoveResult nextMove = newAlphaHantoGame
+					.makeMove(HantoPieceType.BUTTERFLY, null, bottom);
+			assertEquals(newAlphaHantoGame.getPieceAt(bottom).getColor(), HantoPlayerColor.RED);
+			assertEquals(newAlphaHantoGame.getPieceAt(bottom).getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(nextMove, MoveResult.DRAW);
 		} catch (HantoException e) {
 			e.printStackTrace();
 		}
-		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
-		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
-		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottom);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
-		assertEquals(newAlphaHantoGame.getPieceAt(bottom).getColor(), HantoPlayerColor.RED);
-		assertEquals(newAlphaHantoGame.getPieceAt(bottom).getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(nextMove, MoveResult.DRAW);
 	}
 
 	/**
@@ -83,25 +76,17 @@ public class AlphaHantoGameTest {
 		MoveResult firstMove = null;
 		try {
 			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
+			HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
+			assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
+			assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(firstMove, MoveResult.OK);
+			MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, top);
+			assertEquals(newAlphaHantoGame.getPieceAt(top).getColor(), HantoPlayerColor.RED);
+			assertEquals(newAlphaHantoGame.getPieceAt(top).getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(nextMove, MoveResult.DRAW);
 		} catch (HantoException e) {
 			e.printStackTrace();
 		}
-		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
-		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
-		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, top);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
-		assertEquals(newAlphaHantoGame.getPieceAt(top).getColor(), HantoPlayerColor.RED);
-		assertEquals(newAlphaHantoGame.getPieceAt(top).getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(nextMove, MoveResult.DRAW);
 	}
 
 	/**
@@ -112,25 +97,19 @@ public class AlphaHantoGameTest {
 		MoveResult firstMove = null;
 		try {
 			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
+			HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
+			assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
+			assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(firstMove, MoveResult.OK);
+			MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null,
+					bottomRight);
+			assertEquals(newAlphaHantoGame.getPieceAt(bottomRight).getColor(), HantoPlayerColor.RED);
+			assertEquals(newAlphaHantoGame.getPieceAt(bottomRight).getType(),
+					HantoPieceType.BUTTERFLY);
+			assertEquals(nextMove, MoveResult.DRAW);
 		} catch (HantoException e) {
 			e.printStackTrace();
 		}
-		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
-		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
-		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottomRight);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
-		assertEquals(newAlphaHantoGame.getPieceAt(bottomRight).getColor(), HantoPlayerColor.RED);
-		assertEquals(newAlphaHantoGame.getPieceAt(bottomRight).getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(nextMove, MoveResult.DRAW);
 	}
 
 	/**
@@ -141,25 +120,18 @@ public class AlphaHantoGameTest {
 		MoveResult firstMove = null;
 		try {
 			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
+			HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
+			assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
+			assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(firstMove, MoveResult.OK);
+			MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null,
+					topRight);
+			assertEquals(newAlphaHantoGame.getPieceAt(topRight).getColor(), HantoPlayerColor.RED);
+			assertEquals(newAlphaHantoGame.getPieceAt(topRight).getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(nextMove, MoveResult.DRAW);
 		} catch (HantoException e) {
 			e.printStackTrace();
 		}
-		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
-		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
-		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, topRight);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
-		assertEquals(newAlphaHantoGame.getPieceAt(topRight).getColor(), HantoPlayerColor.RED);
-		assertEquals(newAlphaHantoGame.getPieceAt(topRight).getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(nextMove, MoveResult.DRAW);
 	}
 
 	/**
@@ -170,25 +142,18 @@ public class AlphaHantoGameTest {
 		MoveResult firstMove = null;
 		try {
 			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
+			HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
+			assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
+			assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(firstMove, MoveResult.OK);
+			MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null,
+					topLeft);
+			assertEquals(newAlphaHantoGame.getPieceAt(topLeft).getColor(), HantoPlayerColor.RED);
+			assertEquals(newAlphaHantoGame.getPieceAt(topLeft).getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(nextMove, MoveResult.DRAW);
 		} catch (HantoException e) {
 			e.printStackTrace();
 		}
-		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
-		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
-		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, topLeft);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
-		assertEquals(newAlphaHantoGame.getPieceAt(topLeft).getColor(), HantoPlayerColor.RED);
-		assertEquals(newAlphaHantoGame.getPieceAt(topLeft).getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(nextMove, MoveResult.DRAW);
 	}
 
 	/**
@@ -199,25 +164,21 @@ public class AlphaHantoGameTest {
 		MoveResult firstMove = null;
 		try {
 			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
+			HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
+
+			assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
+			assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(firstMove, MoveResult.OK);
+
+			MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null,
+					bottomLeft);
+			assertEquals(newAlphaHantoGame.getPieceAt(bottomLeft).getColor(), HantoPlayerColor.RED);
+			assertEquals(newAlphaHantoGame.getPieceAt(bottomLeft).getType(),
+					HantoPieceType.BUTTERFLY);
+			assertEquals(nextMove, MoveResult.DRAW);
 		} catch (HantoException e) {
 			e.printStackTrace();
 		}
-		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
-		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
-		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottomLeft);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
-		assertEquals(newAlphaHantoGame.getPieceAt(bottomLeft).getColor(), HantoPlayerColor.RED);
-		assertEquals(newAlphaHantoGame.getPieceAt(bottomLeft).getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(nextMove, MoveResult.DRAW);
 	}
 
 	/**
@@ -225,19 +186,13 @@ public class AlphaHantoGameTest {
 	 */
 	@Test
 	public void testThatIllegalRedMoveThrowsException() {
-		MoveResult firstMove = null;
 		try {
-			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
-		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
-		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(firstMove, MoveResult.OK);
-
-		try {
+			MoveResult firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null,
+					origin);
+			HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
+			assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
+			assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(firstMove, MoveResult.OK);
 			newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(1,
 					1));
 		} catch (HantoException e) {
@@ -277,16 +232,10 @@ public class AlphaHantoGameTest {
 		MoveResult firstMove = null;
 		try {
 			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
-		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
-		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
-		assertEquals(firstMove, MoveResult.OK);
-
-		try {
+			HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
+			assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
+			assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
+			assertEquals(firstMove, MoveResult.OK);
 			newAlphaHantoGame.makeMove(HantoPieceType.SPARROW, null, top);
 		} catch (HantoException e) {
 			exception.expectMessage("Invalid piece.");
