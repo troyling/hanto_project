@@ -22,6 +22,10 @@ public class BetaHantoGame implements HantoGame {
 	
 	private HantoPlayerColor currentPlayColor;
 	
+	/**
+	 * Constructor for beta hanto game
+	 * @param movesFirst
+	 */
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
 		this.currentPlayColor = movesFirst;
 	}
@@ -29,8 +33,7 @@ public class BetaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
-		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override
