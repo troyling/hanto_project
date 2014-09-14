@@ -15,30 +15,94 @@ import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
+import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
+import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 import org.junit.Test;
 
 public class BetaHantoGameTest {
+	/**
+	 * 
+	 * Internal class for these test cases.
+	 * 
+	 * @version Sep 13, 2014
+	 */
+
+	class TestHantoCoordinate implements HantoCoordinate
+
+	{
+
+		private final int x, y;
+
+		public TestHantoCoordinate(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		/*
+		 * 
+		 * @see hanto.common.HantoCoordinate#getX()
+		 */
+		@Override
+		public int getX() {
+			return x;
+		}
+
+		/*
+		 * 
+		 * @see hanto.common.HantoCoordinate#getY()
+		 */
+		@Override
+		public int getY() {
+			return y;
+		}
+	}
+	
 	
 	private HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(HantoGameID.BETA_HANTO);
 	
 	// coordinates for placing pieces on board
-	private HantoCoordinate origin = new HantoPieceCoordinate(0, 0);
-	private HantoCoordinate top = new HantoPieceCoordinate(0, 1);
-	private HantoCoordinate bottom = new HantoPieceCoordinate(0, -1);
-	private HantoCoordinate topLeft = new HantoPieceCoordinate(-1, 1);
-	private HantoCoordinate topRight = new HantoPieceCoordinate(1, 0);
-	private HantoCoordinate bottomLeft = new HantoPieceCoordinate(-1, 0);
-	private HantoCoordinate bottomRight = new HantoPieceCoordinate(1, -1);
+	private HantoCoordinate origin = new TestHantoCoordinate(0, 0);
+	private HantoCoordinate top = new TestHantoCoordinate(0, 1);
+	private HantoCoordinate bottom = new TestHantoCoordinate(0, -1);
+	private HantoCoordinate topLeft = new TestHantoCoordinate(-1, 1);
+	private HantoCoordinate topRight = new TestHantoCoordinate(1, 0);
+	private HantoCoordinate bottomLeft = new TestHantoCoordinate(-1, 0);
+	private HantoCoordinate bottomRight = new TestHantoCoordinate(1, -1);
 	
-	private HantoCoordinate coord1 = new HantoPieceCoordinate(1, 1);
-	private HantoCoordinate coord2 = new HantoPieceCoordinate(2, 0);
-	private HantoCoordinate coord3 = new HantoPieceCoordinate(2, -1);
-	private HantoCoordinate coord4 = new HantoPieceCoordinate(2, -2);
-	private HantoCoordinate coord5 = new HantoPieceCoordinate(1, -2);
+	private HantoCoordinate coord1 = new TestHantoCoordinate(1, 1);
+	private HantoCoordinate coord2 = new TestHantoCoordinate(2, 0);
+	private HantoCoordinate coord3 = new TestHantoCoordinate(2, -1);
+	private HantoCoordinate coord4 = new TestHantoCoordinate(2, -2);
+	private HantoCoordinate coord5 = new TestHantoCoordinate(1, -2);
+	
+	
+	@Test 
+	public void testGetPieceAtFunction() {
+		try {
+			betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		} catch (HantoException e) {
+			e.printStackTrace();
+		}
+		
+		HantoPiece p = betaGame.getPieceAt(new TestHantoCoordinate(0, 0));
+		System.out.println("P is: " + p);
+		assertEquals(HantoPlayerColor.BLUE, p.getColor());
+		assertEquals(HantoPieceType.BUTTERFLY, p.getType());
+	}
+	
+	@Test(expected = HantoException.class)
+	public void testPlaceNotAtOrigin() throws HantoException {
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(1, 1));
+	}
+	
+	@Test(expected = HantoException.class)
+	public void attemptToMoveRatherThanPlace() throws HantoException {
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1),
+				new TestHantoCoordinate(0, 0));
+	}
 	
 	@Test
 	public void testRedWinBySurroundingBlueButterfly() {

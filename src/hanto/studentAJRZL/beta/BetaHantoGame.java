@@ -46,11 +46,17 @@ public class BetaHantoGame implements HantoGame {
 		
 		if (board.get(to) != null) {
 			throw new HantoException("Can't place a piece on an occupied tile.");
-		} 
+		}
+		
+		// piece can only be placed, not moved
+		if (from != null) {
+			throw new HantoException("Can't move a piece.");
+		}
 		
 		HantoPiece newPiece = new HantoGamePiece(currentPlayColor, pieceType);
+		HantoCoordinate coord = new HantoPieceCoordinate(to.getX(), to.getY());
 		
-		board.put(to, newPiece);
+		board.put(coord, newPiece);
 		
 		// store the butterflies coordinate
 		switch (newPiece.getColor()) {
@@ -90,8 +96,8 @@ public class BetaHantoGame implements HantoGame {
 
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		// TODO Auto-generated method stub
-		return null;
+		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(), where.getY());
+		return board.get(coord);
 	}
 
 	@Override
