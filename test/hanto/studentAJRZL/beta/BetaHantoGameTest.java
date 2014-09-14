@@ -103,6 +103,13 @@ public class BetaHantoGameTest {
 		betaGame.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1),
 				new TestHantoCoordinate(0, 0));
 	}
+
+	@Test(expected = HantoException.class)
+	public void redPlacesButterflyNonAdjacentToBlueButterfly()
+			throws HantoException {
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 2));
+	}
 	
 	@Test
 	public void testRedWinBySurroundingBlueButterfly() {
@@ -121,7 +128,7 @@ public class BetaHantoGameTest {
 			e.printStackTrace();
 		}
 		
-		assertEquals(result, MoveResult.RED_WINS);
+		assertEquals(MoveResult.RED_WINS, result);
 	}
 	
 	@Test
@@ -153,7 +160,7 @@ public class BetaHantoGameTest {
 			e.printStackTrace();
 		}
 		
-		assertEquals(result, MoveResult.DRAW);
+		assertEquals(MoveResult.DRAW, result);
 	}
 	
 	
