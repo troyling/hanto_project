@@ -88,7 +88,6 @@ public class BetaHantoGameTest {
 		}
 		
 		HantoPiece p = betaGame.getPieceAt(new TestHantoCoordinate(0, 0));
-		System.out.println("P is: " + p);
 		assertEquals(HantoPlayerColor.BLUE, p.getColor());
 		assertEquals(HantoPieceType.BUTTERFLY, p.getType());
 	}

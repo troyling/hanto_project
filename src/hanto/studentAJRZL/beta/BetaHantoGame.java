@@ -168,9 +168,43 @@ public class BetaHantoGame implements HantoGame {
 	private MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 		
-		// check if 
+		if (isButterflyBeingSurrounded(blueButterflyCoordiate)) {
+			result = MoveResult.RED_WINS;
+		}
+		
+		if (isButterflyBeingSurrounded(redButterflyCoordiate)) {
+			result = MoveResult.BLUE_WINS;
+		}
+		
+		if (turn == 6) {
+			result = MoveResult.DRAW;
+		}
 		
 		return result;
+	}
+	
+	/**
+	 * Check if the given butterfly is surrounded
+	 * 
+	 * @param blueButterflyCoordiate
+	 * @return true if it is surrounded; false otherwise.
+	 */
+	private boolean isButterflyBeingSurrounded(HantoCoordinate butterflyCoordiate) {
+		boolean isSurrounded = true;
+		
+		if (butterflyCoordiate != null) {
+			Collection<HantoCoordinate> adjacentTiles = ((HantoPieceCoordinate) butterflyCoordiate).getAdjacentCoordinates();
+			
+			for (HantoCoordinate coord : adjacentTiles) {
+				if (getPieceAt(coord) == null) {
+					isSurrounded = false;
+				}
+			}
+		} else {
+			isSurrounded = false;
+		}
+		
+		return isSurrounded;
 	}
 
 	/**
@@ -191,7 +225,4 @@ public class BetaHantoGame implements HantoGame {
 				throw new HantoException("Invalid player color");
 		}
 	}
-
-	
-	
 }
