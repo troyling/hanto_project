@@ -103,7 +103,6 @@ public class AlphaHantoMasterTest
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1));
 		final HantoPiece p = game.getPieceAt(new TestHantoCoordinate(0, 1));
-		System.out.println("p is: " + p);
 		assertEquals(BUTTERFLY, p.getType());
 		assertEquals(HantoPlayerColor.RED, p.getColor());
 	}
