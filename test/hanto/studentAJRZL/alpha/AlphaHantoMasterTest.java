@@ -1,5 +1,16 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design. The course was taken at
+ * Worcester Polytechnic Institute.
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.studentAJRZL.alpha;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -14,23 +25,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class AlphaHantoMasterTest
-
-{
-
+public class AlphaHantoMasterTest {
 	/**
 	 * 
 	 * Internal class for these test cases.
 	 * 
 	 * @version Sep 13, 2014
 	 */
-
-	class TestHantoCoordinate implements HantoCoordinate
-
-	{
-
+	class TestHantoCoordinate implements HantoCoordinate {
 		private final int x, y;
 
 		public TestHantoCoordinate(int x, int y) {
@@ -80,8 +82,7 @@ public class AlphaHantoMasterTest
 
 	@Test
 	public void blueMakesValidFirstMove() throws HantoException {
-		final MoveResult mr = game.makeMove(BUTTERFLY, null,
-				new TestHantoCoordinate(0, 0));
+		final MoveResult mr = game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
 		assertEquals(OK, mr);
 	}
 
@@ -108,30 +109,26 @@ public class AlphaHantoMasterTest
 	}
 
 	@Test(expected = HantoException.class)
-	public void blueAttemptsToPlaceButterflyAtWrongLocation()
-			throws HantoException {
+	public void blueAttemptsToPlaceButterflyAtWrongLocation() throws HantoException {
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1, 1));
 	}
 
 	@Test
 	public void redMakesValidSecondMoveAndGameIsDrawn() throws HantoException {
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
-		final MoveResult mr = game.makeMove(BUTTERFLY, null,
-				new TestHantoCoordinate(-1, 1));
+		final MoveResult mr = game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1, 1));
 		assertEquals(MoveResult.DRAW, mr);
 	}
 
 	@Test(expected = HantoException.class)
-	public void redPlacesButterflyNonAdjacentToBlueButterfly()
-			throws HantoException {
+	public void redPlacesButterflyNonAdjacentToBlueButterfly() throws HantoException {
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 2));
 	}
 
 	@Test(expected = HantoException.class)
 	public void attemptToMoveRatherThanPlace() throws HantoException {
-		game.makeMove(BUTTERFLY, new TestHantoCoordinate(0, 1),
-				new TestHantoCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, new TestHantoCoordinate(0, 1), new TestHantoCoordinate(0, 0));
 	}
 
 }
