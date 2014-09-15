@@ -30,8 +30,9 @@ import java.util.Map;
  */
 public class AlphaHantoGame implements HantoGame {
 
-	private HantoPlayerColor color;
-	private Map<HantoCoordinate, HantoGamePiece> board = new HashMap<HantoCoordinate, HantoGamePiece>();
+	private HantoPlayerColor CurrentPlayercolor;
+	private HantoCoordinate blueButterflyCoord = null;
+	private HantoCoordinate redButterflyCoord = null;
 
 	/**
 	 * Constructor for the Alpha Hanto game.
@@ -39,7 +40,7 @@ public class AlphaHantoGame implements HantoGame {
 	 * @param color
 	 */
 	public AlphaHantoGame(HantoPlayerColor color) {
-		this.color = color;
+		this.CurrentPlayercolor = color;
 	}
 
 	@Override
@@ -49,17 +50,24 @@ public class AlphaHantoGame implements HantoGame {
 			// The piece must be a butterfly.
 			throw new HantoException("Invalid piece.");
 		}
+		
+		if (from != null) {
+			throw new HantoException("Can't move piece in alpha game.");
+		}
+		
 		MoveResult result = null;
-		// Put the piece on the appropriate spot on the board.
-		board.put(to, new HantoGamePiece(color, pieceType));
-		switch (color) {
+		
+		switch (CurrentPlayercolor) {
 			case BLUE:
 				if (to.getX() != 0 || to.getY() != 0) {
 					// The blue piece must be placed at the origin.
 					throw new HantoException("Invalid move.");
 				}
+				
+				blueButterflyCoord = to;
+				
 				// Change the color to red since it will be red's turn.
-				color = HantoPlayerColor.RED;
+				CurrentPlayercolor = HantoPlayerColor.RED;
 				result = MoveResult.OK;
 				break;
 			case RED:
@@ -68,6 +76,9 @@ public class AlphaHantoGame implements HantoGame {
 					// Throw an exception if the red piece is not placed in a valid space.
 					throw new HantoException("Invalid move.");
 				}
+				
+				redButterflyCoord = to;
+				
 				result = MoveResult.DRAW;
 				break;
 			default:
@@ -78,7 +89,15 @@ public class AlphaHantoGame implements HantoGame {
 
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		return board.get(where);
+		HantoPiece piece = null;
+		
+		if (where.getX() == blueButterflyCoord.getX() && where.getY() == blueButterflyCoord.getY()) {
+			piece = new HantoGamePiece(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY);
+		} else if (where.getX() == redButterflyCoord.getX() && where.getY() == redButterflyCoord.getY()) {
+			piece = new HantoGamePiece(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY);
+		}
+		
+		return piece;
 	}
 
 	@Override
