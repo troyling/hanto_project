@@ -106,6 +106,7 @@ public class AlphaHantoGame implements HantoGame {
 	public String getPrintableBoard() {
 		String printBoard = "";
 		if (blueButterflyCoord != null && redButterflyCoord != null) {
+			// Pieces have been placed, so the printed board should have values.
 			printBoard = "Blue Butterfly: (" + blueButterflyCoord.getX() + ", "
 					+ blueButterflyCoord.getY() + ")\n" + "Red Butterfly: ("
 					+ redButterflyCoord.getX() + ", " + redButterflyCoord.getY() + ")";
