@@ -124,18 +124,25 @@ public class AlphaHantoGame implements HantoGame {
 
 	@Override
 	public String getPrintableBoard() {
-		// Should return an empty string if unfilled.
-		String printBoard = "";
-		if (blueButterflyCoord != null) {
-			// Pieces have been placed, so the printed board should have values.
-			printBoard += "Blue Butterfly: (" + blueButterflyCoord.getX() + ", "
-					+ blueButterflyCoord.getY() + ")\n";
+		// Return the printable entries for each piece, or an empty string if none exist.
+		return getPrintablePiece(HantoPlayerColor.BLUE, blueButterflyCoord)
+				+ getPrintablePiece(HantoPlayerColor.RED, redButterflyCoord);
+	}
+
+	/**
+	 * Get the printable entry for a piece.
+	 * 
+	 * @param color the piece color
+	 * @param coordinates the coordinates of the piece.
+	 * @return
+	 */
+	private String getPrintablePiece(HantoPlayerColor color, HantoCoordinate coordinates) {
+		String result = "";
+		if (coordinates != null) {
+			result = color + " Butterfly: (" + coordinates.getX() + ", " + coordinates.getY()
+					+ ")\n";
 		}
-		if (redButterflyCoord != null) {
-			printBoard += "Red Butterfly: (" + redButterflyCoord.getX() + ", "
-					+ redButterflyCoord.getY() + ")\n";
-		}
-		return printBoard;
+		return result;
 	}
 
 	/**

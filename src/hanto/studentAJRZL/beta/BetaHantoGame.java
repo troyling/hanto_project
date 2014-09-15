@@ -89,7 +89,7 @@ public class BetaHantoGame implements HantoGame {
 			throws HantoException {
 		// ensure player is not placing other piece type onto the board
 		validatePieceType(pieceType);
-		
+
 		// check if the game has already ended
 		validateGameInProgress();
 
@@ -136,7 +136,7 @@ public class BetaHantoGame implements HantoGame {
 
 		return checkGameStatus();
 	}
-	
+
 	/**
 	 * Throws exception if the player attempts to place a piece other than butterfly or sparrow
 	 * 
