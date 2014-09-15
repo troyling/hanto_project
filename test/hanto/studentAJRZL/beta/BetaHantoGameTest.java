@@ -130,6 +130,39 @@ public class BetaHantoGameTest {
 		assertEquals(MoveResult.RED_WINS, result);
 	}
 	
+	@Test(expected = HantoException.class)
+	public void testNoBlueButterflyByEndOfFourthTurn()
+			throws HantoException {
+		// place pieces on board
+		betaGame.makeMove(HantoPieceType.SPARROW, null, origin);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, top);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, bottom);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, topLeft);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, topRight);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, bottomLeft);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, bottomRight);
+	}
+	
+	@Test(expected = HantoException.class)
+	public void testNoRedButterflyByEndOfFourthTurn()
+			throws HantoException {
+		betaGame.makeMove(HantoPieceType.SPARROW, null, origin);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, top);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, bottom);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, topLeft);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, topRight);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, bottomLeft);
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, bottomRight);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, coord1);
+	}
+	
+	@Test(expected = HantoException.class)
+	public void testAttemptToPlacePieceAtSameCoordinate()
+			throws HantoException {
+		betaGame.makeMove(HantoPieceType.SPARROW, null, origin);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, origin);
+	}
+	
 	@Test
 	public void testGameEndInDraw() {
 		MoveResult result = null;

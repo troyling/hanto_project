@@ -95,13 +95,21 @@ public class BetaHantoGame implements HantoGame {
 		
 		// piece can only be placed, not moved
 		if (from != null) {
-			throw new HantoException("Can't move a piece.");
+			throw new HantoException("Can't move a piece in Beta hanto.");
 		}
 		
 		// first piece must be placed at origin
 		if (turn == 0 && currentPlayColor == HantoPlayerColor.BLUE) {
 			if (to.getX() != 0 || to.getY() != 0) {
 				throw new HantoException("First piece must be placed at origin");
+			}
+		}
+		
+		// check if butterfly is placed
+		if (turn == 3 && pieceType != HantoPieceType.BUTTERFLY) {
+			if ((currentPlayColor == HantoPlayerColor.BLUE && blueButterflyCoordiate == null) 
+					|| (currentPlayColor == HantoPlayerColor.RED && redButterflyCoordiate == null)) {
+				throw new HantoException("Butterfly must be placed by 4th turn.");
 			}
 		}
 		
