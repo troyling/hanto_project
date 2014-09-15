@@ -100,6 +100,8 @@ public class AlphaHantoGame implements HantoGame {
 
 	@Override
 	public String getPrintableBoard() {
-		return null;
+		return "Blue Butterfly: (" + blueButterflyCoord.getX() + ", " + blueButterflyCoord.getY()
+				+ ")\n" + "Red Butterfly: (" + redButterflyCoord.getX() + ", "
+				+ redButterflyCoord.getY() + ")";
 	}
 }
