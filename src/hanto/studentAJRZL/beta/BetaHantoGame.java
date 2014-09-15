@@ -63,8 +63,14 @@ public class BetaHantoGame implements HantoGame {
 	 */
 	@Override
 	public String getPrintableBoard() {
-		// TODO Auto-generated method stub
-		return null;
+		String printedBoard = "";
+		for (HantoCoordinate key : board.keySet()) {
+			HantoPiece piece = board.get(key);
+			printedBoard += piece.getColor() + " " + piece.getType() + ": (" + key.getX() + ", "
+					+ key.getY() + ")\n";
+		}
+		System.out.println(printedBoard);
+		return printedBoard;
 	}
 
 	/**
@@ -84,8 +90,8 @@ public class BetaHantoGame implements HantoGame {
 			throws HantoException {
 		// check if the game has already ended
 		validateGameInProgress();
-		
-		// check if the destination coordinate is occupied 
+
+		// check if the destination coordinate is occupied
 		validateDestinationCoordinate(to);
 
 		// piece can only be placed, not moved
@@ -128,7 +134,7 @@ public class BetaHantoGame implements HantoGame {
 
 		return checkGameStatus();
 	}
-	
+
 	/**
 	 * Throws exception if the player attempts to make an action after the game ends
 	 * 
@@ -146,21 +152,20 @@ public class BetaHantoGame implements HantoGame {
 	 * @param butterflyCoordinate
 	 * @throws HantoException
 	 */
-	private void validateButterflyExistence(HantoCoordinate butterflyCoordinate) throws HantoException {
+	private void validateButterflyExistence(HantoCoordinate butterflyCoordinate)
+			throws HantoException {
 		if (butterflyCoordinate != null) {
 			throw new HantoException("Can't place more than one butterfly in beta hanto game.");
 		}
 	}
-	
-	
+
 	/**
 	 * Throws exception if the piece is not placed next to any piece
 	 * 
 	 * @param coord
 	 * @throws HantoException
 	 */
-	private void validateAdjacentCoordinate(HantoCoordinate coord)
-			throws HantoException {
+	private void validateAdjacentCoordinate(HantoCoordinate coord) throws HantoException {
 		if (!board.isEmpty() && !isAnyPieceAdjacentTo(coord)) {
 			throw new HantoException("A piece must be placed next to another.");
 		}
@@ -172,8 +177,7 @@ public class BetaHantoGame implements HantoGame {
 	 * @param pieceType
 	 * @throws HantoException
 	 */
-	private void validateBufferflyPresence(HantoPieceType pieceType)
-			throws HantoException {
+	private void validateBufferflyPresence(HantoPieceType pieceType) throws HantoException {
 		if ((board.size() == 6 || board.size() == 7) && pieceType != HantoPieceType.BUTTERFLY) {
 			if ((currentPlayColor == HantoPlayerColor.BLUE && blueButterflyCoordiate == null)
 					|| (currentPlayColor == HantoPlayerColor.RED && redButterflyCoordiate == null)) {
@@ -188,8 +192,7 @@ public class BetaHantoGame implements HantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateFirstMoveCoordinate(HantoCoordinate to)
-			throws HantoException {
+	private void validateFirstMoveCoordinate(HantoCoordinate to) throws HantoException {
 		if (board.size() == 0 && currentPlayColor == HantoPlayerColor.BLUE) {
 			if (to.getX() != 0 || to.getY() != 0) {
 				throw new HantoException("First piece must be placed at origin");
@@ -215,8 +218,7 @@ public class BetaHantoGame implements HantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateDestinationCoordinate(HantoCoordinate coord)
-			throws HantoException {
+	private void validateDestinationCoordinate(HantoCoordinate coord) throws HantoException {
 		// check if the given destination coordinate is occupied
 		if (board.get(coord) != null) {
 			throw new HantoException("The given destination coordinate has been occupied.");
@@ -262,7 +264,7 @@ public class BetaHantoGame implements HantoGame {
 		if (board.size() == 12) {
 			result = MoveResult.DRAW;
 		}
-		
+
 		// check if game ends
 		if (result != MoveResult.OK) {
 			isGameEnded = true;

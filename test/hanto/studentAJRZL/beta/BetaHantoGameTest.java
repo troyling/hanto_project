@@ -254,7 +254,7 @@ public class BetaHantoGameTest {
 
 		assertEquals(MoveResult.BLUE_WINS, result);
 	}
-	
+
 	/**
 	 * Test that ensures the factory creates the game with red moving first
 	 * 
@@ -264,17 +264,17 @@ public class BetaHantoGameTest {
 	public void testRedPlayerMoveFirst() throws HantoException {
 		final HantoGame newGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.RED);
-		
+
 		newGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
 		newGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(1, 0));
-		
+
 		HantoPiece redButterfly = newGame.getPieceAt(new TestHantoCoordinate(0, 0));
 		HantoPiece blueButterfly = newGame.getPieceAt(new TestHantoCoordinate(1, 0));
-		
+
 		assertEquals(HantoPlayerColor.RED, redButterfly.getColor());
 		assertEquals(HantoPlayerColor.BLUE, blueButterfly.getColor());
 	}
-	
+
 	/**
 	 * Attempt to place more than one butterfly for a player
 	 * 
@@ -286,7 +286,7 @@ public class BetaHantoGameTest {
 		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, -1));
 		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(-1, 1));
 	}
-	
+
 	/**
 	 * Attempt to place piece after the game ends in draw
 	 * 
@@ -296,25 +296,25 @@ public class BetaHantoGameTest {
 	public void testAttemptToPlacePieceAfterGameEnds() throws HantoException {
 		final HantoGame newGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.RED);
-	
+
 		newGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
-		newGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, -1));	
+		newGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, -1));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(-1, 1));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(-1, 0));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(1, 0));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(1, -1));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(2, 0));
-		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(2, -1));	
+		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(2, -1));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(3, 0));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(3, -1));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(4, 0));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(4, -1));
-		
+
 		// attempt to place extra piece after game ends
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(5, -1));
-		
+
 	}
-	
+
 	/**
 	 * Test ensures that blue wins by surrounding the red butterfly.
 	 * 
@@ -338,8 +338,7 @@ public class BetaHantoGameTest {
 		// attempt to place extra piece after game ends
 		betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(0, -3));
 	}
-	
-	
+
 	/**
 	 * Ensures that the player colors are all correct
 	 */
@@ -347,45 +346,43 @@ public class BetaHantoGameTest {
 	public void testPlayerColorsAreAllCorrect() throws HantoException {
 		final HantoGame newGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.RED);
-		
+
 		MoveResult result = null;
-		
+
 		newGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
 		newGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, -1));
-		
+
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(-1, 1));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(-1, 0));
 
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(1, 0));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(1, -1));
-		
+
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(2, 0));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(2, -1));
-		
+
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(3, 0));
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(3, -1));
-		
+
 		newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(4, 0));
 		result = newGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(4, -1));
-		
+
 		HantoPiece red = newGame.getPieceAt(new TestHantoCoordinate(-1, 1));
 		HantoPiece red2 = newGame.getPieceAt(new TestHantoCoordinate(3, 0));
-		
+
 		HantoPiece blue = newGame.getPieceAt(new TestHantoCoordinate(-1, 0));
 		HantoPiece blue2 = newGame.getPieceAt(new TestHantoCoordinate(4, -1));
-		
+
 		// game status
 		assertEquals(MoveResult.DRAW, result);
-		
+
 		// piece colors
 		assertEquals(HantoPlayerColor.RED, red.getColor());
 		assertEquals(HantoPlayerColor.RED, red2.getColor());
-		
+
 		assertEquals(HantoPlayerColor.BLUE, blue.getColor());
 		assertEquals(HantoPlayerColor.BLUE, blue2.getColor());
-		
+
 	}
-	
-	
-	
+
 }
