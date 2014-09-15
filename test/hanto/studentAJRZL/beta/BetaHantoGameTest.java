@@ -417,9 +417,9 @@ public class BetaHantoGameTest {
 		assertEquals(HantoPlayerColor.BLUE, blue2.getColor());
 
 	}
-	
+
 	/**
-	 * Test ensures that blue wins by surrounding the red butterfly.
+	 * Check that you cannot place illegal pieces on the board.
 	 * 
 	 * @throws HantoException
 	 */
@@ -427,9 +427,9 @@ public class BetaHantoGameTest {
 	public void testAttemptToPlaceOtherPices() throws HantoException {
 		betaGame.makeMove(HantoPieceType.DOVE, null, origin);
 	}
-	
+
 	/**
-	 * Test ensures that blue wins by surrounding the red butterfly.
+	 * Check that the player must make a move.
 	 * 
 	 * @throws HantoException
 	 */
