@@ -9,6 +9,8 @@
 
 package hanto.studentAJRZL.alpha;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -20,11 +22,15 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
+/**
+ * Test for alpha hanto class imported from Blackboard posted by Professor
+ * Pollice.
+ * 
+ * @author troyling
+ * 
+ */
 public class AlphaHantoMasterTest
 
 {
@@ -42,7 +48,13 @@ public class AlphaHantoMasterTest
 
 		private final int x, y;
 
-		public TestHantoCoordinate(int x, int y) {
+		/**
+		 * Constructor for test coordinate
+		 * 
+		 * @param x
+		 * @param y
+		 */
+		TestHantoCoordinate(int x, int y) {
 			this.x = x;
 			this.y = y;
 		}
@@ -69,24 +81,30 @@ public class AlphaHantoMasterTest
 	private static final HantoPieceType BUTTERFLY = HantoPieceType.BUTTERFLY;
 	private static final HantoPieceType SPARROW = HantoPieceType.SPARROW;
 	private static final Object OK = MoveResult.OK;
-	private static HantoGameFactory factory;
+	private static HantoGameFactory factory = HantoGameFactory.getInstance();
 	private HantoGame game;
 
-	@BeforeClass
-	public static void initializeClass() {
-		factory = HantoGameFactory.getInstance();
-	}
-
+	/**
+	 * Create alpha hanto game
+	 */
 	@Before
 	public void setup() {
 		game = factory.makeHantoGame(HantoGameID.ALPHA_HANTO);
 	}
 
+	/**
+	 * Test if the game is an instance of the alpha hanto game
+	 */
 	@Test
 	public void getAnAlphaHantoGameFromTheFactory() {
 		assertTrue(game instanceof AlphaHantoGame);
 	}
 
+	/**
+	 * Test if player in blue makes the first move
+	 * 
+	 * @throws HantoException
+	 */
 	@Test
 	public void blueMakesValidFirstMove() throws HantoException {
 		final MoveResult mr = game.makeMove(BUTTERFLY, null,
@@ -94,6 +112,11 @@ public class AlphaHantoMasterTest
 		assertEquals(OK, mr);
 	}
 
+	/**
+	 * Test if the butterfly is at the origin after first move
+	 * 
+	 * @throws HantoException
+	 */
 	@Test
 	public void afterFirstMoveBlueButterflyIsAt0_0() throws HantoException {
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
@@ -102,11 +125,22 @@ public class AlphaHantoMasterTest
 		assertEquals(HantoPlayerColor.BLUE, p.getColor());
 	}
 
+	/**
+	 * Attempt to place sparrow instead of the butterfly at the origin.
+	 * Exception is expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void bluePlacesNonButterfly() throws HantoException {
 		game.makeMove(SPARROW, null, new TestHantoCoordinate(0, 0));
 	}
 
+	/**
+	 * Test to ensure that the red butterfly is placed
+	 * 
+	 * @throws HantoException
+	 */
 	@Test
 	public void redPlacesButterflyNextToBlueButterfly() throws HantoException {
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
@@ -116,12 +150,23 @@ public class AlphaHantoMasterTest
 		assertEquals(HantoPlayerColor.RED, p.getColor());
 	}
 
+	/**
+	 * Player in blue attempts to place butterfly at place other than origin.
+	 * Exception is expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void blueAttemptsToPlaceButterflyAtWrongLocation()
 			throws HantoException {
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1, 1));
 	}
 
+	/**
+	 * Ensures that the game ends in draw after the second move
+	 * 
+	 * @throws HantoException
+	 */
 	@Test
 	public void redMakesValidSecondMoveAndGameIsDrawn() throws HantoException {
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
@@ -130,6 +175,12 @@ public class AlphaHantoMasterTest
 		assertEquals(MoveResult.DRAW, mr);
 	}
 
+	/**
+	 * Attempt to place the second piece at the nonadjacent tile. Exception is
+	 * expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void redPlacesButterflyNonAdjacentToBlueButterfly()
 			throws HantoException {
@@ -137,6 +188,11 @@ public class AlphaHantoMasterTest
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 2));
 	}
 
+	/**
+	 * Attempt to move rather than to place a piece. Exception is expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void attemptToMoveRatherThanPlace() throws HantoException {
 		game.makeMove(BUTTERFLY, new TestHantoCoordinate(0, 1),

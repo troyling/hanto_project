@@ -22,6 +22,12 @@ import hanto.common.MoveResult;
 
 import org.junit.Test;
 
+/**
+ * Test cases for beta hanto game
+ * 
+ * @author troyling
+ * 
+ */
 public class BetaHantoGameTest {
 	/**
 	 * 
@@ -36,7 +42,13 @@ public class BetaHantoGameTest {
 
 		private final int x, y;
 
-		public TestHantoCoordinate(int x, int y) {
+		/**
+		 * Constructor for test coordinate
+		 * 
+		 * @param x
+		 * @param y
+		 */
+		TestHantoCoordinate(int x, int y) {
 			this.x = x;
 			this.y = y;
 		}
@@ -78,6 +90,11 @@ public class BetaHantoGameTest {
 	private HantoCoordinate coord4 = new TestHantoCoordinate(2, -2);
 	private HantoCoordinate coord5 = new TestHantoCoordinate(1, -2);
 
+	/**
+	 * Test ensures that the piece is placed at the origin.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test
 	public void testGetPieceAtFunction() throws HantoException {
 		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
@@ -88,18 +105,34 @@ public class BetaHantoGameTest {
 		assertEquals(HantoPieceType.BUTTERFLY, p.getType());
 	}
 
+	/**
+	 * Attempt to place the first piece at place other than the origin.
+	 * Exception is expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void testPlaceNotAtOrigin() throws HantoException {
 		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
 				new TestHantoCoordinate(1, 1));
 	}
 
+	/**
+	 * Attempt to move a piece rather than to place. Exception is expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void attemptToMoveRatherThanPlace() throws HantoException {
 		betaGame.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0,
 				1), new TestHantoCoordinate(0, 0));
 	}
 
+	/**
+	 * Attempt to place a piece at the nonadjacent tile. Exception is expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void redPlacesButterflyNonAdjacentToBlueButterfly()
 			throws HantoException {
@@ -109,6 +142,11 @@ public class BetaHantoGameTest {
 				new TestHantoCoordinate(0, 2));
 	}
 
+	/**
+	 * Test ensures that red wins by surrounding the blue butterfly.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test
 	public void testRedWinBySurroundingBlueButterfly() throws HantoException {
 		MoveResult result = null;
@@ -125,6 +163,12 @@ public class BetaHantoGameTest {
 		assertEquals(MoveResult.RED_WINS, result);
 	}
 
+	/**
+	 * Blue butterfly is not placed by the end of 4th turn. Exception is
+	 * expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void testNoBlueButterflyByEndOfFourthTurn() throws HantoException {
 		// place pieces on board
@@ -137,6 +181,12 @@ public class BetaHantoGameTest {
 		betaGame.makeMove(HantoPieceType.SPARROW, null, bottomRight);
 	}
 
+	/**
+	 * Red butterfly is not placed by the end of 4th turn. Exception is
+	 * expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void testNoRedButterflyByEndOfFourthTurn() throws HantoException {
 		betaGame.makeMove(HantoPieceType.SPARROW, null, origin);
@@ -149,12 +199,23 @@ public class BetaHantoGameTest {
 		betaGame.makeMove(HantoPieceType.SPARROW, null, coord1);
 	}
 
+	/**
+	 * Attempt to place the piece at the same coordinate. Exception is expected.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void testAttemptToPlacePieceAtSameCoordinate() throws HantoException {
 		betaGame.makeMove(HantoPieceType.SPARROW, null, origin);
 		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
 	}
 
+	/**
+	 * Test ensures that game ends in draw since neither of the butterfly is
+	 * surronded.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test
 	public void testGameEndInDraw() throws HantoException {
 		MoveResult result = null;
@@ -181,23 +242,35 @@ public class BetaHantoGameTest {
 
 		assertEquals(MoveResult.DRAW, result);
 	}
-	
+
+	/**
+	 * Test ensures that blue wins by surrounding the red butterfly.
+	 * 
+	 * @throws HantoException
+	 */
 	@Test
 	public void testBlueWinBySurroundingRedButterfly() throws HantoException {
 		MoveResult result = null;
 
 		// place pieces on board
 		// 1st turn
-		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
-		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, -1));
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
+				new TestHantoCoordinate(0, 0));
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
+				new TestHantoCoordinate(0, -1));
 		// 2nd turn
-		betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(-1, 0));
-		betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(1, -1));
+		betaGame.makeMove(HantoPieceType.SPARROW, null,
+				new TestHantoCoordinate(-1, 0));
+		betaGame.makeMove(HantoPieceType.SPARROW, null,
+				new TestHantoCoordinate(1, -1));
 		// 3rd turn
-		betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(-1, -1));
-		betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(1, -2));
+		betaGame.makeMove(HantoPieceType.SPARROW, null,
+				new TestHantoCoordinate(-1, -1));
+		betaGame.makeMove(HantoPieceType.SPARROW, null,
+				new TestHantoCoordinate(1, -2));
 		// 4th turn
-		result = betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(0, -2));
+		result = betaGame.makeMove(HantoPieceType.SPARROW, null,
+				new TestHantoCoordinate(0, -2));
 
 		assertEquals(MoveResult.BLUE_WINS, result);
 	}

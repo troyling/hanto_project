@@ -19,9 +19,6 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.HantoGamePiece;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Class for the Alpha Hanto Game instances.
  * 
