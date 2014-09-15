@@ -10,6 +10,8 @@
 package hanto.studentAJRZL.alpha;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -21,6 +23,8 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -31,6 +35,48 @@ import org.junit.rules.ExpectedException;
  * 
  */
 public class AlphaHantoGameTest {
+
+	/**
+	 * Internal class for these test cases.
+	 * 
+	 * @version Sep 13, 2014
+	 */
+
+	class TestHantoCoordinate implements HantoCoordinate {
+		private final int x, y;
+
+		/**
+		 * Constructor for the test class.
+		 * 
+		 * @param x the x coordinate
+		 * @param y the y coordinate
+		 */
+		TestHantoCoordinate(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		/*
+		 * @see hanto.common.HantoCoordinate#getX()
+		 */
+		@Override
+		public int getX() {
+			return x;
+		}
+
+		/*
+		 * 
+		 * @see hanto.common.HantoCoordinate#getY()
+		 */
+		@Override
+		public int getY() {
+			return y;
+		}
+	}
+
+	private static HantoGameFactory factory = null;
+
+	private HantoGame game;
 
 	private ExpectedException exception = ExpectedException.none();
 
@@ -47,58 +93,63 @@ public class AlphaHantoGameTest {
 	private HantoCoordinate bottomRight = new HantoPieceCoordinate(1, -1);
 
 	/**
-	 * Test that the Alpha Hanto results are correct for the bottom space from the origin.
+	 * Initialize the factory instance.
+	 */
+	@BeforeClass
+	public static void initializeClass() {
+		factory = HantoGameFactory.getInstance();
+	}
+
+	/**
+	 * Set up the Hanto game.
+	 */
+	@Before
+	public void setup() {
+		game = factory.makeHantoGame(HantoGameID.ALPHA_HANTO);
+	}
+
+	/**
+	 * Check to make sure an unfilled printable board is an empty string.
 	 */
 	@Test
-	public void testThatSecondMoveAtBottomIsCorrect() {
-		MoveResult firstMove = null;
-		try {
-			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
+	public void testThatUnfilledBoardIsEmpty() {
+		String printedBoard = game.getPrintableBoard();
+		assertEquals("", printedBoard);
+	}
 
+	/**
+	 * Test that the Alpha Hanto results are correct for the bottom space from the origin.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test
+	public void testThatSecondMoveAtBottomIsCorrect() throws HantoException {
+		MoveResult firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
+		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
 		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
 		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottom);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
+		MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottom);
 		assertEquals(newAlphaHantoGame.getPieceAt(bottom).getColor(), HantoPlayerColor.RED);
 		assertEquals(newAlphaHantoGame.getPieceAt(bottom).getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(nextMove, MoveResult.DRAW);
+		// Make sure this is not null.
+		assertNotNull(newAlphaHantoGame.getPrintableBoard());
 	}
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the top space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
-	public void testThatSecondMoveAtTopIsCorrect() {
-		MoveResult firstMove = null;
-		try {
-			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
+	public void testThatSecondMoveAtTopIsCorrect() throws HantoException {
+		MoveResult firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
 		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
 		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
 		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, top);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
+		MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, top);
 		assertEquals(newAlphaHantoGame.getPieceAt(top).getColor(), HantoPlayerColor.RED);
 		assertEquals(newAlphaHantoGame.getPieceAt(top).getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(nextMove, MoveResult.DRAW);
@@ -106,28 +157,18 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the bottom right space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
-	public void testThatSecondMoveAtBottomRightIsCorrect() {
-		MoveResult firstMove = null;
-		try {
-			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
+	public void testThatSecondMoveAtBottomRightIsCorrect() throws HantoException {
+		MoveResult firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
 		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
 		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
 		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottomRight);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
+		MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null,
+				bottomRight);
 		assertEquals(newAlphaHantoGame.getPieceAt(bottomRight).getColor(), HantoPlayerColor.RED);
 		assertEquals(newAlphaHantoGame.getPieceAt(bottomRight).getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(nextMove, MoveResult.DRAW);
@@ -135,28 +176,17 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the top right space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
-	public void testThatSecondMoveAtTopRightIsCorrect() {
-		MoveResult firstMove = null;
-		try {
-			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
+	public void testThatSecondMoveAtTopRightIsCorrect() throws HantoException {
+		MoveResult firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
 		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
 		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
 		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, topRight);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
+		MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, topRight);
 		assertEquals(newAlphaHantoGame.getPieceAt(topRight).getColor(), HantoPlayerColor.RED);
 		assertEquals(newAlphaHantoGame.getPieceAt(topRight).getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(nextMove, MoveResult.DRAW);
@@ -164,28 +194,17 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the top left space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
-	public void testThatSecondMoveAtTopLeftIsCorrect() {
-		MoveResult firstMove = null;
-		try {
-			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
+	public void testThatSecondMoveAtTopLeftIsCorrect() throws HantoException {
+		MoveResult firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
 		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
 		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
 		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(firstMove, MoveResult.OK);
-
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, topLeft);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
+		MoveResult nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, topLeft);
 		assertEquals(newAlphaHantoGame.getPieceAt(topLeft).getColor(), HantoPlayerColor.RED);
 		assertEquals(newAlphaHantoGame.getPieceAt(topLeft).getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(nextMove, MoveResult.DRAW);
@@ -193,28 +212,20 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the bottom left space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
-	public void testThatSecondMoveAtBottomLeftIsCorrect() {
-		MoveResult firstMove = null;
-		try {
-			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
+	public void testThatSecondMoveAtBottomLeftIsCorrect() throws HantoException {
+		MoveResult firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
 		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
 
 		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
 		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(firstMove, MoveResult.OK);
 
-		MoveResult nextMove = null;
-		try {
-			nextMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottomLeft);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
-
+		MoveResult nextMove = newAlphaHantoGame
+				.makeMove(HantoPieceType.BUTTERFLY, null, bottomLeft);
 		assertEquals(newAlphaHantoGame.getPieceAt(bottomLeft).getColor(), HantoPlayerColor.RED);
 		assertEquals(newAlphaHantoGame.getPieceAt(bottomLeft).getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(nextMove, MoveResult.DRAW);
@@ -222,39 +233,27 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that an illegal red move throws an exception.
+	 * 
+	 * @throws HantoException
 	 */
-	@Test
-	public void testThatIllegalRedMoveThrowsException() {
-		MoveResult firstMove = null;
-		try {
-			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
+	@Test(expected = HantoException.class)
+	public void testThatIllegalRedMoveThrowsException() throws HantoException {
+		MoveResult firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
 		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
 		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
 		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(firstMove, MoveResult.OK);
-
-		try {
-			newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(1,
-					1));
-		} catch (HantoException e) {
-			exception.expectMessage("Invalid move.");
-		}
+		newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(1, 1));
 	}
 
 	/**
 	 * Test that an illegal red move throws an exception.
+	 * 
+	 * @throws HantoException
 	 */
-	@Test
-	public void testThatIllegalBlueMoveThrowsException() {
-		try {
-			newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottom);
-		} catch (HantoException e) {
-			exception.expectMessage("Invalid move.");
-		}
+	@Test(expected = HantoException.class)
+	public void testThatIllegalBlueMoveThrowsException() throws HantoException {
+		newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, bottom);
 	}
 
 	/**
@@ -271,25 +270,130 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that using an illegal piece on the second move throws an exception.
+	 * 
+	 * @throws HantoException
 	 */
-	@Test
-	public void testThatIllegalPieceThrowsException() {
-		MoveResult firstMove = null;
-		try {
-			firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
-		} catch (HantoException e) {
-			e.printStackTrace();
-		}
+	@Test(expected = HantoException.class)
+	public void testThatIllegalPieceThrowsException() throws HantoException {
+		MoveResult firstMove = newAlphaHantoGame.makeMove(HantoPieceType.BUTTERFLY, null, origin);
 		HantoPiece pieceAtOrigin = newAlphaHantoGame.getPieceAt(origin);
-
 		assertEquals(pieceAtOrigin.getColor(), HantoPlayerColor.BLUE);
 		assertEquals(pieceAtOrigin.getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(firstMove, MoveResult.OK);
+		newAlphaHantoGame.makeMove(HantoPieceType.SPARROW, null, top);
+	}
 
-		try {
-			newAlphaHantoGame.makeMove(HantoPieceType.SPARROW, null, top);
-		} catch (HantoException e) {
-			exception.expectMessage("Invalid piece.");
-		}
+	/**
+	 * Sanity check on the alpha hanto game initialization.
+	 */
+	@Test
+	public void getAnAlphaHantoGameFromTheFactory() {
+		assertTrue(game instanceof AlphaHantoGame);
+	}
+
+	/**
+	 * Check that blue makes a valid first move.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test
+	public void blueMakesValidFirstMove() throws HantoException {
+		final MoveResult mr = game.makeMove(HantoPieceType.BUTTERFLY, null,
+				new TestHantoCoordinate(0, 0));
+		assertEquals(MoveResult.OK, mr);
+	}
+
+	/**
+	 * Check that the blue butterfly is at the origin after it moves.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test
+	public void afterFirstMoveBlueButterflyIsAt0_0() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		final HantoPiece p = game.getPieceAt(new TestHantoCoordinate(0, 0));
+		assertEquals(HantoPieceType.BUTTERFLY, p.getType());
+		assertEquals(HantoPlayerColor.BLUE, p.getColor());
+	}
+
+	/**
+	 * Check that blue can only place a butterfly.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void bluePlacesNonButterfly() throws HantoException {
+		game.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(0, 0));
+	}
+
+	/**
+	 * Check that red places its butterfly adjacent to the blue one.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test
+	public void redPlacesButterflyNextToBlueButterfly() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 1));
+		final HantoPiece p = game.getPieceAt(new TestHantoCoordinate(0, 1));
+		assertEquals(HantoPieceType.BUTTERFLY, p.getType());
+		assertEquals(HantoPlayerColor.RED, p.getColor());
+	}
+
+	/**
+	 * Make sure blue can only place the butterfly at the origin.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void blueAttemptsToPlaceButterflyAtWrongLocation() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(-1, 1));
+	}
+
+	/**
+	 * Check to make sure red makes a valid second move and the game is a draw.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test
+	public void redMakesValidSecondMoveAndGameIsDrawn() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		final MoveResult mr = game.makeMove(HantoPieceType.BUTTERFLY, null,
+				new TestHantoCoordinate(-1, 1));
+		assertEquals(MoveResult.DRAW, mr);
+	}
+
+	/**
+	 * Check to make sure red can only place the buttefly adjacent to the blue one.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void redPlacesButterflyNonAdjacentToBlueButterfly() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 2));
+	}
+
+	/**
+	 * Check to make sure you cannot move, but only place.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void attemptToMoveRatherThanPlace() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1),
+				new TestHantoCoordinate(0, 0));
+	}
+
+	/**
+	 * Check that no moves can be made after the game concludes.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testThatNoMoreMovesCanBeMadeAfterGameEnds() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(1, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, -1));
 	}
 }

@@ -52,6 +52,10 @@ public class AlphaHantoGame implements HantoGame {
 			throw new HantoException("Can't move piece in alpha game.");
 		}
 
+		if (blueButterflyCoord != null && redButterflyCoord != null) {
+			throw new HantoException("Game has ended. No more moves allowed.");
+		}
+
 		MoveResult result = null;
 
 		switch (currentPlayercolor) {
@@ -100,6 +104,12 @@ public class AlphaHantoGame implements HantoGame {
 
 	@Override
 	public String getPrintableBoard() {
-		return null;
+		String printBoard = "";
+		if (blueButterflyCoord != null && redButterflyCoord != null) {
+			printBoard = "Blue Butterfly: (" + blueButterflyCoord.getX() + ", "
+					+ blueButterflyCoord.getY() + ")\n" + "Red Butterfly: ("
+					+ redButterflyCoord.getX() + ", " + redButterflyCoord.getY() + ")";
+		}
+		return printBoard;
 	}
 }

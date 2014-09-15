@@ -33,8 +33,8 @@ import java.util.Map;
 public class BetaHantoGame implements HantoGame {
 
 	private HantoPlayerColor currentPlayColor;
-	private HantoCoordinate blueButterflyCoordiate = null;
-	private HantoCoordinate redButterflyCoordiate = null;
+	private HantoCoordinate blueButterflyCoordiate;
+	private HantoCoordinate redButterflyCoordiate;
 	private int turn = 0;
 
 	private Map<HantoCoordinate, HantoPiece> board = new HashMap<HantoCoordinate, HantoPiece>();
