@@ -43,24 +43,19 @@ public class AlphaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
-		if (!pieceType.equals(HantoPieceType.BUTTERFLY)) {
-			// The piece must be a butterfly.
-			throw new HantoException("Invalid piece.");
-		}
 
-		if (from != null) {
-			throw new HantoException("Can't move piece in alpha game.");
-		}
+		validatePieceIsButterfly(pieceType);
 
-		if (blueButterflyCoord != null && redButterflyCoord != null) {
-			throw new HantoException("Game has ended. No more moves allowed.");
-		}
+		validateMove(from);
+
+		validateEndOfGame();
 
 		MoveResult result = null;
 
 		switch (currentPlayercolor) {
 			case BLUE:
-				if (to.getX() != 0 || to.getY() != 0) {
+				boolean isNotAtOrigin = to.getX() != 0 || to.getY() != 0;
+				if (isNotAtOrigin) {
 					// The blue piece must be placed at the origin.
 					throw new HantoException("Invalid move.");
 				}
@@ -72,8 +67,10 @@ public class AlphaHantoGame implements HantoGame {
 				result = MoveResult.OK;
 				break;
 			case RED:
-				if (!((Math.abs(to.getX()) <= 1 && Math.abs(to.getY()) <= 1) && to.getX() != to
-						.getY())) {
+				boolean isXAndYCoordsAtMost1 = Math.abs(to.getX()) <= 1 && Math.abs(to.getY()) <= 1;
+				boolean isXAndYCoordsDifferent = to.getX() != to.getY();
+				boolean isAdjacentToOrigin = (isXAndYCoordsAtMost1 && isXAndYCoordsDifferent);
+				if (!isAdjacentToOrigin) {
 					// Throw an exception if the red piece is not placed in a valid space.
 					throw new HantoException("Invalid move.");
 				}
@@ -86,6 +83,29 @@ public class AlphaHantoGame implements HantoGame {
 				break;
 		}
 		return result;
+	}
+
+	/**
+	 * Validate that the game has ended.
+	 * 
+	 * @throws HantoException
+	 */
+	private void validateEndOfGame() throws HantoException {
+		if (blueButterflyCoord != null && redButterflyCoord != null) {
+			throw new HantoException("Game has ended. No more moves allowed.");
+		}
+	}
+
+	/**
+	 * Validate that the from coordinate does not exist.
+	 * 
+	 * @param from the coordinate to check.
+	 * @throws HantoException
+	 */
+	private void validateMove(HantoCoordinate from) throws HantoException {
+		if (from != null) {
+			throw new HantoException("Can't move piece in alpha game.");
+		}
 	}
 
 	@Override
@@ -104,13 +124,29 @@ public class AlphaHantoGame implements HantoGame {
 
 	@Override
 	public String getPrintableBoard() {
+		// Should return an empty string if unfilled.
 		String printBoard = "";
-		if (blueButterflyCoord != null && redButterflyCoord != null) {
+		if (blueButterflyCoord != null) {
 			// Pieces have been placed, so the printed board should have values.
-			printBoard = "Blue Butterfly: (" + blueButterflyCoord.getX() + ", "
-					+ blueButterflyCoord.getY() + ")\n" + "Red Butterfly: ("
-					+ redButterflyCoord.getX() + ", " + redButterflyCoord.getY() + ")";
+			printBoard += "Blue Butterfly: (" + blueButterflyCoord.getX() + ", "
+					+ blueButterflyCoord.getY() + ")\n";
+		}
+		if (redButterflyCoord != null) {
+			printBoard += "Red Butterfly: (" + redButterflyCoord.getX() + ", "
+					+ redButterflyCoord.getY() + ")\n";
 		}
 		return printBoard;
+	}
+
+	/**
+	 * Throw a HantoException if the piece is not a butterfly.
+	 * 
+	 * @param pieceType the type to validate.
+	 * @throws HantoException
+	 */
+	private void validatePieceIsButterfly(HantoPieceType pieceType) throws HantoException {
+		if (!pieceType.equals(HantoPieceType.BUTTERFLY)) {
+			throw new HantoException("Invalid piece.");
+		}
 	}
 }
