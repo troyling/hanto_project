@@ -109,6 +109,8 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the bottom space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testThatSecondMoveAtBottomIsCorrect() throws HantoException {
@@ -125,6 +127,8 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the top space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testThatSecondMoveAtTopIsCorrect() throws HantoException {
@@ -141,6 +145,8 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the bottom right space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testThatSecondMoveAtBottomRightIsCorrect() throws HantoException {
@@ -158,6 +164,8 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the top right space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testThatSecondMoveAtTopRightIsCorrect() throws HantoException {
@@ -174,6 +182,8 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the top left space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testThatSecondMoveAtTopLeftIsCorrect() throws HantoException {
@@ -190,6 +200,8 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that the Alpha Hanto results are correct for the bottom left space from the origin.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testThatSecondMoveAtBottomLeftIsCorrect() throws HantoException {
@@ -209,6 +221,8 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that an illegal red move throws an exception.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testThatIllegalRedMoveThrowsException() throws HantoException {
@@ -222,6 +236,8 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that an illegal red move throws an exception.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testThatIllegalBlueMoveThrowsException() throws HantoException {
@@ -242,6 +258,8 @@ public class AlphaHantoGameTest {
 
 	/**
 	 * Test that using an illegal piece on the second move throws an exception.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testThatIllegalPieceThrowsException() throws HantoException {
