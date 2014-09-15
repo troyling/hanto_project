@@ -69,7 +69,6 @@ public class BetaHantoGame implements HantoGame {
 			printedBoard += piece.getColor() + " " + piece.getType() + ": (" + key.getX() + ", "
 					+ key.getY() + ")\n";
 		}
-		System.out.println(printedBoard);
 		return printedBoard;
 	}
 

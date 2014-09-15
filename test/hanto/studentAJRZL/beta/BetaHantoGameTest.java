@@ -10,6 +10,7 @@
 package hanto.studentAJRZL.beta;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -20,6 +21,8 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -68,8 +71,8 @@ public class BetaHantoGameTest {
 		}
 	}
 
-	private HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
-			HantoGameID.BETA_HANTO);
+	private static HantoGameFactory factory = null;
+	private HantoGame betaGame;
 
 	// coordinates for placing pieces on board
 	private HantoCoordinate origin = new TestHantoCoordinate(0, 0);
@@ -85,6 +88,31 @@ public class BetaHantoGameTest {
 	private HantoCoordinate coord3 = new TestHantoCoordinate(2, -1);
 	private HantoCoordinate coord4 = new TestHantoCoordinate(2, -2);
 	private HantoCoordinate coord5 = new TestHantoCoordinate(1, -2);
+
+	/**
+	 * Initialize the factory instance.
+	 */
+	@BeforeClass
+	public static void initializeClass() {
+		factory = HantoGameFactory.getInstance();
+	}
+
+	/**
+	 * Set up the Hanto game.
+	 */
+	@Before
+	public void setup() {
+		betaGame = factory.makeHantoGame(HantoGameID.BETA_HANTO);
+	}
+
+	/**
+	 * Check to make sure an unfilled printable board is an empty string.
+	 */
+	@Test
+	public void testThatUnfilledBoardIsEmpty() {
+		String printedBoard = betaGame.getPrintableBoard();
+		assertEquals("", printedBoard);
+	}
 
 	/**
 	 * Test ensures that the piece is placed at the origin.
@@ -253,6 +281,9 @@ public class BetaHantoGameTest {
 		result = betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(0, -2));
 
 		assertEquals(MoveResult.BLUE_WINS, result);
+
+		// Check to make sure the printable board is working.
+		assertNotNull(betaGame.getPrintableBoard());
 	}
 
 	/**
