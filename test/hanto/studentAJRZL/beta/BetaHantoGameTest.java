@@ -254,5 +254,10 @@ public class BetaHantoGameTest {
 
 		assertEquals(MoveResult.BLUE_WINS, result);
 	}
-
+	
+	/**
+	 * Test that ensures the factory creates the game with red moving first
+	 */
+	//@Test
+	
 }

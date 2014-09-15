@@ -33,8 +33,8 @@ import java.util.Map;
 public class BetaHantoGame implements HantoGame {
 
 	private HantoPlayerColor currentPlayColor;
-	private HantoCoordinate blueButterflyCoordiate = null;
-	private HantoCoordinate redButterflyCoordiate = null;
+	private HantoCoordinate blueButterflyCoordiate;
+	private HantoCoordinate redButterflyCoordiate;
 	private int turn = 0;
 
 	private Map<HantoCoordinate, HantoPiece> board = new HashMap<HantoCoordinate, HantoPiece>();
@@ -82,43 +82,25 @@ public class BetaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
-
-		if (board.get(to) != null) {
-			throw new HantoException("Can't place a piece on an occupied tile.");
-		}
+		
+		// check if the destination coordinate is occupied 
+		validateDestinationCoordinate(to);
 
 		// piece can only be placed, not moved
-		if (from != null) {
-			throw new HantoException("Can't move a piece in Beta hanto.");
-		}
+		validateMove(from);
 
 		// first piece must be placed at origin
-		if (turn == 0 && currentPlayColor == HantoPlayerColor.BLUE) {
-			if (to.getX() != 0 || to.getY() != 0) {
-				throw new HantoException("First piece must be placed at origin");
-			}
-		}
+		validateFirstMoveCoordinate(to);
 
 		// check if butterfly is placed
-		if (turn == 3 && pieceType != HantoPieceType.BUTTERFLY) {
-			if ((currentPlayColor == HantoPlayerColor.BLUE && blueButterflyCoordiate == null)
-					|| (currentPlayColor == HantoPlayerColor.RED && redButterflyCoordiate == null)) {
-				throw new HantoException("Butterfly must be placed by 4th turn.");
-			}
-		}
+		validateBufferflyPresence(pieceType);
 
+		// create objects to store into the board
 		HantoPiece newPiece = new HantoGamePiece(currentPlayColor, pieceType);
 		HantoCoordinate coord = new HantoPieceCoordinate(to.getX(), to.getY());
 
-		// check if the given destination coordinate is occupied
-		if (board.get(coord) != null) {
-			throw new HantoException("The given destination coordinate has been occupied.");
-		}
-
 		// check if the given destination coordinate is adjacent to any piece on the board
-		if (!board.isEmpty() && !isAnyPieceAdjacentTo(coord)) {
-			throw new HantoException("A piece must be placed next to another.");
-		}
+		validateAdjacentCoordinate(coord);
 
 		// putting the piece on board
 		board.put(coord, newPiece);
@@ -141,6 +123,76 @@ public class BetaHantoGame implements HantoGame {
 		alterPlayerColor();
 
 		return checkGameStatus();
+	}
+
+	/**
+	 * Throws exception if the piece is not placed next to any piece
+	 * 
+	 * @param coord
+	 * @throws HantoException
+	 */
+	private void validateAdjacentCoordinate(HantoCoordinate coord)
+			throws HantoException {
+		if (!board.isEmpty() && !isAnyPieceAdjacentTo(coord)) {
+			throw new HantoException("A piece must be placed next to another.");
+		}
+	}
+
+	/**
+	 * Throw exception if butterfly is not placed by the end of 4th turn.
+	 * 
+	 * @param pieceType
+	 * @throws HantoException
+	 */
+	private void validateBufferflyPresence(HantoPieceType pieceType)
+			throws HantoException {
+		if (turn == 3 && pieceType != HantoPieceType.BUTTERFLY) {
+			if ((currentPlayColor == HantoPlayerColor.BLUE && blueButterflyCoordiate == null)
+					|| (currentPlayColor == HantoPlayerColor.RED && redButterflyCoordiate == null)) {
+				throw new HantoException("Butterfly must be placed by 4th turn.");
+			}
+		}
+	}
+
+	/**
+	 * Throws exception if the first move attempts to place piece at coordinate other than origin.
+	 * 
+	 * @param to
+	 * @throws HantoException
+	 */
+	private void validateFirstMoveCoordinate(HantoCoordinate to)
+			throws HantoException {
+		if (turn == 0 && currentPlayColor == HantoPlayerColor.BLUE) {
+			if (to.getX() != 0 || to.getY() != 0) {
+				throw new HantoException("First piece must be placed at origin");
+			}
+		}
+	}
+
+	/**
+	 * Throws exception if the move intends to move rather than to place a piece
+	 * 
+	 * @param from
+	 * @throws HantoException
+	 */
+	private void validateMove(HantoCoordinate from) throws HantoException {
+		if (from != null) {
+			throw new HantoException("Can't move a piece in Beta hanto.");
+		}
+	}
+
+	/**
+	 * Throws exception if the destination coordinate is occupied.
+	 * 
+	 * @param to
+	 * @throws HantoException
+	 */
+	private void validateDestinationCoordinate(HantoCoordinate coord)
+			throws HantoException {
+		// check if the given destination coordinate is occupied
+		if (board.get(coord) != null) {
+			throw new HantoException("The given destination coordinate has been occupied.");
+		}
 	}
 
 	/**
