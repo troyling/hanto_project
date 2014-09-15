@@ -24,6 +24,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import sun.util.BuddhistCalendar;
+
 /**
  * Class for Beta hanto game
  * 
@@ -35,7 +37,7 @@ public class BetaHantoGame implements HantoGame {
 	private HantoPlayerColor currentPlayColor;
 	private HantoCoordinate blueButterflyCoordiate;
 	private HantoCoordinate redButterflyCoordiate;
-	private int turn = 0;
+	private boolean isGameEnded = false;
 
 	private Map<HantoCoordinate, HantoPiece> board = new HashMap<HantoCoordinate, HantoPiece>();
 
@@ -82,6 +84,8 @@ public class BetaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
+		// check if the game has already ended
+		validateGameInProgress();
 		
 		// check if the destination coordinate is occupied 
 		validateDestinationCoordinate(to);
@@ -109,9 +113,11 @@ public class BetaHantoGame implements HantoGame {
 		if (pieceType == HantoPieceType.BUTTERFLY) {
 			switch (currentPlayColor) {
 				case BLUE:
+					validateButterflyExistence(blueButterflyCoordiate);
 					blueButterflyCoordiate = coord;
 					break;
 				case RED:
+					validateButterflyExistence(redButterflyCoordiate);
 					redButterflyCoordiate = coord;
 					break;
 				default:
@@ -124,7 +130,31 @@ public class BetaHantoGame implements HantoGame {
 
 		return checkGameStatus();
 	}
+	
+	/**
+	 * Throws exception if the player attempts to make an action after the game ends
+	 * 
+	 * @throws HantoException
+	 */
+	private void validateGameInProgress() throws HantoException {
+		if (isGameEnded) {
+			throw new HantoException("Can't place a piece after the game is ended.");
+		}
+	}
 
+	/**
+	 * Throws exception if the player attempts to place more than one butterfly on board
+	 * 
+	 * @param butterflyCoordinate
+	 * @throws HantoException
+	 */
+	private void validateButterflyExistence(HantoCoordinate butterflyCoordinate) throws HantoException {
+		if (butterflyCoordinate != null) {
+			throw new HantoException("Can't place more than one butterfly in beta hanto game.");
+		}
+	}
+	
+	
 	/**
 	 * Throws exception if the piece is not placed next to any piece
 	 * 
@@ -146,7 +176,7 @@ public class BetaHantoGame implements HantoGame {
 	 */
 	private void validateBufferflyPresence(HantoPieceType pieceType)
 			throws HantoException {
-		if (turn == 3 && pieceType != HantoPieceType.BUTTERFLY) {
+		if ((board.size() == 6 || board.size() == 7) && pieceType != HantoPieceType.BUTTERFLY) {
 			if ((currentPlayColor == HantoPlayerColor.BLUE && blueButterflyCoordiate == null)
 					|| (currentPlayColor == HantoPlayerColor.RED && redButterflyCoordiate == null)) {
 				throw new HantoException("Butterfly must be placed by 4th turn.");
@@ -162,7 +192,7 @@ public class BetaHantoGame implements HantoGame {
 	 */
 	private void validateFirstMoveCoordinate(HantoCoordinate to)
 			throws HantoException {
-		if (turn == 0 && currentPlayColor == HantoPlayerColor.BLUE) {
+		if (board.size() == 0 && currentPlayColor == HantoPlayerColor.BLUE) {
 			if (to.getX() != 0 || to.getY() != 0) {
 				throw new HantoException("First piece must be placed at origin");
 			}
@@ -231,8 +261,13 @@ public class BetaHantoGame implements HantoGame {
 			result = MoveResult.BLUE_WINS;
 		}
 
-		if (turn == 6) {
+		if (board.size() == 12) {
 			result = MoveResult.DRAW;
+		}
+		
+		// check if game ends
+		if (result != MoveResult.OK) {
+			isGameEnded = true;
 		}
 
 		return result;
@@ -275,7 +310,6 @@ public class BetaHantoGame implements HantoGame {
 				break;
 			case RED:
 				currentPlayColor = HantoPlayerColor.BLUE;
-				turn++; // one turn ends when red player finishes a move
 				break;
 			default:
 				throw new HantoException("Invalid player color");
