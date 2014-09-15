@@ -52,6 +52,10 @@ public class AlphaHantoGame implements HantoGame {
 			throw new HantoException("Can't move piece in alpha game.");
 		}
 
+		if (blueButterflyCoord != null && redButterflyCoord != null) {
+			throw new HantoException("Game has ended. No more moves allowed.");
+		}
+
 		MoveResult result = null;
 
 		switch (currentPlayercolor) {

@@ -108,8 +108,11 @@ public class AlphaHantoGameTest {
 		game = factory.makeHantoGame(HantoGameID.ALPHA_HANTO);
 	}
 
+	/**
+	 * Check to make sure an unfilled printable board is an empty string.
+	 */
 	@Test
-	public void testThatUninitializedBoardIsAnEmptyString() {
+	public void testThatUnfilledBoardIsEmpty() {
 		String printedBoard = game.getPrintableBoard();
 		assertEquals("", printedBoard);
 	}
@@ -380,5 +383,17 @@ public class AlphaHantoGameTest {
 	public void attemptToMoveRatherThanPlace() throws HantoException {
 		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1),
 				new TestHantoCoordinate(0, 0));
+	}
+
+	/**
+	 * Check that no moves can be made after the game concludes.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testThatNoMoreMovesCanBeMadeAfterGameEnds() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(1, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, -1));
 	}
 }
