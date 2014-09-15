@@ -10,6 +10,7 @@
 package hanto.studentAJRZL.alpha;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
@@ -107,6 +108,12 @@ public class AlphaHantoGameTest {
 		game = factory.makeHantoGame(HantoGameID.ALPHA_HANTO);
 	}
 
+	@Test
+	public void testThatUninitializedBoardIsAnEmptyString() {
+		String printedBoard = game.getPrintableBoard();
+		assertEquals("", printedBoard);
+	}
+
 	/**
 	 * Test that the Alpha Hanto results are correct for the bottom space from the origin.
 	 * 
@@ -123,6 +130,8 @@ public class AlphaHantoGameTest {
 		assertEquals(newAlphaHantoGame.getPieceAt(bottom).getColor(), HantoPlayerColor.RED);
 		assertEquals(newAlphaHantoGame.getPieceAt(bottom).getType(), HantoPieceType.BUTTERFLY);
 		assertEquals(nextMove, MoveResult.DRAW);
+		// Make sure this is not null.
+		assertNotNull(newAlphaHantoGame.getPrintableBoard());
 	}
 
 	/**

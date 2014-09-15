@@ -100,10 +100,12 @@ public class AlphaHantoGame implements HantoGame {
 
 	@Override
 	public String getPrintableBoard() {
-		String printBoard = "Blue Butterfly: (" + blueButterflyCoord.getX() + ", "
-				+ blueButterflyCoord.getY() + ")\n" + "Red Butterfly: (" + redButterflyCoord.getX()
-				+ ", " + redButterflyCoord.getY() + ")";
-		System.out.println(printBoard);
+		String printBoard = "";
+		if (blueButterflyCoord != null && redButterflyCoord != null) {
+			printBoard = "Blue Butterfly: (" + blueButterflyCoord.getX() + ", "
+					+ blueButterflyCoord.getY() + ")\n" + "Red Butterfly: ("
+					+ redButterflyCoord.getX() + ", " + redButterflyCoord.getY() + ")";
+		}
 		return printBoard;
 	}
 }
