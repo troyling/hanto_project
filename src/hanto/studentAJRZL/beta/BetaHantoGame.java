@@ -63,6 +63,7 @@ public class BetaHantoGame implements HantoGame {
 	 */
 	@Override
 	public String getPrintableBoard() {
+		// Should return an empty string if the board has no pieces.
 		String printedBoard = "";
 		for (HantoCoordinate key : board.keySet()) {
 			HantoPiece piece = board.get(key);
