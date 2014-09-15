@@ -30,16 +30,12 @@ import org.junit.Test;
  */
 public class BetaHantoGameTest {
 	/**
-	 * 
 	 * Internal class for these test cases.
 	 * 
 	 * @version Sep 13, 2014
 	 */
 
-	class TestHantoCoordinate implements HantoCoordinate
-
-	{
-
+	class TestHantoCoordinate implements HantoCoordinate {
 		private final int x, y;
 
 		/**
@@ -97,8 +93,7 @@ public class BetaHantoGameTest {
 	 */
 	@Test
 	public void testGetPieceAtFunction() throws HantoException {
-		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
-				new TestHantoCoordinate(0, 0));
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
 
 		HantoPiece p = betaGame.getPieceAt(new TestHantoCoordinate(0, 0));
 		assertEquals(HantoPlayerColor.BLUE, p.getColor());
@@ -106,15 +101,13 @@ public class BetaHantoGameTest {
 	}
 
 	/**
-	 * Attempt to place the first piece at place other than the origin.
-	 * Exception is expected.
+	 * Attempt to place the first piece at place other than the origin. Exception is expected.
 	 * 
 	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testPlaceNotAtOrigin() throws HantoException {
-		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
-				new TestHantoCoordinate(1, 1));
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(1, 1));
 	}
 
 	/**
@@ -124,8 +117,8 @@ public class BetaHantoGameTest {
 	 */
 	@Test(expected = HantoException.class)
 	public void attemptToMoveRatherThanPlace() throws HantoException {
-		betaGame.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0,
-				1), new TestHantoCoordinate(0, 0));
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1),
+				new TestHantoCoordinate(0, 0));
 	}
 
 	/**
@@ -134,12 +127,9 @@ public class BetaHantoGameTest {
 	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
-	public void redPlacesButterflyNonAdjacentToBlueButterfly()
-			throws HantoException {
-		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
-				new TestHantoCoordinate(0, 0));
-		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
-				new TestHantoCoordinate(0, 2));
+	public void redPlacesButterflyNonAdjacentToBlueButterfly() throws HantoException {
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 2));
 	}
 
 	/**
@@ -164,8 +154,7 @@ public class BetaHantoGameTest {
 	}
 
 	/**
-	 * Blue butterfly is not placed by the end of 4th turn. Exception is
-	 * expected.
+	 * Blue butterfly is not placed by the end of 4th turn. Exception is expected.
 	 * 
 	 * @throws HantoException
 	 */
@@ -182,8 +171,7 @@ public class BetaHantoGameTest {
 	}
 
 	/**
-	 * Red butterfly is not placed by the end of 4th turn. Exception is
-	 * expected.
+	 * Red butterfly is not placed by the end of 4th turn. Exception is expected.
 	 * 
 	 * @throws HantoException
 	 */
@@ -211,8 +199,7 @@ public class BetaHantoGameTest {
 	}
 
 	/**
-	 * Test ensures that game ends in draw since neither of the butterfly is
-	 * surronded.
+	 * Test ensures that game ends in draw since neither of the butterfly is surronded.
 	 * 
 	 * @throws HantoException
 	 */
@@ -254,23 +241,16 @@ public class BetaHantoGameTest {
 
 		// place pieces on board
 		// 1st turn
-		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
-				new TestHantoCoordinate(0, 0));
-		betaGame.makeMove(HantoPieceType.BUTTERFLY, null,
-				new TestHantoCoordinate(0, -1));
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, -1));
 		// 2nd turn
-		betaGame.makeMove(HantoPieceType.SPARROW, null,
-				new TestHantoCoordinate(-1, 0));
-		betaGame.makeMove(HantoPieceType.SPARROW, null,
-				new TestHantoCoordinate(1, -1));
+		betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(-1, 0));
+		betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(1, -1));
 		// 3rd turn
-		betaGame.makeMove(HantoPieceType.SPARROW, null,
-				new TestHantoCoordinate(-1, -1));
-		betaGame.makeMove(HantoPieceType.SPARROW, null,
-				new TestHantoCoordinate(1, -2));
+		betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(-1, -1));
+		betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(1, -2));
 		// 4th turn
-		result = betaGame.makeMove(HantoPieceType.SPARROW, null,
-				new TestHantoCoordinate(0, -2));
+		result = betaGame.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(0, -2));
 
 		assertEquals(MoveResult.BLUE_WINS, result);
 	}

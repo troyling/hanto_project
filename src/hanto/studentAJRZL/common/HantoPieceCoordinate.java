@@ -35,7 +35,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	/**
 	 * @return the X-coordinate
 	 */
@@ -51,7 +51,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	public int getY() {
 		return y;
 	}
-	
+
 	/**
 	 * Equals function for the hashable class.
 	 * 
@@ -59,36 +59,41 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	 */
 	public boolean equals(Object obj) {
 		boolean isEqual = false;
-		
+
 		if (obj instanceof HantoCoordinate) {
-			isEqual = (x == ((HantoCoordinate) obj).getX()) && (y == ((HantoCoordinate) obj).getY());
+			isEqual = (x == ((HantoCoordinate) obj).getX())
+					&& (y == ((HantoCoordinate) obj).getY());
 		}
-		
+
 		return isEqual;
 	}
-	
+
 	/**
 	 * Hashing function for the class
 	 * 
 	 * @return the hash code of the current object
 	 */
 	public int hashCode() {
-	    int hash = x;
-	    hash = hash * 31 + y;
-	    return hash;
+		int hash = x;
+		hash = hash * 31 + y;
+		return hash;
 	}
-	
-	
+
+	/**
+	 * Get the coordinates for the adjacent spaces.
+	 * 
+	 * @return a collection of the space coordinates.
+	 */
 	public Collection<HantoCoordinate> getAdjacentCoordinates() {
 		Collection<HantoCoordinate> adjacentCoordinates = new ArrayList<HantoCoordinate>();
-		
+
 		adjacentCoordinates.add(new HantoPieceCoordinate(x - 1, y));
 		adjacentCoordinates.add(new HantoPieceCoordinate(x + 1, y));
 		adjacentCoordinates.add(new HantoPieceCoordinate(x, y - 1));
 		adjacentCoordinates.add(new HantoPieceCoordinate(x, y + 1));
 		adjacentCoordinates.add(new HantoPieceCoordinate(x - 1, y + 1));
 		adjacentCoordinates.add(new HantoPieceCoordinate(x + 1, y - 1));
-		
+
 		return adjacentCoordinates;
 	}
 }
