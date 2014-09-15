@@ -417,5 +417,15 @@ public class BetaHantoGameTest {
 		assertEquals(HantoPlayerColor.BLUE, blue2.getColor());
 
 	}
+	
+	/**
+	 * Test ensures that blue wins by surrounding the red butterfly.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptToPlaceOtherPices() throws HantoException {
+		betaGame.makeMove(HantoPieceType.DOVE, null, origin);
+	}
 
 }

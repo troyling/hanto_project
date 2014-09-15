@@ -87,6 +87,9 @@ public class BetaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
+		// ensure player is not placing other piece type onto the board
+		validatePieceType(pieceType);
+		
 		// check if the game has already ended
 		validateGameInProgress();
 
@@ -132,6 +135,17 @@ public class BetaHantoGame implements HantoGame {
 		alterPlayerColor();
 
 		return checkGameStatus();
+	}
+	
+	/**
+	 * Throws exception if the player attempts to place a piece other than butterfly or sparrow
+	 * 
+	 * @throws HantoException
+	 */
+	private void validatePieceType(HantoPieceType pieceType) throws HantoException {
+		if (pieceType != HantoPieceType.BUTTERFLY && pieceType != HantoPieceType.SPARROW) {
+			throw new HantoException("Can't place piece other than butterfly or sparrow.");
+		}
 	}
 
 	/**
