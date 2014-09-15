@@ -372,6 +372,8 @@ public class BetaHantoGameTest {
 
 	/**
 	 * Ensures that the player colors are all correct
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testPlayerColorsAreAllCorrect() throws HantoException {
