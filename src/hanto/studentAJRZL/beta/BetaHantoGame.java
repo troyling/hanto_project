@@ -233,6 +233,10 @@ public class BetaHantoGame implements HantoGame {
 	 */
 	private void validateDestinationCoordinate(HantoCoordinate coord) throws HantoException {
 		// check if the given destination coordinate is occupied
+		if (coord == null) {
+			throw new HantoException("Piece must be placed on board");
+		}
+		
 		if (board.get(coord) != null) {
 			throw new HantoException("The given destination coordinate has been occupied.");
 		}

@@ -46,7 +46,7 @@ public class AlphaHantoGame implements HantoGame {
 
 		validatePieceIsButterfly(pieceType);
 
-		validateMove(from);
+		validateMove(from, to);
 
 		validateEndOfGame();
 
@@ -97,12 +97,16 @@ public class AlphaHantoGame implements HantoGame {
 	}
 
 	/**
-	 * Validate that the from coordinate does not exist.
+	 * Validate that the move is legal
 	 * 
 	 * @param from the coordinate to check.
 	 * @throws HantoException
 	 */
-	private void validateMove(HantoCoordinate from) throws HantoException {
+	private void validateMove(HantoCoordinate from, HantoCoordinate to) throws HantoException {
+		if (to == null) {
+			throw new HantoException("You must actually make a move.");
+		}
+		
 		if (from != null) {
 			throw new HantoException("Can't move piece in alpha game.");
 		}

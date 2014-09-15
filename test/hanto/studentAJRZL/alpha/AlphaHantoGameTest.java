@@ -396,4 +396,15 @@ public class AlphaHantoGameTest {
 		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(1, 0));
 		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, -1));
 	}
+	
+	/**
+	 * Attempt to not make a move at all.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptToDoNothing() throws HantoException {
+		game.makeMove(HantoPieceType.BUTTERFLY, null, null);
+	}
+	
 }

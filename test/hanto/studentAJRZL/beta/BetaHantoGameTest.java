@@ -427,5 +427,15 @@ public class BetaHantoGameTest {
 	public void testAttemptToPlaceOtherPices() throws HantoException {
 		betaGame.makeMove(HantoPieceType.DOVE, null, origin);
 	}
+	
+	/**
+	 * Test ensures that blue wins by surrounding the red butterfly.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptTodoNothing() throws HantoException {
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, null);
+	}
 
 }
