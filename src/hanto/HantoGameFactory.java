@@ -24,7 +24,7 @@ import hanto.studentAJRZL.beta.BetaHantoGame;
  * @version Feb 5, 2013
  */
 public class HantoGameFactory {
-	private static final HantoGameFactory INSTANCE = new HantoGameFactory();
+	private static final HantoGameFactory instance = new HantoGameFactory();
 
 	/**
 	 * Default private descriptor.
@@ -37,7 +37,7 @@ public class HantoGameFactory {
 	 * @return the instance
 	 */
 	public static HantoGameFactory getInstance() {
-		return INSTANCE;
+		return instance;
 	}
 
 	/**
