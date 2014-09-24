@@ -19,13 +19,13 @@ import static hanto.common.MoveResult.DRAW;
 import static hanto.common.MoveResult.OK;
 import static hanto.common.MoveResult.RED_WINS;
 import static org.junit.Assert.assertEquals;
-import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
 import hanto.common.MoveResult;
+import hanto.studentAJRZL.HantoGameFactory;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

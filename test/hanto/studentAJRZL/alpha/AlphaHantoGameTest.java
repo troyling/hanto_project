@@ -12,7 +12,6 @@ package hanto.studentAJRZL.alpha;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
@@ -21,6 +20,7 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentAJRZL.HantoGameFactory;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 import org.junit.Before;
