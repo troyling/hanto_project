@@ -270,6 +270,10 @@ public class BetaHantoGame implements HantoGame {
 	 */
 	private MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
+		
+		if (board.size() == 12) {
+			result = MoveResult.DRAW;
+		}
 
 		if (isButterflyBeingSurrounded(blueButterflyCoordiate)) {
 			result = MoveResult.RED_WINS;
@@ -277,10 +281,6 @@ public class BetaHantoGame implements HantoGame {
 
 		if (isButterflyBeingSurrounded(redButterflyCoordiate)) {
 			result = MoveResult.BLUE_WINS;
-		}
-
-		if (board.size() == 12) {
-			result = MoveResult.DRAW;
 		}
 
 		// check if game ends
