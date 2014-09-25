@@ -10,6 +10,8 @@
 
 package hanto.common;
 
+import hanto.studentAJRZL.gamma.GammaHantoTestGame;
+
 
 /**
  * Description
@@ -53,7 +55,7 @@ public class HantoTestGameFactory
 	 * @return the game instance
 	 */
 	public HantoTestGame makeHantoTestGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
-		HantoGame game = null;
+		HantoTestGame game = null;
 		switch (gameId) {
 			case GAMMA_HANTO:
 				game = new GammaHantoTestGame(movesFirst);
