@@ -35,16 +35,7 @@ public class BetaHantoGame extends BaseHantoGame {
 	}
 
 	/**
-	 * This method executes a move in the game. It is called for every move that must be made.
-	 * 
-	 * @param pieceType the piece type that is being moved
-	 * @param from the coordinate where the piece begins. If the coordinate is null, then the piece
-	 *            begins off the board (that is, it is placed on the board in this move).
-	 * @param to the coordinated where the piece is after the move has been made.
-	 * @return the result of the move
-	 * @throws HantoException if there are any problems in making the move (such as specifying a
-	 *             coordinate that does not have the appropriate piece, or the color of the piece is
-	 *             not the color of the player who is moving.
+	 * {@inheritDoc}          
 	 */
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
@@ -127,25 +118,17 @@ public class BetaHantoGame extends BaseHantoGame {
 		}
 	}
 
-	
-
 	/**
-	 * Check the game status and return the result after a move
-	 * 
-	 * @return the result of a move
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected MoveResult checkGameStatus() {
-		MoveResult result = MoveResult.DRAW;
+		MoveResult result = super.checkGameStatus();
 		
-		if (board.size() == 12) {
+		if (board.size() == 12 && result == MoveResult.OK) {
 			result = MoveResult.DRAW;
 		}
 
 		return result;
 	}
-
-	
-
-	
 }
