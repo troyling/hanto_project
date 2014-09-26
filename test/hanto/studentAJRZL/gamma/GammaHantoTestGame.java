@@ -2,13 +2,16 @@ package hanto.studentAJRZL.gamma;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
+import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.HantoTestGame;
+import hanto.common.HantoTestGameFactory;
 import hanto.common.MoveResult;
 
 public class GammaHantoTestGame implements HantoTestGame {
+	HantoTestGame gamma = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO);
 
 	/**
 	 * Constructor of the GammaHantoTestGame
@@ -20,17 +23,17 @@ public class GammaHantoTestGame implements HantoTestGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
-		return null;
+		return gamma.makeMove(pieceType, from, to);
 	}
 
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		return null;
+		return gamma.getPieceAt(where);
 	}
 
 	@Override
 	public String getPrintableBoard() {
-		return null;
+		return gamma.getPrintableBoard();
 	}
 
 	@Override
