@@ -62,6 +62,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
+		// check if the game has already ended
+		validateGameInProgress();
 		movePiece(pieceType, from, to);
 		alterPlayerTurn();
 		return checkGameStatus();
@@ -149,6 +151,10 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	protected MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
+		
+		if (board.size() == getMaxBoardSize()) {
+			result = MoveResult.DRAW;
+		}
 
 		if (isPieceBeingSurrounded(blueButterflyCoordiate)) {
 			result = MoveResult.RED_WINS;
@@ -162,8 +168,15 @@ public abstract class BaseHantoGame implements HantoGame {
 		if (result != MoveResult.OK) {
 			isGameEnded = true;
 		}
+		
 		return result;
 	}
+	
+	/**
+	 * Get the maximum number of pieces can placed on the board for a hanto game
+	 * @return
+	 */
+	protected abstract int getMaxBoardSize();
 
 	/**
 	 * Alternate the player turn for next move

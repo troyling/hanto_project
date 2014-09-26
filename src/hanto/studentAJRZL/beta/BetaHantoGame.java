@@ -24,6 +24,7 @@ import hanto.studentAJRZL.common.BaseHantoGame;
  * 
  */
 public class BetaHantoGame extends BaseHantoGame {
+	private final int MAX_BOARD_SIZE = 12;
 	
 	/**
 	 * Constructor for beta hanto game
@@ -118,17 +119,8 @@ public class BetaHantoGame extends BaseHantoGame {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	protected MoveResult checkGameStatus() {
-		MoveResult result = super.checkGameStatus();
-		
-		if (board.size() == 12 && result == MoveResult.OK) {
-			result = MoveResult.DRAW;
-		}
-
-		return result;
-	}
+	protected int getMaxBoardSize() {
+		return MAX_BOARD_SIZE;
+	}	
 }
