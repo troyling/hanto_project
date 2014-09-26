@@ -31,8 +31,6 @@ import java.util.Map;
  * 
  */
 public class BetaHantoGame extends BaseHantoGame {
-	private HantoCoordinate blueButterflyCoordiate;
-	private HantoCoordinate redButterflyCoordiate;
 	
 	/**
 	 * Constructor for beta hanto game
@@ -75,37 +73,8 @@ public class BetaHantoGame extends BaseHantoGame {
 
 		// check if butterfly is placed
 		validateBufferflyPresence(pieceType);
-
-		// create objects to store into the board
-		HantoPiece newPiece = new HantoGamePiece(currentPlayColor, pieceType);
-		HantoCoordinate coord = new HantoPieceCoordinate(to.getX(), to.getY());
-
-		// check if the given destination coordinate is adjacent to any piece on the board
-		validateAdjacentCoordinate(coord);
-
-		// putting the piece on board
-		board.put(coord, newPiece);
-
-		// store the coordinate if the piece is butterfly
-		if (pieceType == HantoPieceType.BUTTERFLY) {
-			switch (currentPlayColor) {
-				case BLUE:
-					validateButterflyExistence(blueButterflyCoordiate);
-					blueButterflyCoordiate = coord;
-					break;
-				case RED:
-					validateButterflyExistence(redButterflyCoordiate);
-					redButterflyCoordiate = coord;
-					break;
-				default:
-					throw new HantoException("Invalid color.");
-			}
-		}
-
-		// change player color in preparation for next move
-		alterPlayerColor();
-
-		return checkGameStatus();
+						
+		return super.makeMove(pieceType, from, to);
 	}
 
 	/**
@@ -118,43 +87,7 @@ public class BetaHantoGame extends BaseHantoGame {
 			throw new HantoException("Can't place piece other than butterfly or sparrow.");
 		}
 	}
-
-	/**
-	 * Throws exception if the player attempts to make an action after the game ends
-	 * 
-	 * @throws HantoException
-	 */
-	private void validateGameInProgress() throws HantoException {
-		if (isGameEnded) {
-			throw new HantoException("Can't place a piece after the game is ended.");
-		}
-	}
-
-	/**
-	 * Throws exception if the player attempts to place more than one butterfly on board
-	 * 
-	 * @param butterflyCoordinate
-	 * @throws HantoException
-	 */
-	private void validateButterflyExistence(HantoCoordinate butterflyCoordinate)
-			throws HantoException {
-		if (butterflyCoordinate != null) {
-			throw new HantoException("Can't place more than one butterfly in beta hanto game.");
-		}
-	}
-
-	/**
-	 * Throws exception if the piece is not placed next to any piece
-	 * 
-	 * @param coord
-	 * @throws HantoException
-	 */
-	private void validateAdjacentCoordinate(HantoCoordinate coord) throws HantoException {
-		if (!board.isEmpty() && !isAnyPieceAdjacentTo(coord)) {
-			throw new HantoException("A piece must be placed next to another.");
-		}
-	}
-
+	
 	/**
 	 * Throw exception if butterfly is not placed by the end of 4th turn.
 	 * 
@@ -170,19 +103,7 @@ public class BetaHantoGame extends BaseHantoGame {
 		}
 	}
 
-	/**
-	 * Throws exception if the first move attempts to place piece at coordinate other than origin.
-	 * 
-	 * @param to
-	 * @throws HantoException
-	 */
-	private void validateFirstMoveCoordinate(HantoCoordinate to) throws HantoException {
-		if (board.size() == 0 && currentPlayColor == HantoPlayerColor.BLUE) {
-			if (to.getX() != 0 || to.getY() != 0) {
-				throw new HantoException("First piece must be placed at origin");
-			}
-		}
-	}
+	
 
 	/**
 	 * Throws exception if the move intends to move rather than to place a piece
@@ -213,43 +134,26 @@ public class BetaHantoGame extends BaseHantoGame {
 		}
 	}
 
-	/**
-	 * Check if there is any piece adjacent to the given coordinate
-	 * 
-	 * @param coord
-	 * @return true if there is. False otherwise
-	 */
-	private boolean isAnyPieceAdjacentTo(HantoCoordinate coord) {
-		boolean result = false;
-		Collection<HantoCoordinate> adjacentTiles = ((HantoPieceCoordinate) coord)
-				.getAdjacentCoordinates();
-
-		for (HantoCoordinate tile : adjacentTiles) {
-			if (getPieceAt(tile) != null) {
-				result = true;
-			}
-		}
-
-		return result;
-	}
+	
 
 	/**
 	 * Check the game status and return the result after a move
 	 * 
 	 * @return the result of a move
 	 */
-	private MoveResult checkGameStatus() {
+	@Override
+	protected MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 		
 		if (board.size() == 12) {
 			result = MoveResult.DRAW;
 		}
 
-		if (isButterflyBeingSurrounded(blueButterflyCoordiate)) {
+		if (isPieceBeingSurrounded(blueButterflyCoordiate)) {
 			result = MoveResult.RED_WINS;
 		}
 
-		if (isButterflyBeingSurrounded(redButterflyCoordiate)) {
+		if (isPieceBeingSurrounded(redButterflyCoordiate)) {
 			result = MoveResult.BLUE_WINS;
 		}
 
@@ -261,46 +165,7 @@ public class BetaHantoGame extends BaseHantoGame {
 		return result;
 	}
 
-	/**
-	 * Check if the given butterfly is surrounded
-	 * 
-	 * @param blueButterflyCoordiate
-	 * @return true if it is surrounded; false otherwise.
-	 */
-	private boolean isButterflyBeingSurrounded(HantoCoordinate butterflyCoordiate) {
-		boolean isSurrounded = true;
+	
 
-		if (butterflyCoordiate != null) {
-			Collection<HantoCoordinate> adjacentTiles = ((HantoPieceCoordinate) butterflyCoordiate)
-					.getAdjacentCoordinates();
-
-			for (HantoCoordinate coord : adjacentTiles) {
-				if (getPieceAt(coord) == null) {
-					isSurrounded = false;
-				}
-			}
-		} else {
-			isSurrounded = false;
-		}
-
-		return isSurrounded;
-	}
-
-	/**
-	 * Alternate the player color for next move
-	 * 
-	 * @throws HantoException
-	 */
-	private void alterPlayerColor() throws HantoException {
-		switch (currentPlayColor) {
-			case BLUE:
-				currentPlayColor = HantoPlayerColor.RED;
-				break;
-			case RED:
-				currentPlayColor = HantoPlayerColor.BLUE;
-				break;
-			default:
-				throw new HantoException("Invalid player color");
-		}
-	}
+	
 }
