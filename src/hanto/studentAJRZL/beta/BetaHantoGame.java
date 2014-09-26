@@ -12,11 +12,11 @@ package hanto.studentAJRZL.beta;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
-import hanto.common.HantoGame;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentAJRZL.common.BaseHantoGame;
 import hanto.studentAJRZL.common.HantoGamePiece;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
@@ -30,47 +30,17 @@ import java.util.Map;
  * @author troyling
  * 
  */
-public class BetaHantoGame implements HantoGame {
-
-	private HantoPlayerColor currentPlayColor;
+public class BetaHantoGame extends BaseHantoGame {
 	private HantoCoordinate blueButterflyCoordiate;
 	private HantoCoordinate redButterflyCoordiate;
-	private boolean isGameEnded = false;
-
-	private Map<HantoCoordinate, HantoPiece> board = new HashMap<HantoCoordinate, HantoPiece>();
-
+	
 	/**
 	 * Constructor for beta hanto game
 	 * 
 	 * @param movesFirst
 	 */
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
-		currentPlayColor = movesFirst;
-	}
-
-	/**
-	 * @param where the coordinate to query
-	 * @return the piece at the specified coordinate or null if there is no piece at that position
-	 */
-	@Override
-	public HantoPiece getPieceAt(HantoCoordinate where) {
-		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(), where.getY());
-		return board.get(coord);
-	}
-
-	/**
-	 * @return a printable representation of the board.
-	 */
-	@Override
-	public String getPrintableBoard() {
-		// Should return an empty string if the board has no pieces.
-		String printedBoard = "";
-		for (HantoCoordinate key : board.keySet()) {
-			HantoPiece piece = board.get(key);
-			printedBoard += piece.getColor() + " " + piece.getType() + ": (" + key.getX() + ", "
-					+ key.getY() + ")\n";
-		}
-		return printedBoard;
+		super(movesFirst);
 	}
 
 	/**
