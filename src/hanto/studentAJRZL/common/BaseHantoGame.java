@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.studentAJRZL.common;
 
 import hanto.common.HantoCoordinate;
@@ -12,6 +22,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Base Hanto Game class.
+ * 
+ * @author anthonyjruffa
+ * 
+ */
 public abstract class BaseHantoGame implements HantoGame {
 	protected HantoCoordinate blueButterflyCoordiate;
 	protected HantoCoordinate redButterflyCoordiate;
@@ -23,36 +39,29 @@ public abstract class BaseHantoGame implements HantoGame {
 	/**
 	 * Constructor for Base hanto game
 	 * 
-	 * @param moveFirst
+	 * @param movesFirst
 	 */
-	public BaseHantoGame(HantoPlayerColor movesFirst) {
+	protected BaseHantoGame(HantoPlayerColor movesFirst) {
 		currentPlayColor = movesFirst;
 		board = new HashMap<HantoCoordinate, HantoPiece>();
 	}
 
 	/**
-	 * This method uses template method pattern to execute a move in the game.
-	 * It is called for every move that must be made.
+	 * This method uses template method pattern to execute a move in the game. It is called for
+	 * every move that must be made.
 	 * 
-	 * @param pieceType
-	 *            the piece type that is being moved
-	 * @param from
-	 *            the coordinate where the piece begins. If the coordinate is
-	 *            null, then the piece begins off the board (that is, it is
-	 *            placed on the board in this move).
-	 * @param to
-	 *            the coordinated where the piece is after the move has been
-	 *            made.
+	 * @param pieceType the piece type that is being moved
+	 * @param from the coordinate where the piece begins. If the coordinate is null, then the piece
+	 *            begins off the board (that is, it is placed on the board in this move).
+	 * @param to the coordinated where the piece is after the move has been made.
 	 * @return the result of the move
-	 * @throws HantoException
-	 *             if there are any problems in making the move (such as
-	 *             specifying a coordinate that does not have the appropriate
-	 *             piece, or the color of the piece is not the color of the
-	 *             player who is moving.
+	 * @throws HantoException if there are any problems in making the move (such as specifying a
+	 *             coordinate that does not have the appropriate piece, or the color of the piece is
+	 *             not the color of the player who is moving.
 	 */
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 		movePiece(pieceType, from, to);
 		alterPlayerTurn();
 		return checkGameStatus();
@@ -60,21 +69,21 @@ public abstract class BaseHantoGame implements HantoGame {
 
 	/**
 	 * Move the piece from the given source coordinate to the given destination coordinate
-	 *
+	 * 
 	 * @param pieceType
 	 * @param from
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void movePiece(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	private void movePiece(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 		// create objects to store into the board
 		HantoPiece newPiece = new HantoGamePiece(currentPlayColor, pieceType);
 		HantoCoordinate coord = new HantoPieceCoordinate(to.getX(), to.getY());
 
 		// check if the given destination coordinate is adjacent to any piece on the board
 		validateAdjacentCoordinate(coord);
-		
+
 		// store the coordinate if the piece is butterfly
 		if (pieceType == HantoPieceType.BUTTERFLY) {
 			switch (currentPlayColor) {
@@ -94,7 +103,7 @@ public abstract class BaseHantoGame implements HantoGame {
 		// putting the piece on board
 		board.put(coord, newPiece);
 	}
-	
+
 	/**
 	 * Throws exception if the player attempts to place more than one butterfly on board
 	 * 
@@ -109,15 +118,12 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * @param where
-	 *            the coordinate to query
-	 * @return the piece at the specified coordinate or null if there is no
-	 *         piece at that position
+	 * @param where the coordinate to query
+	 * @return the piece at the specified coordinate or null if there is no piece at that position
 	 */
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(),
-				where.getY());
+		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(), where.getY());
 		return board.get(coord);
 	}
 
@@ -130,12 +136,12 @@ public abstract class BaseHantoGame implements HantoGame {
 		String printedBoard = "";
 		for (HantoCoordinate key : board.keySet()) {
 			HantoPiece piece = board.get(key);
-			printedBoard += piece.getColor() + " " + piece.getType() + ": ("
-					+ key.getX() + ", " + key.getY() + ")\n";
+			printedBoard += piece.getColor() + " " + piece.getType() + ": (" + key.getX() + ", "
+					+ key.getY() + ")\n";
 		}
 		return printedBoard;
 	}
-	
+
 	/**
 	 * Check the game status and return the result after a move
 	 * 
@@ -143,7 +149,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	protected MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
-		
+
 		if (isPieceBeingSurrounded(blueButterflyCoordiate)) {
 			result = MoveResult.RED_WINS;
 		}
@@ -156,7 +162,6 @@ public abstract class BaseHantoGame implements HantoGame {
 		if (result != MoveResult.OK) {
 			isGameEnded = true;
 		}
-		
 		return result;
 	}
 
@@ -177,7 +182,7 @@ public abstract class BaseHantoGame implements HantoGame {
 				throw new HantoException("Invalid player color");
 		}
 	}
-	
+
 	/**
 	 * Throws exception if the first move attempts to place piece at coordinate other than origin.
 	 * 
@@ -185,13 +190,12 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @throws HantoException
 	 */
 	protected void validateFirstMoveCoordinate(HantoCoordinate to) throws HantoException {
-		if (board.size() == 0 && currentPlayColor == HantoPlayerColor.BLUE) {
-			if (to.getX() != 0 || to.getY() != 0) {
-				throw new HantoException("First piece must be placed at origin");
-			}
+		if ((board.size() == 0 && currentPlayColor == HantoPlayerColor.BLUE)
+				&& (to.getX() != 0 || to.getY() != 0)) {
+			throw new HantoException("First piece must be placed at origin");
 		}
 	}
-	
+
 	/**
 	 * Throws exception if the piece is not placed next to any piece
 	 * 
@@ -203,7 +207,7 @@ public abstract class BaseHantoGame implements HantoGame {
 			throw new HantoException("A piece must be placed next to another.");
 		}
 	}
-	
+
 	/**
 	 * Throws exception if the player attempts to make an action after the game ends
 	 * 
@@ -214,7 +218,7 @@ public abstract class BaseHantoGame implements HantoGame {
 			throw new HantoException("Can't place a piece after the game is ended.");
 		}
 	}
-	
+
 	/**
 	 * Check if there is any piece adjacent to the given coordinate
 	 * 
@@ -222,23 +226,21 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @return true if there is. False otherwise
 	 */
 	protected boolean isAnyPieceAdjacentTo(HantoCoordinate coord) {
-		boolean result = false;
 		Collection<HantoCoordinate> adjacentTiles = ((HantoPieceCoordinate) coord)
 				.getAdjacentCoordinates();
 
 		for (HantoCoordinate tile : adjacentTiles) {
 			if (getPieceAt(tile) != null) {
-				result = true;
+				return true;
 			}
 		}
-
-		return result;
+		return false;
 	}
-	
+
 	/**
 	 * Check if the given butterfly is surrounded
 	 * 
-	 * @param blueButterflyCoordiate
+	 * @param pieceCoordinate
 	 * @return true if it is surrounded; false otherwise.
 	 */
 	protected boolean isPieceBeingSurrounded(HantoCoordinate pieceCoordinate) {
