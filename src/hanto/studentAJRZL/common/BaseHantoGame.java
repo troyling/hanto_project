@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.studentAJRZL.common;
 
 import hanto.common.HantoCoordinate;
@@ -12,6 +22,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Base Hanto Game class.
+ * 
+ * @author anthonyjruffa
+ * 
+ */
 public abstract class BaseHantoGame implements HantoGame {
 	protected HantoCoordinate blueButterflyCoordiate;
 	protected HantoCoordinate redButterflyCoordiate;
@@ -23,9 +39,9 @@ public abstract class BaseHantoGame implements HantoGame {
 	/**
 	 * Constructor for Base hanto game
 	 * 
-	 * @param moveFirst
+	 * @param movesFirst
 	 */
-	public BaseHantoGame(HantoPlayerColor movesFirst) {
+	protected BaseHantoGame(HantoPlayerColor movesFirst) {
 		currentPlayColor = movesFirst;
 		board = new HashMap<HantoCoordinate, HantoPiece>();
 	}
@@ -146,7 +162,6 @@ public abstract class BaseHantoGame implements HantoGame {
 		if (result != MoveResult.OK) {
 			isGameEnded = true;
 		}
-
 		return result;
 	}
 
@@ -175,10 +190,9 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @throws HantoException
 	 */
 	protected void validateFirstMoveCoordinate(HantoCoordinate to) throws HantoException {
-		if (board.size() == 0 && currentPlayColor == HantoPlayerColor.BLUE) {
-			if (to.getX() != 0 || to.getY() != 0) {
-				throw new HantoException("First piece must be placed at origin");
-			}
+		if ((board.size() == 0 && currentPlayColor == HantoPlayerColor.BLUE)
+				&& (to.getX() != 0 || to.getY() != 0)) {
+			throw new HantoException("First piece must be placed at origin");
 		}
 	}
 
@@ -212,23 +226,21 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @return true if there is. False otherwise
 	 */
 	protected boolean isAnyPieceAdjacentTo(HantoCoordinate coord) {
-		boolean result = false;
 		Collection<HantoCoordinate> adjacentTiles = ((HantoPieceCoordinate) coord)
 				.getAdjacentCoordinates();
 
 		for (HantoCoordinate tile : adjacentTiles) {
 			if (getPieceAt(tile) != null) {
-				result = true;
+				return true;
 			}
 		}
-
-		return result;
+		return false;
 	}
 
 	/**
 	 * Check if the given butterfly is surrounded
 	 * 
-	 * @param blueButterflyCoordiate
+	 * @param pieceCoordinate
 	 * @return true if it is surrounded; false otherwise.
 	 */
 	protected boolean isPieceBeingSurrounded(HantoCoordinate pieceCoordinate) {
