@@ -33,13 +33,11 @@ public class GammaHantoGame implements HantoGame {
 
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getPrintableBoard() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
