@@ -12,17 +12,10 @@ package hanto.studentAJRZL.beta;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
-import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.BaseHantoGame;
-import hanto.studentAJRZL.common.HantoGamePiece;
-import hanto.studentAJRZL.common.HantoPieceCoordinate;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class for Beta hanto game
@@ -143,23 +136,10 @@ public class BetaHantoGame extends BaseHantoGame {
 	 */
 	@Override
 	protected MoveResult checkGameStatus() {
-		MoveResult result = MoveResult.OK;
+		MoveResult result = MoveResult.DRAW;
 		
 		if (board.size() == 12) {
 			result = MoveResult.DRAW;
-		}
-
-		if (isPieceBeingSurrounded(blueButterflyCoordiate)) {
-			result = MoveResult.RED_WINS;
-		}
-
-		if (isPieceBeingSurrounded(redButterflyCoordiate)) {
-			result = MoveResult.BLUE_WINS;
-		}
-
-		// check if game ends
-		if (result != MoveResult.OK) {
-			isGameEnded = true;
 		}
 
 		return result;

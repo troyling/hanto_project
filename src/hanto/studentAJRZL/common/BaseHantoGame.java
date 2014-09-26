@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BaseHantoGame implements HantoGame {
+public abstract class BaseHantoGame implements HantoGame {
 	protected HantoCoordinate blueButterflyCoordiate;
 	protected HantoCoordinate redButterflyCoordiate;
 
