@@ -10,12 +10,8 @@
 
 package hanto.studentAJRZL.gamma;
 
-import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
-import hanto.common.HantoGame;
-import hanto.common.HantoPiece;
-import hanto.common.HantoPieceType;
-import hanto.common.MoveResult;
+import hanto.common.HantoPlayerColor;
+import hanto.studentAJRZL.common.BaseHantoGame;
 
 /**
  * Gamma Hanto Game class.
@@ -23,22 +19,21 @@ import hanto.common.MoveResult;
  * @author anthonyjruffa
  * 
  */
-public class GammaHantoGame implements HantoGame {
-
-	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
-			throws HantoException {
-		return null;
+public class GammaHantoGame extends BaseHantoGame {
+	private final int MAX_BOARD_SIZE = 20;
+	
+	public GammaHantoGame(HantoPlayerColor movesFirst) {
+		super(movesFirst);
 	}
 
+	/**
+	 * {@inheritDoc}          
+	 */
 	@Override
-	public HantoPiece getPieceAt(HantoCoordinate where) {
-		return null;
+	protected int getMaxBoardSize() {
+		return MAX_BOARD_SIZE;
 	}
 
-	@Override
-	public String getPrintableBoard() {
-		return null;
-	}
+
 
 }
