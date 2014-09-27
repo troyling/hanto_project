@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.studentAJRZL.gamma;
 
 import hanto.common.HantoCoordinate;
@@ -10,14 +20,21 @@ import hanto.common.HantoTestGame;
 import hanto.common.HantoTestGameFactory;
 import hanto.common.MoveResult;
 
+/**
+ * Class for the gamma hanto test game.
+ * 
+ * @author anthonyjruffa
+ * 
+ */
 public class GammaHantoTestGame implements HantoTestGame {
-	HantoTestGame gamma = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO);
+	private final HantoTestGame gamma;
 
 	/**
 	 * Constructor of the GammaHantoTestGame
 	 */
 	public GammaHantoTestGame(HantoPlayerColor movesFirst) {
-		// TODO fill in this later
+		gamma = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO,
+				movesFirst);
 	}
 
 	@Override
