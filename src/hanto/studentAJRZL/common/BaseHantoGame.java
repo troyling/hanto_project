@@ -138,37 +138,91 @@ public abstract class BaseHantoGame implements HantoGame {
 		}
 
 		// create objects to store into the board
-		HantoPiece newPiece = new HantoGamePiece(currentPlayColor, pieceType);
-		HantoCoordinate coord = new HantoPieceCoordinate(to.getX(), to.getY());
-
+		final HantoPiece newPiece = new HantoGamePiece(currentPlayColor, pieceType);
+		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(), to.getY());
+		HantoCoordinate fromCoord = null;
+		
 		// first piece must be placed at origin
-		validateFirstMoveCoordinate(coord);
+		validateFirstMoveCoordinate(toCoord);
 
 		// check if the destination coordinate is occupied
-		validateDestinationCoordinate(coord);
+		validateDestinationCoordinate(toCoord);
 
 		// check if the given destination coordinate is adjacent to any piece on
 		// the board
-		validateAdjacentCoordinate(coord);
+		validateAdjacentCoordinate(toCoord);
+
+		// check if user is moving a piece
+		if (from != null) {
+			fromCoord = new HantoPieceCoordinate(from.getX(),
+					from.getY());
+
+			// check if the piece we are moving is valid
+			validatePieceAtFromCoordinate(fromCoord, newPiece);
+		}
 
 		// store the coordinate if the piece is butterfly
 		if (pieceType == HantoPieceType.BUTTERFLY) {
 			switch (currentPlayColor) {
 			case BLUE:
-				validateButterflyExistence(blueButterflyCoordiate);
-				blueButterflyCoordiate = coord;
+				if (fromCoord == null) {
+					// placing a piece
+					validateButterflyExistence(blueButterflyCoordiate);
+				}
+				blueButterflyCoordiate = toCoord;
 				break;
 			case RED:
-				validateButterflyExistence(redButterflyCoordiate);
-				redButterflyCoordiate = coord;
+				if (fromCoord == null) {
+					validateButterflyExistence(redButterflyCoordiate);
+				}
+				redButterflyCoordiate = toCoord;
 				break;
 			default:
 				throw new HantoException("Invalid color.");
 			}
 		}
+		
+		// move the piece in the hashtable
+		if (fromCoord != null) {
+			board.remove(fromCoord);
+		}
 
 		// putting the piece on board
-		board.put(coord, newPiece);
+		board.put(toCoord, newPiece);
+	}
+
+	/**
+	 * Check if there is a piece with right type at this location
+	 * 
+	 * @param fromCoord
+	 * @param newPiece
+	 * @throws HantoException
+	 */
+	private void validatePieceAtFromCoordinate(HantoCoordinate coord,
+			HantoPiece piece) throws HantoException {
+		final HantoPiece pieceOnBoard = board.get(coord);
+
+		if (pieceOnBoard == null) {
+			throw new HantoException(
+					"There is no hanto piece at this location.");
+		}
+
+		if (!isPieceEqual(pieceOnBoard, piece)) {
+			throw new HantoException(
+					"The hanto piece you are trying to move is not at the given from coordinate.");
+		}
+	}
+
+	/**
+	 * Check if the given pieces are the same
+	 * 
+	 * @param pieceOnBoard
+	 * @param piece
+	 * @return true if two pieces are equal. False otherwise.
+	 */
+	private boolean isPieceEqual(HantoPiece piece1, HantoPiece piece2) {
+		return piece1.getColor() == piece2.getColor()
+				&& piece1.getType() == piece2.getType();
 	}
 
 	/**
