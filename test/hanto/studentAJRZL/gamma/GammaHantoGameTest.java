@@ -105,7 +105,7 @@ public class GammaHantoGameTest {
 	}
 
 	/**
-	 * Test if the piece is moved incorrectly
+	 * Test if the piece is moved incorrectly, causing disconnection
 	 */
 	@Test(expected = HantoException.class)
 	public void testInvalidMovePiece() throws HantoException {
@@ -130,7 +130,6 @@ public class GammaHantoGameTest {
 		game.setTurnNumber(3);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 
-		// both butterflies' move should be valid
 		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0),
 				new TestHantoCoordinate(1, 0));
 	}
@@ -176,13 +175,13 @@ public class GammaHantoGameTest {
 		game.setTurnNumber(5);
 		game.setPlayerMoving(HantoPlayerColor.RED);
 
-		//System.out.println("Before moving:\n" + game.getPrintableBoard());
+		System.out.println("Before moving:\n" + game.getPrintableBoard());
 		// both butterflies' move should be valid
 		assertEquals(MoveResult.RED_WINS,
 				game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(
 						-1, -1), new TestHantoCoordinate(0, -1)));
 		
-		//System.out.println("After moving:\n" + game.getPrintableBoard());
+		System.out.println("After moving:\n" + game.getPrintableBoard());
 	}
 
 	/**
