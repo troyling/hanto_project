@@ -188,6 +188,11 @@ public abstract class BaseHantoGame implements HantoGame {
 			board.remove(fromCoord);
 		}
 
+		// move the piece in the hashtable
+		if (fromCoord != null) {
+			board.remove(fromCoord);
+		}
+
 		// putting the piece on board
 		board.put(toCoord, newPiece);
 	}
