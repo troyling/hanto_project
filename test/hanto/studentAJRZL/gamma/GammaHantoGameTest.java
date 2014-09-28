@@ -176,13 +176,13 @@ public class GammaHantoGameTest {
 		game.setTurnNumber(5);
 		game.setPlayerMoving(HantoPlayerColor.RED);
 
-		System.out.println("Before moving:\n" + game.getPrintableBoard());
+		//System.out.println("Before moving:\n" + game.getPrintableBoard());
 		// both butterflies' move should be valid
 		assertEquals(MoveResult.RED_WINS,
 				game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(
 						-1, -1), new TestHantoCoordinate(0, -1)));
 		
-		System.out.println("After moving:\n" + game.getPrintableBoard());
+		//System.out.println("After moving:\n" + game.getPrintableBoard());
 	}
 
 	/**
@@ -258,7 +258,7 @@ public class GammaHantoGameTest {
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
-		
+
 		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0), new TestHantoCoordinate(0, 1));
 	}
 	
@@ -294,9 +294,9 @@ public class GammaHantoGameTest {
 		game.setTurnNumber(4);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 		
-		System.out.println("Before: \n" + game.getPrintableBoard());
+		//System.out.println("Before: \n" + game.getPrintableBoard());
 		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0), new TestHantoCoordinate(1, 0)));
-		System.out.println("After: \n" + game.getPrintableBoard());
+		//System.out.println("After: \n" + game.getPrintableBoard());
 	}
 	
 	/**

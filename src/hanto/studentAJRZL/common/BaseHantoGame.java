@@ -133,15 +133,19 @@ public abstract class BaseHantoGame implements HantoGame {
 	private void movePiece(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 
-		// check if the destination coordinate is occupied
-		validateDestinationCoordinate(to);
-
-		// first piece must be placed at origin
-		validateFirstMoveCoordinate(to);
+		if (to == null) {
+			throw new HantoException("Piece must be placed somewhere on board");
+		}
 
 		// create objects to store into the board
 		HantoPiece newPiece = new HantoGamePiece(currentPlayColor, pieceType);
 		HantoCoordinate coord = new HantoPieceCoordinate(to.getX(), to.getY());
+
+		// first piece must be placed at origin
+		validateFirstMoveCoordinate(coord);
+
+		// check if the destination coordinate is occupied
+		validateDestinationCoordinate(coord);
 
 		// check if the given destination coordinate is adjacent to any piece on
 		// the board
@@ -237,8 +241,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	protected void validateFirstMoveCoordinate(HantoCoordinate to)
 			throws HantoException {
-		if ((board.size() == 0 && currentPlayColor == HantoPlayerColor.BLUE)
-				&& (to.getX() != 0 || to.getY() != 0)) {
+		if (board.size() == 0 && (to.getX() != 0 || to.getY() != 0)) {
 			throw new HantoException("First piece must be placed at origin");
 		}
 	}
@@ -320,11 +323,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	private void validateDestinationCoordinate(HantoCoordinate coord)
 			throws HantoException {
-		// check if the given destination coordinate is occupied
-		if (coord == null) {
-			throw new HantoException("Piece must be placed on board");
-		}
-
 		if (board.get(coord) != null) {
 			throw new HantoException(
 					"The given destination coordinate has been occupied.");
