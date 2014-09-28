@@ -78,6 +78,50 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
+	 * @param where
+	 *            the coordinate to query
+	 * @return the piece at the specified coordinate or null if there is no
+	 *         piece at that position
+	 */
+	@Override
+	public HantoPiece getPieceAt(HantoCoordinate where) {
+		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(),
+				where.getY());
+		return board.get(coord);
+	}
+
+	/**
+	 * @return a printable representation of the board.
+	 */
+	@Override
+	public String getPrintableBoard() {
+		// Should return an empty string if the board has no pieces.
+		String printedBoard = "";
+		for (HantoCoordinate key : board.keySet()) {
+			HantoPiece piece = board.get(key);
+			printedBoard += piece.getColor() + " " + piece.getType() + ": ("
+					+ key.getX() + ", " + key.getY() + ")\n";
+		}
+		return printedBoard;
+	}
+
+	/**
+	 * Get the maximum number of pieces can placed on the board for a hanto game
+	 * 
+	 * @return
+	 */
+	protected abstract int getMaxBoardSize();
+
+	/**
+	 * This function should be overridden by subclasses to add any necessary
+	 * validation before acutally making the move.
+	 * 
+	 * @throws HantoException
+	 */
+	protected abstract void preMakeMoveCheck(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to) throws HantoException;
+
+	/**
 	 * Move the piece from the given source coordinate to the given destination
 	 * coordinate
 	 * 
@@ -88,6 +132,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	private void movePiece(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
+
 		// check if the destination coordinate is occupied
 		validateDestinationCoordinate(to);
 
@@ -138,34 +183,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * @param where
-	 *            the coordinate to query
-	 * @return the piece at the specified coordinate or null if there is no
-	 *         piece at that position
-	 */
-	@Override
-	public HantoPiece getPieceAt(HantoCoordinate where) {
-		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(),
-				where.getY());
-		return board.get(coord);
-	}
-
-	/**
-	 * @return a printable representation of the board.
-	 */
-	@Override
-	public String getPrintableBoard() {
-		// Should return an empty string if the board has no pieces.
-		String printedBoard = "";
-		for (HantoCoordinate key : board.keySet()) {
-			HantoPiece piece = board.get(key);
-			printedBoard += piece.getColor() + " " + piece.getType() + ": ("
-					+ key.getX() + ", " + key.getY() + ")\n";
-		}
-		return printedBoard;
-	}
-
-	/**
 	 * Check the game status and return the result after a move
 	 * 
 	 * @return the result of a move
@@ -192,13 +209,6 @@ public abstract class BaseHantoGame implements HantoGame {
 
 		return result;
 	}
-
-	/**
-	 * Get the maximum number of pieces can placed on the board for a hanto game
-	 * 
-	 * @return
-	 */
-	protected abstract int getMaxBoardSize();
 
 	/**
 	 * Alternate the player turn for next move
@@ -320,13 +330,4 @@ public abstract class BaseHantoGame implements HantoGame {
 					"The given destination coordinate has been occupied.");
 		}
 	}
-
-	/**
-	 * This function should be overridden by subclasses to add any necessary
-	 * validation before acutally making the move.
-	 * 
-	 * @throws HantoException
-	 */
-	protected abstract void preMakeMoveCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException;
 }
