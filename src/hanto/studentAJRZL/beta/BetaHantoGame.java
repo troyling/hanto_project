@@ -14,7 +14,6 @@ import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.BaseHantoGame;
 
 /**
@@ -25,7 +24,7 @@ import hanto.studentAJRZL.common.BaseHantoGame;
  */
 public class BetaHantoGame extends BaseHantoGame {
 	private final int MAX_BOARD_SIZE = 12;
-	
+
 	/**
 	 * Constructor for beta hanto game
 	 * 
@@ -36,59 +35,61 @@ public class BetaHantoGame extends BaseHantoGame {
 	}
 
 	/**
-	 * {@inheritDoc}          
+	 * {@inheritDoc}
 	 */
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
-			throws HantoException {
+	protected int getMaxBoardSize() {
+		return MAX_BOARD_SIZE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void preMakeMoveCheck(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to) throws HantoException {
 		// ensure player is not placing other piece type onto the board
 		validatePieceType(pieceType);
-
-		// check if the game has already ended
-		validateGameInProgress();
-
-		// check if the destination coordinate is occupied
-		validateDestinationCoordinate(to);
 
 		// piece can only be placed, not moved
 		validateMove(from);
 
-		// first piece must be placed at origin
-		validateFirstMoveCoordinate(to);
-
 		// check if butterfly is placed
 		validateBufferflyPresence(pieceType);
-						
-		return super.makeMove(pieceType, from, to);
 	}
 
 	/**
-	 * Throws exception if the player attempts to place a piece other than butterfly or sparrow
+	 * Throws exception if the player attempts to place a piece other than
+	 * butterfly or sparrow
 	 * 
 	 * @throws HantoException
 	 */
-	private void validatePieceType(HantoPieceType pieceType) throws HantoException {
-		if (pieceType != HantoPieceType.BUTTERFLY && pieceType != HantoPieceType.SPARROW) {
-			throw new HantoException("Can't place piece other than butterfly or sparrow.");
+	private void validatePieceType(HantoPieceType pieceType)
+			throws HantoException {
+		if (pieceType != HantoPieceType.BUTTERFLY
+				&& pieceType != HantoPieceType.SPARROW) {
+			throw new HantoException(
+					"Can't place piece other than butterfly or sparrow.");
 		}
 	}
-	
+
 	/**
 	 * Throw exception if butterfly is not placed by the end of 4th turn.
 	 * 
 	 * @param pieceType
 	 * @throws HantoException
 	 */
-	private void validateBufferflyPresence(HantoPieceType pieceType) throws HantoException {
-		if ((board.size() == 6 || board.size() == 7) && pieceType != HantoPieceType.BUTTERFLY) {
+	private void validateBufferflyPresence(HantoPieceType pieceType)
+			throws HantoException {
+		if ((board.size() == 6 || board.size() == 7)
+				&& pieceType != HantoPieceType.BUTTERFLY) {
 			if ((currentPlayColor == HantoPlayerColor.BLUE && blueButterflyCoordiate == null)
 					|| (currentPlayColor == HantoPlayerColor.RED && redButterflyCoordiate == null)) {
-				throw new HantoException("Butterfly must be placed by 4th turn.");
+				throw new HantoException(
+						"Butterfly must be placed by 4th turn.");
 			}
 		}
 	}
-
-	
 
 	/**
 	 * Throws exception if the move intends to move rather than to place a piece
@@ -101,26 +102,4 @@ public class BetaHantoGame extends BaseHantoGame {
 			throw new HantoException("Can't move a piece in Beta hanto.");
 		}
 	}
-
-	/**
-	 * Throws exception if the destination coordinate is occupied.
-	 * 
-	 * @param to
-	 * @throws HantoException
-	 */
-	private void validateDestinationCoordinate(HantoCoordinate coord) throws HantoException {
-		// check if the given destination coordinate is occupied
-		if (coord == null) {
-			throw new HantoException("Piece must be placed on board");
-		}
-		
-		if (board.get(coord) != null) {
-			throw new HantoException("The given destination coordinate has been occupied.");
-		}
-	}
-
-	@Override
-	protected int getMaxBoardSize() {
-		return MAX_BOARD_SIZE;
-	}	
 }
