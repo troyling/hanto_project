@@ -20,7 +20,9 @@ import hanto.common.MoveResult;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * Base Hanto Game class.
@@ -70,8 +72,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 		preMakeMoveCheck(pieceType, from, to);
-		// check if the game has already ended
-		validateGameInProgress();
 		movePiece(pieceType, from, to);
 		postMakeMoveCheck();
 		alterPlayerTurn();
@@ -111,7 +111,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * 
 	 * @return the max size of the board
 	 */
-	protected abstract int getMaxBoardSize();
+	protected abstract int getMaxNumPiecesOnBoard();
 
 	/**
 	 * This function should be overridden by subclasses to add any necessary
@@ -126,12 +126,15 @@ public abstract class BaseHantoGame implements HantoGame {
 			HantoCoordinate from, HantoCoordinate to) throws HantoException;
 
 	/**
-	 * This function should be overridden by subclasses to add any necessary
-	 * validation after making the move.
+	 * This function can be overridden by subclasses to add any necessary
+	 * validation after making the move. The overridden function should use
+	 * super() to run the default validations.
 	 * 
 	 * @throws HantoException
 	 */
-	protected abstract void postMakeMoveCheck() throws HantoException;
+	protected void postMakeMoveCheck() throws HantoException {
+		validatePiecesAreContiguous();
+	}
 
 	/**
 	 * This function should be overridden by subclasses to return the distance a
@@ -152,6 +155,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	private void movePiece(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
+		// check if the game has already ended
+		validateGameInProgress();
 
 		if (to == null) {
 			throw new HantoException("Piece must be placed somewhere on board");
@@ -291,7 +296,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	private MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 
-		if (board.size() == getMaxBoardSize()) {
+		if (board.size() == getMaxNumPiecesOnBoard()) {
 			result = MoveResult.DRAW;
 		}
 
@@ -401,6 +406,47 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
+	 * Check if all the pieces on board are contiguous
+	 * 
+	 * @throws HantoException
+	 */
+	private void validatePiecesAreContiguous() throws HantoException {
+		HantoCoordinate start = null;
+
+		for (HantoCoordinate coord : board.keySet()) {
+			start = coord;
+			break;
+		}
+
+		Collection<HantoCoordinate> visited = new LinkedList<HantoCoordinate>();
+		Queue<HantoCoordinate> queue = new LinkedList<HantoCoordinate>();
+
+		visited.add(start);
+		queue.add(start);
+
+		while (!queue.isEmpty()) {
+			HantoPieceCoordinate c = (HantoPieceCoordinate) queue.poll();
+
+			if (!visited.contains(c)) {
+				visited.add(c);
+			}
+
+			for (HantoCoordinate coord : c.getAdjacentCoordinates()) {
+				if (board.get(coord) != null) {
+					if (!visited.contains(coord)) {
+						visited.add(coord);
+						queue.add(coord);
+					}
+				}
+			}
+		}
+
+		if (board.size() != visited.size()) {
+			throw new HantoException("Pieces are not contiguous");
+		}
+	}
+
+	/**
 	 * Check if the given butterfly is surrounded
 	 * 
 	 * @param pieceCoordinate
@@ -423,4 +469,5 @@ public abstract class BaseHantoGame implements HantoGame {
 		}
 		return isSurrounded;
 	}
+
 }

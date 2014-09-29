@@ -14,7 +14,6 @@ import hanto.common.HantoCoordinate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Class for the coordinates of the game.
@@ -36,6 +35,14 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	public HantoPieceCoordinate(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	/**
+	 * Constructor for converting HantoCoordinate to HantoPieceCoordinate
+	 */
+	public HantoPieceCoordinate(HantoCoordinate coord) {
+		this.x = coord.getX();
+		this.y = coord.getY();
 	}
 
 	/**
@@ -100,56 +107,39 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	}
 
 	/**
+	 * Return the common neighbors between two tiles
+	 * 
+	 * @param coord
+	 * @return common neighbors
+	 */
+	public Collection<HantoCoordinate> getCommonNeighbors(
+			HantoPieceCoordinate coord) {
+		Collection<HantoCoordinate> commonNeighbors = new LinkedList<HantoCoordinate>();
+		Collection<HantoCoordinate> neighbors1 = getAdjacentCoordinates();
+		Collection<HantoCoordinate> neighbors2 = coord.getAdjacentCoordinates();
+
+		// find out common tiles
+		for (HantoCoordinate c : neighbors1) {
+			if (neighbors2.contains(c)) {
+				commonNeighbors.add(c);
+			}
+		}
+		return commonNeighbors;
+	}
+
+	/**
 	 * Calculate the distance between the coordinate and the given coordinate
 	 * 
 	 * @param coord
 	 * @return the distance between two coordinates
 	 */
 	public int getDistanceTo(HantoCoordinate coord) {
-		int distance = 0;
-		final HantoPieceCoordinate destCoord = new HantoPieceCoordinate(coord.getX(), coord.getY());
+		// calculate the distance using formula
+		int z1 = 0 - x - y;
+		int z2 = 0 - coord.getX() - coord.getY();
 
-		if (!this.equals(destCoord)) {
-			// BFS
-			Collection<HantoPieceCoordinate> visited = new LinkedList<HantoPieceCoordinate>();
-			Queue<HantoPieceCoordinate> queue = new LinkedList<HantoPieceCoordinate>();
+		return (Math.abs(x - coord.getX()) + Math.abs(y - coord.getY()) + Math
+				.abs(z1 - z2)) / 2;
 
-			visited.add(this);
-			queue.add(this);
-			int count = 0;
-
-			while (!queue.isEmpty()) {
-
-				HantoPieceCoordinate c = queue.poll();
-				count++;
-				if (c.equals(destCoord)) {
-					break;
-				}
-
-				for (HantoCoordinate neighbor : c.getAdjacentCoordinates()) {
-					if (!visited.contains(neighbor)) {
-						visited.add(((HantoPieceCoordinate) neighbor));
-						queue.add(((HantoPieceCoordinate) neighbor));
-					}
-				}
-			}
-			distance = 1;
-
-			while (getTotalNumTiles(distance) < count) {
-				distance++;
-			}
-		}
-		return distance;
 	}
-
-	/**
-	 * Calculate the total number of tiles without the origin in the nth layer
-	 * 
-	 * @param layer
-	 * @return number of tiles
-	 */
-	private int getTotalNumTiles(int layer) {
-		return 3 * layer * (layer + 1);
-	}
-
 }

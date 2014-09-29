@@ -18,8 +18,6 @@ import hanto.studentAJRZL.common.BaseHantoGame;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Gamma Hanto Game class.
@@ -38,7 +36,7 @@ public class GammaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected int getMaxBoardSize() {
+	protected int getMaxNumPiecesOnBoard() {
 		return MAX_BOARD_SIZE;
 	}
 
@@ -49,7 +47,7 @@ public class GammaHantoGame extends BaseHantoGame {
 	protected void preMakeMoveCheck(HantoPieceType pieceType,
 			HantoCoordinate from, HantoCoordinate to) throws HantoException {
 		if (from != null && to != null) {
-			validateCanWalk(from, to);
+			validateWalk(from, to);
 		}
 	}
 
@@ -62,68 +60,19 @@ public class GammaHantoGame extends BaseHantoGame {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Check if the walk is valid
+	 * 
+	 * @param from
+	 * @param to
+	 * @throws HantoException
 	 */
-	@Override
-	protected void postMakeMoveCheck() throws HantoException {
-		validatePiecesAreContiguous();
-	}
-
-	private void validatePiecesAreContiguous() throws HantoException {
-		HantoCoordinate start = null;
-
-		for (HantoCoordinate coord : board.keySet()) {
-			start = coord;
-			break;
-		}
-
-		Collection<HantoCoordinate> visited = new LinkedList<HantoCoordinate>();
-		Queue<HantoCoordinate> queue = new LinkedList<HantoCoordinate>();
-
-		visited.add(start);
-		queue.add(start);
-
-		while (!queue.isEmpty()) {
-			HantoPieceCoordinate c = (HantoPieceCoordinate) queue.poll();
-
-			if (!visited.contains(c)) {
-				visited.add(c);
-			}
-
-			for (HantoCoordinate coord : c.getAdjacentCoordinates()) {
-				if (board.get(coord) != null) {
-					if (!visited.contains(coord)) {
-						visited.add(coord);
-						queue.add(coord);
-					}
-				}
-			}
-		}
-
-		if (board.size() != visited.size()) {
-			throw new HantoException("Pieces are not contiguous");
-		}
-	}
-
-	private void validateCanWalk(HantoCoordinate from, HantoCoordinate to)
+	private void validateWalk(HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
 		boolean isWalkValid = false;
-		HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from.getX(),
-				from.getY());
-		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to.getX(),
-				to.getY());
-		Collection<HantoCoordinate> commonNeighbors = new LinkedList<HantoCoordinate>();
-		Collection<HantoCoordinate> fromNeighbors = fromCoord
-				.getAdjacentCoordinates();
-		Collection<HantoCoordinate> toNeighbors = toCoord
-				.getAdjacentCoordinates();
-
-		// find out common tiles
-		for (HantoCoordinate coord : fromNeighbors) {
-			if (toNeighbors.contains(coord)) {
-				commonNeighbors.add(coord);
-			}
-		}
+		HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
+		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
+		Collection<HantoCoordinate> commonNeighbors = fromCoord
+				.getCommonNeighbors(toCoord);
 
 		// check if either neighbor is not occupied
 		for (HantoCoordinate coord : commonNeighbors) {

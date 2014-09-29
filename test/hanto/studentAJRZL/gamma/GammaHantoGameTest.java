@@ -422,4 +422,25 @@ public class GammaHantoGameTest {
 		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0),
 				new TestHantoCoordinate(1, 0));
 	}
+	
+	/**
+	 * Attempt to move a piece which is not on board
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptToMovePieceNotOnBoard() throws HantoException {
+		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(-1, 1));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(2);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(1, 1),
+				new TestHantoCoordinate(1, 0));
+	}
 }

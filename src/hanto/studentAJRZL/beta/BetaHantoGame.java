@@ -38,7 +38,7 @@ public class BetaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected int getMaxBoardSize() {
+	protected int getMaxNumPiecesOnBoard() {
 		return MAX_BOARD_SIZE;
 	}
 
@@ -109,12 +109,5 @@ public class BetaHantoGame extends BaseHantoGame {
 		if (from != null) {
 			throw new HantoException("Can't move a piece in Beta hanto.");
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void postMakeMoveCheck() throws HantoException {
 	}
 }
