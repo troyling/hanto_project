@@ -56,6 +56,21 @@ public class BetaHantoGame extends BaseHantoGame {
 
 		// check if butterfly is placed
 		validateBufferflyPresence(pieceType);
+
+		super.preMakeMoveCheck(pieceType, from, to);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void validateAllowedPieceType(HantoPieceType pieceType)
+			throws HantoException {
+		if (pieceType != HantoPieceType.BUTTERFLY
+				&& pieceType != HantoPieceType.SPARROW) {
+			throw new HantoException(
+					"The piece you are trying to place is not allowed.");
+		}
 	}
 
 	/**
@@ -110,4 +125,5 @@ public class BetaHantoGame extends BaseHantoGame {
 			throw new HantoException("Can't move a piece in Beta hanto.");
 		}
 	}
+
 }

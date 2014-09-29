@@ -114,16 +114,19 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected abstract int getMaxNumPiecesOnBoard();
 
 	/**
-	 * This function should be overridden by subclasses to add any necessary
-	 * validation before actually making the move.
+	 * This function can be overridden by subclasses to add any necessary
+	 * validation before actually making the move. The overridden function
+	 * should use super() to run the default validations.
 	 * 
 	 * @param pieceType
 	 * @param from
 	 * @param to
 	 * @throws HantoException
 	 */
-	protected abstract void preMakeMoveCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException;
+	protected void preMakeMoveCheck(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+		validateAllowedPieceType(pieceType);
+	}
 
 	/**
 	 * This function can be overridden by subclasses to add any necessary
@@ -135,6 +138,15 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected void postMakeMoveCheck() throws HantoException {
 		validatePiecesAreContiguous();
 	}
+
+	/**
+	 * This function should be overridden by subclasses to check for piece types
+	 * that are allowed in the game
+	 * 
+	 * @throws HantoException
+	 */
+	protected abstract void validateAllowedPieceType(HantoPieceType pieceType)
+			throws HantoException;
 
 	/**
 	 * This function should be overridden by subclasses to return the distance a
@@ -256,7 +268,7 @@ public abstract class BaseHantoGame implements HantoGame {
 
 		if (!isPieceEqual(pieceOnBoard, piece)) {
 			throw new HantoException(
-					"You can't move the piece at this location.");
+					"The piece you are trying to move does not match to the one you provided. ");
 		}
 	}
 
@@ -296,6 +308,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	private MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 
+		// TODO fix this check
 		if (board.size() == getMaxNumPiecesOnBoard()) {
 			result = MoveResult.DRAW;
 		}

@@ -49,6 +49,20 @@ public class GammaHantoGame extends BaseHantoGame {
 		if (from != null && to != null) {
 			validateWalk(from, to);
 		}
+		super.preMakeMoveCheck(pieceType, from, to);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void validateAllowedPieceType(HantoPieceType pieceType)
+			throws HantoException {
+		if (pieceType != HantoPieceType.BUTTERFLY
+				&& pieceType != HantoPieceType.SPARROW) {
+			throw new HantoException(
+					"The piece you are trying to place is not allowed.");
+		}
 	}
 
 	/**

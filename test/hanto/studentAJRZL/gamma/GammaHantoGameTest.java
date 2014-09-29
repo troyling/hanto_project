@@ -87,10 +87,12 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
@@ -112,14 +114,18 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[4];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
-		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(1, -1));
-		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 2));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, 2));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(3);
@@ -140,24 +146,33 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[9];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
-		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(1, -1));
-		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(1, 0));
-		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 1));
-		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 0));
-		initialPieces[6] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(1, -2));
-		initialPieces[7] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, -1));
-		initialPieces[8] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(2, -2));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, 0));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 0));
+		initialPieces[6] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, -2));
+		initialPieces[7] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, -1));
+		initialPieces[8] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(2, -2));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(5);
@@ -165,14 +180,16 @@ public class GammaHantoGameTest {
 
 		System.out.println("Before moving:\n" + game.getPrintableBoard());
 		// both butterflies' move should be valid
-		assertEquals(MoveResult.RED_WINS, game.makeMove(HantoPieceType.SPARROW,
-				new TestHantoCoordinate(-1, -1), new TestHantoCoordinate(0, -1)));
+		assertEquals(MoveResult.RED_WINS,
+				game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(
+						-1, -1), new TestHantoCoordinate(0, -1)));
 
 		System.out.println("After moving:\n" + game.getPrintableBoard());
 	}
 
 	/**
-	 * Test for moving the blue butterfly which would result into disconnection between other pieces
+	 * Test for moving the blue butterfly which would result into disconnection
+	 * between other pieces
 	 */
 	@Test(expected = HantoException.class)
 	public void testBlueButterflyCannotMove() throws HantoException {
@@ -180,14 +197,18 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[4];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
-		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 0));
-		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(1, 0));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 0));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, 0));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(3);
@@ -206,31 +227,38 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 
-		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0), null);
+		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0),
+				null);
 	}
 
 	/**
-	 * Attempts to move a piece to an occupied destination. Exception is expected.
+	 * Attempts to move a piece to an occupied destination. Exception is
+	 * expected.
 	 */
 	@Test(expected = HantoException.class)
-	public void testMovePieceToOccupiedDestionCoordinate() throws HantoException {
+	public void testMovePieceToOccupiedDestionCoordinate()
+			throws HantoException {
 		// init test
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
@@ -255,18 +283,24 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[6];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
-		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(1, -1));
-		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(1, 1));
-		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(2, -1));
-		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(2, 0));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, 1));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(2, -1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(2, 0));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(4);
@@ -287,10 +321,12 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
@@ -309,10 +345,12 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
@@ -331,10 +369,12 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
@@ -353,16 +393,19 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 
-		game.makeMove(null, new TestHantoCoordinate(0, 1), new TestHantoCoordinate(1, 0));
+		game.makeMove(null, new TestHantoCoordinate(0, 1),
+				new TestHantoCoordinate(1, 0));
 	}
 
 	/**
@@ -373,22 +416,30 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[8];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(-1, 1));
-		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(0, -1));
-		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 2));
-		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, -1));
-		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 2));
-		initialPieces[6] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 0));
-		initialPieces[7] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(1, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(-1, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 2));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, -1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, 2));
+		initialPieces[6] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 0));
+		initialPieces[7] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(5);
@@ -406,14 +457,18 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[4];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(-1, 1));
-		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(0, -1));
-		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 2));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(-1, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 2));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(3);
@@ -422,7 +477,7 @@ public class GammaHantoGameTest {
 		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0),
 				new TestHantoCoordinate(1, 0));
 	}
-	
+
 	/**
 	 * Attempt to move a piece which is not on board
 	 */
@@ -431,10 +486,12 @@ public class GammaHantoGameTest {
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(-1, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(-1, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
@@ -442,5 +499,129 @@ public class GammaHantoGameTest {
 
 		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(1, 1),
 				new TestHantoCoordinate(1, 0));
+	}
+
+	/**
+	 * Test that ensures the board allows making move after both player finish
+	 * placing pieces on board
+	 * 
+	 */
+	@Test
+	public void testValidMovesForMaxNumPiece() throws HantoException {
+		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[12];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(-1, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 2));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, -1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, 2));
+		initialPieces[6] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 0));
+		initialPieces[7] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, 1));
+		initialPieces[8] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-2, 1));
+		initialPieces[9] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-2, 2));
+		initialPieces[10] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-2, 3));
+		initialPieces[11] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-2, 4));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(7);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0), new TestHantoCoordinate(1, 0)));
+		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-2, 4), new TestHantoCoordinate(-1, 3)));
+		assertEquals(MoveResult.OK,
+				game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(
+						-1, -1), new TestHantoCoordinate(-2, 0)));
+	}
+
+	/**
+	 * Test that ensures the board allows making move after both player finish
+	 * placing pieces on board
+	 * 
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptToPlaceExtraPiece() throws HantoException {
+		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[12];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(-1, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 2));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, -1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, 2));
+		initialPieces[6] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-1, 0));
+		initialPieces[7] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(1, 1));
+		initialPieces[8] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-2, 1));
+		initialPieces[9] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-2, 2));
+		initialPieces[10] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-2, 3));
+		initialPieces[11] = new HantoTestGame.PieceLocationPair(
+				HantoPlayerColor.RED, HantoPieceType.SPARROW,
+				new TestHantoCoordinate(-2, 4));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(7);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		game.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(1,
+				0));
+	}
+
+	/**
+	 * Attempt to place a crab on board
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptToPlaceCrab() throws HantoException {
+		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
+		game.makeMove(HantoPieceType.CRAB, null, new TestHantoCoordinate(0, 0));
 	}
 }
