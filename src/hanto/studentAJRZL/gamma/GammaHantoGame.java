@@ -24,13 +24,13 @@ import hanto.studentAJRZL.common.BaseHantoGame;
  */
 public class GammaHantoGame extends BaseHantoGame {
 	private final int MAX_BOARD_SIZE = 20;
-	
+
 	public GammaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
 	}
 
 	/**
-	 * {@inheritDoc}          
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected int getMaxBoardSize() {
@@ -38,21 +38,18 @@ public class GammaHantoGame extends BaseHantoGame {
 	}
 
 	/**
-	 * {@inheritDoc}          
+	 * {@inheritDoc}
 	 */
 	@Override
-	protected void preMakeMoveCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
 	}
 
 	/**
-	 * {@inheritDoc}          
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected int getAllowedWalkingDistance() {
 		return 1;
 	}
-
-
-
 }

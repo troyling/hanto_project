@@ -107,8 +107,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	 */
 	public int getDistanceTo(HantoCoordinate coord) {
 		int distance = 0;
-		final HantoPieceCoordinate destCoord = new HantoPieceCoordinate(
-				coord.getX(), coord.getY());
+		final HantoPieceCoordinate destCoord = new HantoPieceCoordinate(coord.getX(), coord.getY());
 
 		if (!this.equals(destCoord)) {
 			// BFS
@@ -117,15 +116,12 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 
 			visited.add(this);
 			queue.add(this);
-
 			int count = 0;
 
 			while (!queue.isEmpty()) {
 
 				HantoPieceCoordinate c = queue.poll();
-
 				count++;
-
 				if (c.equals(destCoord)) {
 					break;
 				}
@@ -137,14 +133,12 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 					}
 				}
 			}
-
 			distance = 1;
 
 			while (getTotalNumTiles(distance) < count) {
 				distance++;
 			}
 		}
-
 		return distance;
 	}
 

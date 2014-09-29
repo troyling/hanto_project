@@ -47,28 +47,21 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * This method uses template method pattern to execute a move in the game.
-	 * It is called for every move that must be made.
+	 * This method uses template method pattern to execute a move in the game. It is called for
+	 * every move that must be made.
 	 * 
-	 * @param pieceType
-	 *            the piece type that is being moved
-	 * @param from
-	 *            the coordinate where the piece begins. If the coordinate is
-	 *            null, then the piece begins off the board (that is, it is
-	 *            placed on the board in this move).
-	 * @param to
-	 *            the coordinated where the piece is after the move has been
-	 *            made.
+	 * @param pieceType the piece type that is being moved
+	 * @param from the coordinate where the piece begins. If the coordinate is null, then the piece
+	 *            begins off the board (that is, it is placed on the board in this move).
+	 * @param to the coordinated where the piece is after the move has been made.
 	 * @return the result of the move
-	 * @throws HantoException
-	 *             if there are any problems in making the move (such as
-	 *             specifying a coordinate that does not have the appropriate
-	 *             piece, or the color of the piece is not the color of the
-	 *             player who is moving.
+	 * @throws HantoException if there are any problems in making the move (such as specifying a
+	 *             coordinate that does not have the appropriate piece, or the color of the piece is
+	 *             not the color of the player who is moving.
 	 */
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 		preMakeMoveCheck(pieceType, from, to);
 		// check if the game has already ended
 		validateGameInProgress();
@@ -78,15 +71,12 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * @param where
-	 *            the coordinate to query
-	 * @return the piece at the specified coordinate or null if there is no
-	 *         piece at that position
+	 * @param where the coordinate to query
+	 * @return the piece at the specified coordinate or null if there is no piece at that position
 	 */
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(),
-				where.getY());
+		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(), where.getY());
 		return board.get(coord);
 	}
 
@@ -99,8 +89,8 @@ public abstract class BaseHantoGame implements HantoGame {
 		String printedBoard = "";
 		for (HantoCoordinate key : board.keySet()) {
 			HantoPiece piece = board.get(key);
-			printedBoard += piece.getColor() + " " + piece.getType() + ": ("
-					+ key.getX() + ", " + key.getY() + ")\n";
+			printedBoard += piece.getColor() + " " + piece.getType() + ": (" + key.getX() + ", "
+					+ key.getY() + ")\n";
 		}
 		return printedBoard;
 	}
@@ -113,43 +103,40 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected abstract int getMaxBoardSize();
 
 	/**
-	 * This function should be overridden by subclasses to add any necessary
-	 * validation before acutally making the move.
+	 * This function should be overridden by subclasses to add any necessary validation before
+	 * acutally making the move.
 	 * 
 	 * @throws HantoException
 	 */
-	protected abstract void preMakeMoveCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException;
+	protected abstract void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException;
 
 	/**
-	 * This function should be overridden by subclasses to return the distance a
-	 * hanto piece is allowed to walk
+	 * This function should be overridden by subclasses to return the distance a hanto piece is
+	 * allowed to walk
 	 * 
 	 * @return
 	 */
 	protected abstract int getAllowedWalkingDistance();
 
 	/**
-	 * Move the piece from the given source coordinate to the given destination
-	 * coordinate
+	 * Move the piece from the given source coordinate to the given destination coordinate
 	 * 
 	 * @param pieceType
 	 * @param from
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void movePiece(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	private void movePiece(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 
 		if (to == null) {
 			throw new HantoException("Piece must be placed somewhere on board");
 		}
 
 		// create objects to store into the board
-		final HantoPiece newPiece = new HantoGamePiece(currentPlayColor,
-				pieceType);
-		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(),
-				to.getY());
+		final HantoPiece newPiece = new HantoGamePiece(currentPlayColor, pieceType);
+		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(), to.getY());
 		HantoCoordinate fromCoord = null;
 
 		// first piece must be placed at origin
@@ -179,24 +166,23 @@ public abstract class BaseHantoGame implements HantoGame {
 		// store the coordinate if the piece is butterfly
 		if (pieceType == HantoPieceType.BUTTERFLY) {
 			switch (currentPlayColor) {
-			case BLUE:
-				if (fromCoord == null) {
-					// placing a piece
-					validateButterflyExistence(blueButterflyCoordiate);
-				}
-				blueButterflyCoordiate = toCoord;
-				break;
-			case RED:
-				if (fromCoord == null) {
-					validateButterflyExistence(redButterflyCoordiate);
-				}
-				redButterflyCoordiate = toCoord;
-				break;
-			default:
-				throw new HantoException("Invalid color.");
+				case BLUE:
+					if (fromCoord == null) {
+						// placing a piece
+						validateButterflyExistence(blueButterflyCoordiate);
+					}
+					blueButterflyCoordiate = toCoord;
+					break;
+				case RED:
+					if (fromCoord == null) {
+						validateButterflyExistence(redButterflyCoordiate);
+					}
+					redButterflyCoordiate = toCoord;
+					break;
+				default:
+					throw new HantoException("Invalid color.");
 			}
 		}
-
 		// putting the piece on board
 		board.put(toCoord, newPiece);
 	}
@@ -208,13 +194,11 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param toCoord
 	 * @throws HantoException
 	 */
-	private void validateWalkDistance(HantoCoordinate fromCoord,
-			HantoCoordinate toCoord) throws HantoException {
-		final int distance = ((HantoPieceCoordinate) fromCoord)
-				.getDistanceTo(toCoord);
+	private void validateWalkDistance(HantoCoordinate fromCoord, HantoCoordinate toCoord)
+			throws HantoException {
+		final int distance = ((HantoPieceCoordinate) fromCoord).getDistanceTo(toCoord);
 		if (distance > getAllowedWalkingDistance()) {
-			throw new HantoException(
-					"Can't walk further than allowed distance.");
+			throw new HantoException("Can't walk further than allowed distance.");
 		}
 	}
 
@@ -225,8 +209,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param newPiece
 	 * @throws HantoException
 	 */
-	private void validatePieceAtFromCoordinate(HantoCoordinate coord,
-			HantoPiece piece) throws HantoException {
+	private void validatePieceAtFromCoordinate(HantoCoordinate coord, HantoPiece piece)
+			throws HantoException {
 		if (piece.getType() == null) {
 			throw new HantoException("Piece must not be null.");
 		}
@@ -234,13 +218,11 @@ public abstract class BaseHantoGame implements HantoGame {
 		final HantoPiece pieceOnBoard = board.get(coord);
 
 		if (pieceOnBoard == null) {
-			throw new HantoException(
-					"There is no hanto piece at this location.");
+			throw new HantoException("There is no hanto piece at this location.");
 		}
 
 		if (!isPieceEqual(pieceOnBoard, piece)) {
-			throw new HantoException(
-					"You can't move the piece at this location.");
+			throw new HantoException("You can't move the piece at this location.");
 		}
 	}
 
@@ -253,13 +235,11 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	// TODO move this method to HantoPiece class
 	private boolean isPieceEqual(HantoPiece piece1, HantoPiece piece2) {
-		return piece1.getColor() == piece2.getColor()
-				&& piece1.getType() == piece2.getType();
+		return piece1.getColor() == piece2.getColor() && piece1.getType() == piece2.getType();
 	}
 
 	/**
-	 * Throws exception if the player attempts to place more than one butterfly
-	 * on board
+	 * Throws exception if the player attempts to place more than one butterfly on board
 	 * 
 	 * @param butterflyCoordinate
 	 * @throws HantoException
@@ -267,8 +247,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	private void validateButterflyExistence(HantoCoordinate butterflyCoordinate)
 			throws HantoException {
 		if (butterflyCoordinate != null) {
-			throw new HantoException(
-					"Can't place more than one butterfly in beta hanto game.");
+			throw new HantoException("Can't place more than one butterfly in beta hanto game.");
 		}
 	}
 
@@ -296,7 +275,6 @@ public abstract class BaseHantoGame implements HantoGame {
 		if (result != MoveResult.OK) {
 			isGameEnded = true;
 		}
-
 		return result;
 	}
 
@@ -307,26 +285,24 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	private void alterPlayerTurn() throws HantoException {
 		switch (currentPlayColor) {
-		case BLUE:
-			currentPlayColor = HantoPlayerColor.RED;
-			break;
-		case RED:
-			currentPlayColor = HantoPlayerColor.BLUE;
-			break;
-		default:
-			throw new HantoException("Invalid player color");
+			case BLUE:
+				currentPlayColor = HantoPlayerColor.RED;
+				break;
+			case RED:
+				currentPlayColor = HantoPlayerColor.BLUE;
+				break;
+			default:
+				throw new HantoException("Invalid player color");
 		}
 	}
 
 	/**
-	 * Throws exception if the first move attempts to place piece at coordinate
-	 * other than origin.
+	 * Throws exception if the first move attempts to place piece at coordinate other than origin.
 	 * 
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateFirstMoveCoordinate(HantoCoordinate to)
-			throws HantoException {
+	private void validateFirstMoveCoordinate(HantoCoordinate to) throws HantoException {
 		if (board.size() == 0 && (to.getX() != 0 || to.getY() != 0)) {
 			throw new HantoException("First piece must be placed at origin");
 		}
@@ -338,8 +314,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param coord
 	 * @throws HantoException
 	 */
-	private void validateAdjacentCoordinate(HantoCoordinate coord)
-			throws HantoException {
+	private void validateAdjacentCoordinate(HantoCoordinate coord) throws HantoException {
 		if (!board.isEmpty() && !isAnyPieceAdjacentTo(coord)) {
 			throw new HantoException("A piece must be placed next to another.");
 		}
@@ -351,24 +326,20 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateDestinationCoordinate(HantoCoordinate coord)
-			throws HantoException {
+	private void validateDestinationCoordinate(HantoCoordinate coord) throws HantoException {
 		if (board.get(coord) != null) {
-			throw new HantoException(
-					"The given destination coordinate has been occupied.");
+			throw new HantoException("The given destination coordinate has been occupied.");
 		}
 	}
 
 	/**
-	 * Throws exception if the player attempts to make an action after the game
-	 * ends
+	 * Throws exception if the player attempts to make an action after the game ends
 	 * 
 	 * @throws HantoException
 	 */
 	private void validateGameInProgress() throws HantoException {
 		if (isGameEnded) {
-			throw new HantoException(
-					"Can't place a piece after the game is ended.");
+			throw new HantoException("Can't place a piece after the game is ended.");
 		}
 	}
 
@@ -411,8 +382,6 @@ public abstract class BaseHantoGame implements HantoGame {
 		} else {
 			isSurrounded = false;
 		}
-
 		return isSurrounded;
 	}
-
 }
