@@ -386,7 +386,7 @@ public class GammaHantoGameTest {
 		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
 				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 2));
 		initialPieces[6] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.SPARROW, new TestHantoCoordinate(-2, 0));
+				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 0));
 		initialPieces[7] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
 				HantoPieceType.SPARROW, new TestHantoCoordinate(1, 1));
 

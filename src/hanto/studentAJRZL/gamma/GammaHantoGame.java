@@ -19,6 +19,7 @@ import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Gamma Hanto Game class.
@@ -65,7 +66,43 @@ public class GammaHantoGame extends BaseHantoGame {
 	 */
 	@Override
 	protected void postMakeMoveCheck() throws HantoException {
-		// validatePiecesAreContiguous();
+		validatePiecesAreContiguous();
+	}
+
+	private void validatePiecesAreContiguous() throws HantoException {
+		HantoCoordinate start = null;
+
+		for (HantoCoordinate coord : board.keySet()) {
+			start = coord;
+			break;
+		}
+
+		Collection<HantoCoordinate> visited = new LinkedList<HantoCoordinate>();
+		Queue<HantoCoordinate> queue = new LinkedList<HantoCoordinate>();
+
+		visited.add(start);
+		queue.add(start);
+
+		while (!queue.isEmpty()) {
+			HantoPieceCoordinate c = (HantoPieceCoordinate) queue.poll();
+
+			if (!visited.contains(c)) {
+				visited.add(c);
+			}
+
+			for (HantoCoordinate coord : c.getAdjacentCoordinates()) {
+				if (board.get(coord) != null) {
+					if (!visited.contains(coord)) {
+						visited.add(coord);
+						queue.add(coord);
+					}
+				}
+			}
+		}
+
+		if (board.size() != visited.size()) {
+			throw new HantoException("Pieces are not contiguous");
+		}
 	}
 
 	private void validateCanWalk(HantoCoordinate from, HantoCoordinate to)
