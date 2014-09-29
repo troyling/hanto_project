@@ -102,7 +102,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	/**
 	 * Calculate the distance between the coordinate and the given coordinate
 	 * 
-	 * @param destCoord
+	 * @param coord
 	 * @return the distance between two coordinates
 	 */
 	public int getDistanceTo(HantoCoordinate coord) {

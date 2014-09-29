@@ -98,7 +98,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	/**
 	 * Get the maximum number of pieces can placed on the board for a hanto game
 	 * 
-	 * @return
+	 * @return the max size of the board
 	 */
 	protected abstract int getMaxBoardSize();
 
@@ -106,6 +106,9 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * This function should be overridden by subclasses to add any necessary validation before
 	 * acutally making the move.
 	 * 
+	 * @param pieceType
+	 * @param from
+	 * @param to
 	 * @throws HantoException
 	 */
 	protected abstract void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
@@ -115,7 +118,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * This function should be overridden by subclasses to return the distance a hanto piece is
 	 * allowed to walk
 	 * 
-	 * @return
+	 * @return the distance a hanto piece can walk.
 	 */
 	protected abstract int getAllowedWalkingDistance();
 
