@@ -212,7 +212,6 @@ public abstract class BaseHantoGame implements HantoGame {
 			HantoCoordinate toCoord) throws HantoException {
 		final int distance = ((HantoPieceCoordinate) fromCoord)
 				.getDistanceTo(toCoord);
-		System.out.println("Distance is: " + distance);
 		if (distance > getAllowedWalkingDistance()) {
 			throw new HantoException(
 					"Can't walk further than allowed distance.");
@@ -228,6 +227,10 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	private void validatePieceAtFromCoordinate(HantoCoordinate coord,
 			HantoPiece piece) throws HantoException {
+		if (piece.getType() == null) {
+			throw new HantoException("Piece must not be null.");
+		}
+
 		final HantoPiece pieceOnBoard = board.get(coord);
 
 		if (pieceOnBoard == null) {
@@ -237,7 +240,7 @@ public abstract class BaseHantoGame implements HantoGame {
 
 		if (!isPieceEqual(pieceOnBoard, piece)) {
 			throw new HantoException(
-					"The hanto piece you are trying to move is not at the given from coordinate.");
+					"You can't move the piece at this location.");
 		}
 	}
 
@@ -248,6 +251,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param piece
 	 * @return true if two pieces are equal. False otherwise.
 	 */
+	// TODO move this method to HantoPiece class
 	private boolean isPieceEqual(HantoPiece piece1, HantoPiece piece2) {
 		return piece1.getColor() == piece2.getColor()
 				&& piece1.getType() == piece2.getType();
