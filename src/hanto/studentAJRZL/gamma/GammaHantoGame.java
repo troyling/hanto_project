@@ -15,6 +15,10 @@ import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentAJRZL.common.BaseHantoGame;
+import hanto.studentAJRZL.common.HantoPieceCoordinate;
+
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * Gamma Hanto Game class.
@@ -24,13 +28,13 @@ import hanto.studentAJRZL.common.BaseHantoGame;
  */
 public class GammaHantoGame extends BaseHantoGame {
 	private final int MAX_BOARD_SIZE = 20;
-	
+
 	public GammaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
 	}
 
 	/**
-	 * {@inheritDoc}          
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected int getMaxBoardSize() {
@@ -38,21 +42,62 @@ public class GammaHantoGame extends BaseHantoGame {
 	}
 
 	/**
-	 * {@inheritDoc}          
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void preMakeMoveCheck(HantoPieceType pieceType,
 			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+		if (from != null && to != null) {
+			validateCanWalk(from, to);
+		}
 	}
 
 	/**
-	 * {@inheritDoc}          
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected int getAllowedWalkingDistance() {
 		return 1;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void postMakeMoveCheck() throws HantoException {
+		// validatePiecesAreContiguous();
+	}
 
+	private void validateCanWalk(HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
+		boolean isWalkValid = false;
+		HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from.getX(),
+				from.getY());
+		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to.getX(),
+				to.getY());
+		Collection<HantoCoordinate> commonNeighbors = new LinkedList<HantoCoordinate>();
+		Collection<HantoCoordinate> fromNeighbors = fromCoord
+				.getAdjacentCoordinates();
+		Collection<HantoCoordinate> toNeighbors = toCoord
+				.getAdjacentCoordinates();
+
+		// find out common tiles
+		for (HantoCoordinate coord : fromNeighbors) {
+			if (toNeighbors.contains(coord)) {
+				commonNeighbors.add(coord);
+			}
+		}
+
+		// check if either neighbor is not occupied
+		for (HantoCoordinate coord : commonNeighbors) {
+			if (board.get((HantoPieceCoordinate) coord) == null) {
+				isWalkValid = true;
+			}
+		}
+
+		if (!isWalkValid) {
+			throw new HantoException("Walk is not valid.");
+		}
+	}
 
 }

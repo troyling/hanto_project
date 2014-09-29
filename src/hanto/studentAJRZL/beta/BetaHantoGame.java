@@ -110,4 +110,11 @@ public class BetaHantoGame extends BaseHantoGame {
 			throw new HantoException("Can't move a piece in Beta hanto.");
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void postMakeMoveCheck() throws HantoException {
+	}
 }

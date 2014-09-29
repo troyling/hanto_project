@@ -73,6 +73,7 @@ public abstract class BaseHantoGame implements HantoGame {
 		// check if the game has already ended
 		validateGameInProgress();
 		movePiece(pieceType, from, to);
+		postMakeMoveCheck();
 		alterPlayerTurn();
 		return checkGameStatus();
 	}
@@ -114,12 +115,20 @@ public abstract class BaseHantoGame implements HantoGame {
 
 	/**
 	 * This function should be overridden by subclasses to add any necessary
-	 * validation before acutally making the move.
+	 * validation before actually making the move.
 	 * 
 	 * @throws HantoException
 	 */
 	protected abstract void preMakeMoveCheck(HantoPieceType pieceType,
 			HantoCoordinate from, HantoCoordinate to) throws HantoException;
+
+	/**
+	 * This function should be overridden by subclasses to add any necessary
+	 * validation after making the move.
+	 * 
+	 * @throws HantoException
+	 */
+	protected abstract void postMakeMoveCheck() throws HantoException;
 
 	/**
 	 * This function should be overridden by subclasses to return the distance a

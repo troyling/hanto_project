@@ -131,8 +131,10 @@ public class GammaHantoGameTest {
 		game.setTurnNumber(3);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 
+		System.out.println("Before moving:\n" + game.getPrintableBoard());
 		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0),
 				new TestHantoCoordinate(1, 0));
+		System.out.println("After moving:\n" + game.getPrintableBoard());
 	}
 
 	/**
@@ -267,10 +269,10 @@ public class GammaHantoGameTest {
 	}
 
 	/**
-	 * Test for validly moving a piece.
+	 * Test for two neighbors are being occupied
 	 */
-	@Test
-	public void testMovePieceWithoutResultingInDisconnection()
+	@Test(expected = HantoException.class)
+	public void testAttemptToMoveWhereNeighborsAreOccupied()
 			throws HantoException {
 		HantoPieceCoordinate c1 = new HantoPieceCoordinate(0, 0);
 		HantoPieceCoordinate c2 = new HantoPieceCoordinate(2, 1);
@@ -380,7 +382,7 @@ public class GammaHantoGameTest {
 		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1),
 				new TestHantoCoordinate(1, 0));
 	}
-	
+
 	/**
 	 * Call makeMove function without providing a hanto piece type
 	 */
