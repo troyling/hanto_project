@@ -122,6 +122,14 @@ public abstract class BaseHantoGame implements HantoGame {
 			HantoCoordinate from, HantoCoordinate to) throws HantoException;
 
 	/**
+	 * This function should be overridden by subclasses to return the distance a
+	 * hanto piece is allowed to walk
+	 * 
+	 * @return
+	 */
+	protected abstract int getAllowedWalkingDistance();
+
+	/**
 	 * Move the piece from the given source coordinate to the given destination
 	 * coordinate
 	 * 
@@ -160,6 +168,12 @@ public abstract class BaseHantoGame implements HantoGame {
 
 			// check if the piece we are moving is valid
 			validatePieceAtFromCoordinate(fromCoord, newPiece);
+
+			// check if the piece is moving at the allowed pace
+			validateWalkDistance(fromCoord, toCoord);
+
+			// remove the piece at the original location
+			board.remove(fromCoord);
 		}
 
 		// store the coordinate if the piece is butterfly
@@ -183,13 +197,26 @@ public abstract class BaseHantoGame implements HantoGame {
 			}
 		}
 
-		// move the piece in the hashtable
-		if (fromCoord != null) {
-			board.remove(fromCoord);
-		}
-
 		// putting the piece on board
 		board.put(toCoord, newPiece);
+	}
+
+	/**
+	 * Check if the walk is within the allowed distance
+	 * 
+	 * @param fromCoord
+	 * @param toCoord
+	 * @throws HantoException
+	 */
+	private void validateWalkDistance(HantoCoordinate fromCoord,
+			HantoCoordinate toCoord) throws HantoException {
+		final int distance = ((HantoPieceCoordinate) fromCoord)
+				.getDistanceTo(toCoord);
+		System.out.println("Distance is: " + distance);
+		if (distance > getAllowedWalkingDistance()) {
+			throw new HantoException(
+					"Can't walk further than allowed distance.");
+		}
 	}
 
 	/**

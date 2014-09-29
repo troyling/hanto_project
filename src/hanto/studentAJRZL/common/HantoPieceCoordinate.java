@@ -13,6 +13,8 @@ import hanto.common.HantoCoordinate;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Class for the coordinates of the game.
@@ -96,4 +98,64 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 
 		return adjacentCoordinates;
 	}
+
+	/**
+	 * Calculate the distance between the coordinate and the given coordinate
+	 * 
+	 * @param destCoord
+	 * @return the distance between two coordinates
+	 */
+	public int getDistanceTo(HantoCoordinate coord) {
+		int distance = 0;
+		final HantoPieceCoordinate destCoord = new HantoPieceCoordinate(
+				coord.getX(), coord.getY());
+
+		if (!this.equals(destCoord)) {
+			// BFS
+			Collection<HantoPieceCoordinate> visited = new LinkedList<HantoPieceCoordinate>();
+			Queue<HantoPieceCoordinate> queue = new LinkedList<HantoPieceCoordinate>();
+
+			visited.add(this);
+			queue.add(this);
+
+			int count = 0;
+
+			while (!queue.isEmpty()) {
+
+				HantoPieceCoordinate c = queue.poll();
+
+				count++;
+
+				if (c.equals(destCoord)) {
+					break;
+				}
+
+				for (HantoCoordinate neighbor : c.getAdjacentCoordinates()) {
+					if (!visited.contains(neighbor)) {
+						visited.add(((HantoPieceCoordinate) neighbor));
+						queue.add(((HantoPieceCoordinate) neighbor));
+					}
+				}
+			}
+
+			distance = 1;
+
+			while (getTotalNumTiles(distance) < count) {
+				distance++;
+			}
+		}
+
+		return distance;
+	}
+
+	/**
+	 * Calculate the total number of tiles without the origin in the nth layer
+	 * 
+	 * @param layer
+	 * @return number of tiles
+	 */
+	private int getTotalNumTiles(int layer) {
+		return 3 * layer * (layer + 1);
+	}
+
 }

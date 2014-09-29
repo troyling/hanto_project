@@ -45,6 +45,14 @@ public class GammaHantoGame extends BaseHantoGame {
 			HantoCoordinate from, HantoCoordinate to) throws HantoException {
 	}
 
+	/**
+	 * {@inheritDoc}          
+	 */
+	@Override
+	protected int getAllowedWalkingDistance() {
+		return 1;
+	}
+
 
 
 }

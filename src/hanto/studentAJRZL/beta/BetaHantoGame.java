@@ -59,6 +59,14 @@ public class BetaHantoGame extends BaseHantoGame {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected int getAllowedWalkingDistance() {
+		return 0;
+	}
+
+	/**
 	 * Throws exception if the player attempts to place a piece other than
 	 * butterfly or sparrow
 	 * 

@@ -16,6 +16,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.HantoTestGame;
 import hanto.common.MoveResult;
+import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 import org.junit.Test;
 
@@ -266,6 +267,10 @@ public class GammaHantoGameTest {
 	 */
 	@Test
 	public void testMovePieceWithoutResultingInDisconnection() throws HantoException {
+		HantoPieceCoordinate c1 = new HantoPieceCoordinate(0, 0);
+		HantoPieceCoordinate c2 = new HantoPieceCoordinate(2, 1);
+		System.out.println("Calced distance is: " + c1.getDistanceTo(c2));
+		
 		// init test
 		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[6];
