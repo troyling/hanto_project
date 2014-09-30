@@ -10,6 +10,7 @@
 
 package hanto.common;
 
+import hanto.studentAJRZL.delta.DeltaHantoTestGame;
 import hanto.studentAJRZL.gamma.GammaHantoTestGame;
 
 /**
@@ -61,6 +62,9 @@ public class HantoTestGameFactory {
 		switch (gameId) {
 		case GAMMA_HANTO:
 			game = new GammaHantoTestGame(movesFirst);
+			break;
+		case DELTA_HANTO:
+			game = new DeltaHantoTestGame(movesFirst);
 			break;
 		default:
 			break;
