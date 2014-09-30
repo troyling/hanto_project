@@ -144,6 +144,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * This function should be overridden by subclasses to check for piece types
 	 * that are allowed in the game
 	 * 
+	 * @param pieceType
 	 * @throws HantoException
 	 */
 	protected abstract void validateAllowedPieceType(HantoPieceType pieceType)

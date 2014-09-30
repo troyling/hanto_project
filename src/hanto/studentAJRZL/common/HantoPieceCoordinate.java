@@ -39,10 +39,12 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 
 	/**
 	 * Constructor for converting HantoCoordinate to HantoPieceCoordinate
+	 * 
+	 * @param coord
 	 */
 	public HantoPieceCoordinate(HantoCoordinate coord) {
-		this.x = coord.getX();
-		this.y = coord.getY();
+		x = coord.getX();
+		y = coord.getY();
 	}
 
 	/**
