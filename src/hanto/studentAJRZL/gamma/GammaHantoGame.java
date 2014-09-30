@@ -26,7 +26,7 @@ import java.util.Collection;
  * 
  */
 public class GammaHantoGame extends BaseHantoGame {
-	private final int MAX_BOARD_SIZE = 20;
+	private final int MAX_BOARD_SIZE = 12;
 
 	public GammaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);

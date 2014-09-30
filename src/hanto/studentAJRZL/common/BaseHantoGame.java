@@ -137,6 +137,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	protected void postMakeMoveCheck() throws HantoException {
 		validatePiecesAreContiguous();
+		validateNumPieceOnBoard();
 	}
 
 	/**
@@ -309,7 +310,8 @@ public abstract class BaseHantoGame implements HantoGame {
 		MoveResult result = MoveResult.OK;
 
 		// TODO fix this check
-		if (board.size() == getMaxNumPiecesOnBoard()) {
+		if (board.size() == getMaxNumPiecesOnBoard()
+				&& isGameEndedAfterPlacingAllPieces()) {
 			result = MoveResult.DRAW;
 		}
 
@@ -326,6 +328,17 @@ public abstract class BaseHantoGame implements HantoGame {
 			isGameEnded = true;
 		}
 		return result;
+	}
+
+	/**
+	 * Determine if a game should end after all pieces allowed are placed on
+	 * board
+	 * 
+	 * @return true if so; false otherwise
+	 */
+	private boolean isGameEndedAfterPlacingAllPieces() {
+		// TODO this will contain more test as we allow pieces to fly and etc..
+		return getAllowedWalkingDistance() == 0;
 	}
 
 	/**
@@ -481,6 +494,17 @@ public abstract class BaseHantoGame implements HantoGame {
 			isSurrounded = false;
 		}
 		return isSurrounded;
+	}
+
+	/**
+	 * Check if there are more pieces placed than allowed
+	 * 
+	 * @throws HantoException
+	 */
+	private void validateNumPieceOnBoard() throws HantoException {
+		if (board.size() > getMaxNumPiecesOnBoard()) {
+			throw new HantoException("You can't place more pieces than allowed");
+		}
 	}
 
 }
