@@ -114,8 +114,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	 * @param coord
 	 * @return common neighbors
 	 */
-	public Collection<HantoCoordinate> getCommonNeighbors(
-			HantoPieceCoordinate coord) {
+	public Collection<HantoCoordinate> getCommonNeighbors(HantoPieceCoordinate coord) {
 		Collection<HantoCoordinate> commonNeighbors = new LinkedList<HantoCoordinate>();
 		Collection<HantoCoordinate> neighbors1 = getAdjacentCoordinates();
 		Collection<HantoCoordinate> neighbors2 = coord.getAdjacentCoordinates();
@@ -140,8 +139,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 		int z1 = 0 - x - y;
 		int z2 = 0 - coord.getX() - coord.getY();
 
-		return (Math.abs(x - coord.getX()) + Math.abs(y - coord.getY()) + Math
-				.abs(z1 - z2)) / 2;
+		return (Math.abs(x - coord.getX()) + Math.abs(y - coord.getY()) + Math.abs(z1 - z2)) / 2;
 
 	}
 }

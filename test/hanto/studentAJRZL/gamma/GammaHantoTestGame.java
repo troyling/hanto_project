@@ -35,12 +35,13 @@ public class GammaHantoTestGame implements HantoTestGame {
 	 * Constructor of the GammaHantoTestGame
 	 */
 	public GammaHantoTestGame(HantoPlayerColor movesFirst) {
-		testGame = HantoGameFactory.getInstance().makeHantoGame(HantoGameID.GAMMA_HANTO, movesFirst);
+		testGame = HantoGameFactory.getInstance()
+				.makeHantoGame(HantoGameID.GAMMA_HANTO, movesFirst);
 	}
 
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 		return testGame.makeMove(pieceType, from, to);
 	}
 
@@ -56,7 +57,7 @@ public class GammaHantoTestGame implements HantoTestGame {
 
 	@Override
 	public void initializeBoard(PieceLocationPair[] initialPieces) {
-		for(PieceLocationPair p : initialPieces) {
+		for (PieceLocationPair p : initialPieces) {
 			try {
 				makeMove(p.pieceType, null, p.location);
 			} catch (HantoException e) {

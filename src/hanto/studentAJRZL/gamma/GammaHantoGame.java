@@ -44,8 +44,8 @@ public class GammaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void preMakeMoveCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
 		if (from != null && to != null) {
 			validateWalk(from, to);
 		}
@@ -56,12 +56,9 @@ public class GammaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void validateAllowedPieceType(HantoPieceType pieceType)
-			throws HantoException {
-		if (pieceType != HantoPieceType.BUTTERFLY
-				&& pieceType != HantoPieceType.SPARROW) {
-			throw new HantoException(
-					"The piece you are trying to place is not allowed.");
+	protected void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
+		if (pieceType != HantoPieceType.BUTTERFLY && pieceType != HantoPieceType.SPARROW) {
+			throw new HantoException("The piece you are trying to place is not allowed.");
 		}
 	}
 
@@ -80,13 +77,11 @@ public class GammaHantoGame extends BaseHantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateWalk(HantoCoordinate from, HantoCoordinate to)
-			throws HantoException {
+	private void validateWalk(HantoCoordinate from, HantoCoordinate to) throws HantoException {
 		boolean isWalkValid = false;
 		HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
 		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
-		Collection<HantoCoordinate> commonNeighbors = fromCoord
-				.getCommonNeighbors(toCoord);
+		Collection<HantoCoordinate> commonNeighbors = fromCoord.getCommonNeighbors(toCoord);
 
 		// check if either neighbor is not occupied
 		for (HantoCoordinate coord : commonNeighbors) {
