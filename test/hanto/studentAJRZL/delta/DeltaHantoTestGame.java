@@ -34,8 +34,8 @@ public class DeltaHantoTestGame implements HantoTestGame {
 	 * Constructor of the DeltaHantoTestGame
 	 */
 	public DeltaHantoTestGame(HantoPlayerColor movesFirst) {
-		testGame = (DeltaHantoGame) HantoGameFactory.getInstance()
-				.makeHantoGame(HantoGameID.DELTA_HANTO, movesFirst);
+		testGame = (DeltaHantoGame) HantoGameFactory.getInstance().makeHantoGame(
+				HantoGameID.DELTA_HANTO, movesFirst);
 	}
 
 	@Override

@@ -280,7 +280,7 @@ public class DeltaHantoGameTest {
 		game.makeMove(HantoPieceType.CRAB, new TestHantoCoordinate(0, 0), new TestHantoCoordinate(
 				0, 2));
 	}
-	
+
 	/**
 	 * Test that attempts to make butterfly fly
 	 */
@@ -299,8 +299,8 @@ public class DeltaHantoGameTest {
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 
 		// making moves
-		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0), new TestHantoCoordinate(
-				0, 2));
+		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0),
+				new TestHantoCoordinate(0, 2));
 	}
 
 	/**
@@ -364,7 +364,7 @@ public class DeltaHantoGameTest {
 		game.setTurnNumber(2);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 	}
-	
+
 	/**
 	 * Test for sparrow flying over neighbors
 	 */
@@ -381,14 +381,15 @@ public class DeltaHantoGameTest {
 				HantoPieceType.SPARROW, new TestHantoCoordinate(1, 0));
 		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
 				HantoPieceType.SPARROW, new TestHantoCoordinate(1, -1));
-		
+
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(3);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
-		
-		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(0, 0), new TestHantoCoordinate(2, 0)));
+
+		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(
+				0, 0), new TestHantoCoordinate(2, 0)));
 	}
-	
+
 	/**
 	 * Test for sparrow flying through neighbors
 	 */
@@ -405,14 +406,15 @@ public class DeltaHantoGameTest {
 				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 2));
 		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
 				HantoPieceType.SPARROW, new TestHantoCoordinate(1, -1));
-		
+
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(3);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
-		
-		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(0, 0), new TestHantoCoordinate(1, 0)));
+
+		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(
+				0, 0), new TestHantoCoordinate(1, 0)));
 	}
-	
+
 	/**
 	 * Test for blue player winning the game by flying a sparrow to surround the red butterfly
 	 */
@@ -437,14 +439,15 @@ public class DeltaHantoGameTest {
 				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 2));
 		initialPieces[7] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
 				HantoPieceType.SPARROW, new TestHantoCoordinate(2, 0));
-		
+
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(5);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
-		
-		assertEquals(MoveResult.BLUE_WINS, game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(0, -1), new TestHantoCoordinate(-1, 1)));
+
+		assertEquals(MoveResult.BLUE_WINS, game.makeMove(HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, -1), new TestHantoCoordinate(-1, 1)));
 	}
-	
+
 	/**
 	 * Test for red player winning the game by flying a sparrow to surround the blue butterfly
 	 */
@@ -467,11 +470,12 @@ public class DeltaHantoGameTest {
 				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 2));
 		initialPieces[6] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
 				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 0));
-		
+
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(4);
 		game.setPlayerMoving(HantoPlayerColor.RED);
-		
-		assertEquals(MoveResult.RED_WINS, game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(0, 2), new TestHantoCoordinate(1, -1)));
+
+		assertEquals(MoveResult.RED_WINS, game.makeMove(HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, 2), new TestHantoCoordinate(1, -1)));
 	}
 }

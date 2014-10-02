@@ -27,7 +27,7 @@ import java.util.Collection;
  * 
  */
 public class DeltaHantoGame extends BaseHantoGame {
-	
+
 	/**
 	 * Constructor for delta hanto game
 	 * 
