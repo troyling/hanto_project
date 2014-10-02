@@ -49,7 +49,6 @@ public class DeltaHantoGame extends BaseHantoGame {
 				&& pieceType != HantoPieceType.CRAB) {
 			throw new HantoException("The piece you are trying to place is not allowed.");
 		}
-
 	}
 
 	/**

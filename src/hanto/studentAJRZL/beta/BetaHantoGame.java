@@ -50,15 +50,9 @@ public class BetaHantoGame extends BaseHantoGame {
 	@Override
 	protected void preMakeMoveCheck(HantoPieceType pieceType,
 			HantoCoordinate from, HantoCoordinate to) throws HantoException {
-		// ensure player is not placing other piece type onto the board
 		validatePieceType(pieceType);
-
-		// piece can only be placed, not moved
 		validateMove(from);
-
-		// check if butterfly is placed
 		validateBufferflyPresence(pieceType);
-
 		super.preMakeMoveCheck(pieceType, from, to);
 	}
 
