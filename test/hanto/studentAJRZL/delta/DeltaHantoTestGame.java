@@ -12,7 +12,6 @@ package hanto.studentAJRZL.delta;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
-import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
@@ -29,13 +28,13 @@ import hanto.studentAJRZL.HantoGameFactory;
  */
 public class DeltaHantoTestGame implements HantoTestGame {
 
-	private final HantoGame testGame;
+	private final DeltaHantoGame testGame;
 
 	/**
 	 * Constructor of the DeltaHantoTestGame
 	 */
 	public DeltaHantoTestGame(HantoPlayerColor movesFirst) {
-		testGame = HantoGameFactory.getInstance()
+		testGame = (DeltaHantoGame) HantoGameFactory.getInstance()
 				.makeHantoGame(HantoGameID.DELTA_HANTO, movesFirst);
 	}
 
@@ -68,9 +67,11 @@ public class DeltaHantoTestGame implements HantoTestGame {
 
 	@Override
 	public void setTurnNumber(int turnNumber) {
+		testGame.setTurnNumber(turnNumber);
 	}
 
 	@Override
 	public void setPlayerMoving(HantoPlayerColor player) {
+		testGame.setCurrentPlayerColor(player);
 	}
 }
