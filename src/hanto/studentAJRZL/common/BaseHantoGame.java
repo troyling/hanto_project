@@ -31,6 +31,14 @@ import java.util.Queue;
  * 
  */
 public abstract class BaseHantoGame implements HantoGame {
+	// pieces allowed
+	protected int NUM_BUTTERFLY_ALLOWED = 0;
+	protected int NUM_SPARROW_ALLOWED = 0;
+	protected int NUM_CRAB_ALLOWED = 0;
+	protected int NUM_CRANE_ALLOWED = 0;
+	protected int NUM_DOVE_ALLOWED = 0;
+	protected int NUM_HORSE_ALLOWED = 0;
+	
 	protected HantoCoordinate blueButterflyCoordiate;
 	protected HantoCoordinate redButterflyCoordiate;
 
