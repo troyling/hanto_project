@@ -190,7 +190,7 @@ public abstract class BaseHantoGame implements HantoGame {
 			validatePieceAtFromCoordinate(fromCoord, newPiece);
 
 			// check if the piece is moving at the allowed pace
-			validateWalkDistance(fromCoord, toCoord);
+			validateWalkDistance(pieceType, fromCoord, toCoord);
 
 			// remove the piece at the original location
 			board.remove(fromCoord);
@@ -223,16 +223,35 @@ public abstract class BaseHantoGame implements HantoGame {
 	/**
 	 * Check if the walk is within the allowed distance
 	 * 
+	 * @param pieceType
 	 * @param fromCoord
 	 * @param toCoord
 	 * @throws HantoException
 	 */
-	private void validateWalkDistance(HantoCoordinate fromCoord, HantoCoordinate toCoord)
+	private void validateWalkDistance(HantoPieceType pieceType,
+			HantoCoordinate fromCoord, HantoCoordinate toCoord)
 			throws HantoException {
-		final int distance = ((HantoPieceCoordinate) fromCoord).getDistanceTo(toCoord);
+		final int distance = ((HantoPieceCoordinate) fromCoord)
+				.getDistanceTo(toCoord);
 		if (distance > getAllowedWalkingDistance()) {
-			throw new HantoException("Can't walk further than allowed distance.");
+			if (!isPieceAllowedToFly(pieceType)) {
+				throw new HantoException(
+						"Can't walk further than allowed distance. Only sparrow can fly in delta hato game.");
+
+			}
 		}
+	}
+
+	/**
+	 * Determine if the piece is allowed to fly. By default is false for all
+	 * pieces, hanto game variant which allows flying should override this
+	 * method.
+	 * 
+	 * @param pieceType
+	 * @return true if so; flase otherwise
+	 */
+	protected boolean isPieceAllowedToFly(HantoPieceType pieceType) {
+		return false;
 	}
 
 	/**
@@ -293,8 +312,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 
-		// TODO fix this check
-		if (board.size() == getMaxNumPiecesOnBoard() && isGameEndedAfterPlacingAllPieces()) {
+		if (board.size() == getMaxNumPiecesOnBoard()
+				&& isGameEndedAfterPlacingAllPieces()) {
 			result = MoveResult.DRAW;
 		}
 

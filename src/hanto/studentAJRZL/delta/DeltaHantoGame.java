@@ -10,10 +10,13 @@
 
 package hanto.studentAJRZL.delta;
 
+import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.BaseHantoGame;
+import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 /**
  * Class for the delta hanto game.
@@ -24,25 +27,114 @@ import hanto.studentAJRZL.common.BaseHantoGame;
 public class DeltaHantoGame extends BaseHantoGame {
 	private final int MAX_BOARD_SIZE = 18;
 
+
+	/**
+	 * Constructor for delta hanto game
+	 * 
+	 * @param movesFirst
+	 */
 	public DeltaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected int getMaxNumPiecesOnBoard() {
 		return MAX_BOARD_SIZE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
 		if (pieceType != HantoPieceType.BUTTERFLY && pieceType != HantoPieceType.SPARROW
 				&& pieceType != HantoPieceType.CRAB) {
 			throw new HantoException("The piece you are trying to place is not allowed.");
 		}
+
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected int getAllowedWalkingDistance() {
 		return 1;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
+		MoveResult result = MoveResult.OK;
+		if (isPlayerResigning(pieceType, from, to)) {
+			if (currentPlayColor == HantoPlayerColor.BLUE) {
+				result = MoveResult.RED_WINS;
+			} else {
+				result = MoveResult.BLUE_WINS;
+			}
+		} else {
+			result = super.makeMove(pieceType, from, to);
+		}
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void preMakeMoveCheck(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+		super.preMakeMoveCheck(pieceType, from, to);
+		validateCanFly(pieceType, from, to);
+	}
+
+	/**
+	 * Validate if the flying is valid
+	 * 
+	 * @param pieceType
+	 * @param from
+	 * @param to
+	 * @throws HantoException
+	 */
+	private void validateCanFly(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
+		if (from != null && to != null) {
+			HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
+
+			// check for flying
+			if (fromCoord.getDistanceTo(to) > getAllowedWalkingDistance()
+					&& pieceType != HantoPieceType.SPARROW) {
+				throw new HantoException(
+						"Only sparrow can fly in delta hato game.");
+			}
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected boolean isPieceAllowedToFly(HantoPieceType pieceType) {
+		return pieceType == HantoPieceType.SPARROW;
+	}
+
+	/**
+	 * Check if the current player intends to resign
+	 * 
+	 * @param pieceType
+	 * @param from
+	 * @param to
+	 * @return true if so; false otherwise
+	 */
+	private boolean isPlayerResigning(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to) {
+		return pieceType == null && from == null && to == null;
+	}
+
 }
