@@ -252,7 +252,12 @@ public abstract class BaseHantoGame implements HantoGame {
 		board.put(toCoord, newPiece);
 	}
 
-	// TODO
+	/**
+	 * Validates the maximum number of pieces are on the board
+	 * 
+	 * @param pieceType the piece type
+	 * @throws HantoException
+	 */
 	private void validateNumMaxPiece(HantoPieceType pieceType) throws HantoException {
 		int numPieceWillBeOnBoard = 0;
 		for (HantoCoordinate coord : board.keySet()) {
@@ -401,7 +406,6 @@ public abstract class BaseHantoGame implements HantoGame {
 		MoveResult result = MoveResult.OK;
 
 		if (numTurns > getMaxTurnOfGame()) {
-			// && isGameEndedAfterPlacingAllPieces()
 			result = MoveResult.DRAW;
 		}
 
