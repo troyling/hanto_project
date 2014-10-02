@@ -271,10 +271,8 @@ public class GammaHantoGameTest {
 		game.setTurnNumber(4);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 
-		// System.out.println("Before: \n" + game.getPrintableBoard());
 		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.BUTTERFLY,
 				new TestHantoCoordinate(0, 0), new TestHantoCoordinate(1, 0)));
-		// System.out.println("After: \n" + game.getPrintableBoard());
 	}
 
 	/**
