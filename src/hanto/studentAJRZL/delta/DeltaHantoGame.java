@@ -7,7 +7,7 @@ import hanto.studentAJRZL.common.BaseHantoGame;
 
 public class DeltaHantoGame extends BaseHantoGame {
 	private final int MAX_BOARD_SIZE = 18;
-	
+
 	public DeltaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
 	}
@@ -18,20 +18,16 @@ public class DeltaHantoGame extends BaseHantoGame {
 	}
 
 	@Override
-	protected void validateAllowedPieceType(HantoPieceType pieceType)
-			throws HantoException {
-		if (pieceType != HantoPieceType.BUTTERFLY
-				&& pieceType != HantoPieceType.SPARROW
+	protected void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
+		if (pieceType != HantoPieceType.BUTTERFLY && pieceType != HantoPieceType.SPARROW
 				&& pieceType != HantoPieceType.CRAB) {
-			throw new HantoException(
-					"The piece you are trying to place is not allowed.");
+			throw new HantoException("The piece you are trying to place is not allowed.");
 		}
-		
+
 	}
 
 	@Override
 	protected int getAllowedWalkingDistance() {
 		return 1;
 	}
-
 }

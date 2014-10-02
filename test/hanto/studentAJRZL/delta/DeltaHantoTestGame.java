@@ -19,13 +19,13 @@ public class DeltaHantoTestGame implements HantoTestGame {
 	 * Constructor of the GammaHantoTestGame
 	 */
 	public DeltaHantoTestGame(HantoPlayerColor movesFirst) {
-		testGame = HantoGameFactory.getInstance().makeHantoGame(
-				HantoGameID.DELTA_HANTO, movesFirst);
+		testGame = HantoGameFactory.getInstance()
+				.makeHantoGame(HantoGameID.DELTA_HANTO, movesFirst);
 	}
 
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 		return testGame.makeMove(pieceType, from, to);
 	}
 
@@ -48,19 +48,13 @@ public class DeltaHantoTestGame implements HantoTestGame {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	@Override
 	public void setTurnNumber(int turnNumber) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void setPlayerMoving(HantoPlayerColor player) {
-		// TODO Auto-generated method stub
-
 	}
-
 }
