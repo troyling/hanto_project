@@ -333,11 +333,9 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param toCoord
 	 * @throws HantoException
 	 */
-	private void validateWalkDistance(HantoPieceType pieceType,
-			HantoCoordinate fromCoord, HantoCoordinate toCoord)
-			throws HantoException {
-		final int distance = ((HantoPieceCoordinate) fromCoord)
-				.getDistanceTo(toCoord);
+	private void validateWalkDistance(HantoPieceType pieceType, HantoCoordinate fromCoord,
+			HantoCoordinate toCoord) throws HantoException {
+		final int distance = ((HantoPieceCoordinate) fromCoord).getDistanceTo(toCoord);
 		if (distance > getAllowedWalkingDistance()) {
 			if (!isPieceAllowedToFly(pieceType)) {
 				throw new HantoException(
@@ -348,9 +346,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * Determine if the piece is allowed to fly. By default is false for all
-	 * pieces, hanto game variant which allows flying should override this
-	 * method.
+	 * Determine if the piece is allowed to fly. By default is false for all pieces, hanto game
+	 * variant which allows flying should override this method.
 	 * 
 	 * @param pieceType
 	 * @return true if so; flase otherwise

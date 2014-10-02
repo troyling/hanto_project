@@ -18,6 +18,8 @@ import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.BaseHantoGame;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
+import java.util.Collection;
+
 /**
  * Class for the delta hanto game.
  * 
@@ -42,13 +44,10 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void validateAllowedPieceType(HantoPieceType pieceType)
-			throws HantoException {
-		if (pieceType != HantoPieceType.BUTTERFLY
-				&& pieceType != HantoPieceType.SPARROW
+	protected void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
+		if (pieceType != HantoPieceType.BUTTERFLY && pieceType != HantoPieceType.SPARROW
 				&& pieceType != HantoPieceType.CRAB) {
-			throw new HantoException(
-					"The piece you are trying to place is not allowed.");
+			throw new HantoException("The piece you are trying to place is not allowed.");
 		}
 
 	}
@@ -65,8 +64,8 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 		MoveResult result = MoveResult.OK;
 		if (isPlayerResigning(pieceType, from, to)) {
 			if (currentPlayerColor == HantoPlayerColor.BLUE) {
@@ -84,10 +83,35 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void preMakeMoveCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
 		super.preMakeMoveCheck(pieceType, from, to);
-		validateCanFly(pieceType, from, to);
+		validateCanWalk(pieceType, from, to);
+	}
+
+	/**
+	 * Validate if walking is valid
+	 * 
+	 * @param pieceType
+	 * @param from
+	 * @param to
+	 * @throws HantoException
+	 */
+	private void validateCanWalk(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
+		if (from != null && to != null) {
+			HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
+
+			if (pieceType == HantoPieceType.SPARROW) {
+				validateCanFly(pieceType, from, to);
+				return;
+			}
+			if (fromCoord.getDistanceTo(to) != getAllowedWalkingDistance()) {
+				throw new HantoException("Pieces can only walk one hex in delta hanto.");
+			} else {
+				validateWalk(from, to);
+			}
+		}
 	}
 
 	/**
@@ -98,16 +122,15 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateCanFly(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	private void validateCanFly(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 		if (from != null && to != null) {
 			HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
 
 			// check for flying
 			if (fromCoord.getDistanceTo(to) > getAllowedWalkingDistance()
 					&& pieceType != HantoPieceType.SPARROW) {
-				throw new HantoException(
-						"Only sparrow can fly in delta hato game.");
+				throw new HantoException("Only sparrow can fly in delta hato game.");
 			}
 		}
 	}
@@ -128,9 +151,33 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 * @param to
 	 * @return true if so; false otherwise
 	 */
-	private boolean isPlayerResigning(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) {
+	private boolean isPlayerResigning(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) {
 		return pieceType == null && from == null && to == null;
 	}
 
+	/**
+	 * Check if the walk is valid
+	 * 
+	 * @param from
+	 * @param to
+	 * @throws HantoException
+	 */
+	protected void validateWalk(HantoCoordinate from, HantoCoordinate to) throws HantoException {
+		boolean isWalkValid = false;
+		HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
+		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
+		Collection<HantoCoordinate> commonNeighbors = fromCoord.getCommonNeighbors(toCoord);
+
+		// check if either neighbor is not occupied
+		for (HantoCoordinate coord : commonNeighbors) {
+			if (board.get((HantoPieceCoordinate) coord) == null) {
+				isWalkValid = true;
+			}
+		}
+
+		if (!isWalkValid) {
+			throw new HantoException("Walk is not valid.");
+		}
+	}
 }
