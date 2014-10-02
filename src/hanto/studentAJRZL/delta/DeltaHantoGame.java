@@ -117,9 +117,9 @@ public class DeltaHantoGame extends BaseHantoGame {
 	/**
 	 * Validate if the flying is valid
 	 * 
-	 * @param pieceType
-	 * @param from
-	 * @param to
+	 * @param pieceType the piece type
+	 * @param from the original coordinate
+	 * @param to the destination coordinate
 	 * @throws HantoException
 	 */
 	private void validateCanFly(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
