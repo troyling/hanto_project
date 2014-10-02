@@ -14,6 +14,7 @@ import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.BaseHantoGame;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
@@ -46,6 +47,11 @@ public class GammaHantoGame extends BaseHantoGame {
 	@Override
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
+		// Make sure the game cannot continue after 20 moves.
+		if (numTurns == 20) {
+			throw new HantoException("Game has already ended.");
+		}
+
 		if (from != null && to != null) {
 			validateWalk(from, to);
 		}
@@ -95,4 +101,14 @@ public class GammaHantoGame extends BaseHantoGame {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected MoveResult checkGameStatus() {
+		if (numTurns == 20) {
+			return MoveResult.DRAW;
+		}
+		return super.checkGameStatus();
+	}
 }

@@ -117,9 +117,9 @@ public class GammaHantoTestMaster {
 
 	@Test
 	public void blueMovesSparrowUsingTestGame() throws HantoException {
-		final PieceLocationPair[] board = new PieceLocationPair[] { plPair(BLUE, BUTTERFLY, 0, 0),
-				plPair(RED, BUTTERFLY, 0, 1), plPair(BLUE, SPARROW, 0, -1),
-				plPair(RED, SPARROW, 0, 2)
+		final PieceLocationPair[] board = new PieceLocationPair[] {
+				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
+				plPair(BLUE, SPARROW, 0, -1), plPair(RED, SPARROW, 0, 2)
 
 		};
 		testGame.initializeBoard(board);
@@ -134,9 +134,9 @@ public class GammaHantoTestMaster {
 
 	@Test
 	public void gameEndsInDrawAfter20Moves() throws HantoException {
-		final PieceLocationPair[] board = new PieceLocationPair[] { plPair(BLUE, BUTTERFLY, 0, 0),
-				plPair(RED, BUTTERFLY, 0, 1), plPair(BLUE, SPARROW, 0, -1),
-				plPair(RED, SPARROW, 0, 2)
+		final PieceLocationPair[] board = new PieceLocationPair[] {
+				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
+				plPair(BLUE, SPARROW, 0, -1), plPair(RED, SPARROW, 0, 2)
 
 		};
 		testGame.initializeBoard(board);

@@ -35,8 +35,10 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected HantoCoordinate redButterflyCoordiate;
 
 	protected HantoPlayerColor currentPlayColor;
+	protected HantoPlayerColor movesFirst;
 	protected boolean isGameEnded = false;
 	protected Map<HantoCoordinate, HantoPiece> board;
+	protected int numTurns;
 
 	/**
 	 * Constructor for Base hanto game
@@ -44,8 +46,10 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param movesFirst
 	 */
 	protected BaseHantoGame(HantoPlayerColor movesFirst) {
+		this.movesFirst = movesFirst;
 		currentPlayColor = movesFirst;
 		board = new HashMap<HantoCoordinate, HantoPiece>();
+		numTurns = 0;
 	}
 
 	/**
@@ -286,7 +290,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * 
 	 * @return the result of a move
 	 */
-	private MoveResult checkGameStatus() {
+	protected MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 
 		// TODO fix this check
@@ -334,6 +338,11 @@ public abstract class BaseHantoGame implements HantoGame {
 				break;
 			default:
 				throw new HantoException("Invalid player color");
+		}
+
+		// Increment the number of turns if the first player is moving again.
+		if (currentPlayColor == movesFirst) {
+			numTurns++;
 		}
 	}
 

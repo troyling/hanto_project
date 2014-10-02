@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Test cases for beta hanto game
+ * Test cases for gamma hanto game
  * 
  * @author troyling
  * 
