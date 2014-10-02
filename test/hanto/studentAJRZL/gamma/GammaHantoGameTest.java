@@ -96,6 +96,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Test if the piece is moved correctly
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testValidMovePiece() throws HantoException {
@@ -120,6 +122,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Test if the piece is moved incorrectly, causing disconnection
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testInvalidMovePiece() throws HantoException {
@@ -145,6 +149,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Test for red winning the game
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testRedWinsBySurroundingRedButterfly() throws HantoException {
@@ -181,6 +187,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Test for moving the blue butterfly which would result into disconnection between other pieces
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testBlueButterflyCannotMove() throws HantoException {
@@ -206,6 +214,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Attempts to move a piece to a null destination. Exception is expected.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testMovePieceToNullDestionCoordinate() throws HantoException {
@@ -226,6 +236,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Attempts to move a piece to an occupied destination. Exception is expected.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testMovePieceToOccupiedDestionCoordinate() throws HantoException {
@@ -247,6 +259,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Test for two neighbors are being occupied
+	 * 
+	 * @throws HantoException
 	 */
 
 	@Test(expected = HantoException.class)
@@ -277,6 +291,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Attempts to move a sparrow which in fact is a butterfly
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testMoveWrongPiece() throws HantoException {
@@ -298,6 +314,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Attempts to move a piece for 2 steps, which is not allowed in gamma.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testAttemptToMoveTwoSteps() throws HantoException {
@@ -319,6 +337,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Attempt to move other player's piece
+	 * 
+	 * @throws HantoException
 	 */
 	public void testBluePlayerAttemptToMoveRedButterfly() throws HantoException {
 		// initial test
@@ -339,6 +359,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Call makeMove function without providing a hanto piece type
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testAttemptToMoveWithoutPieceType() throws HantoException {
@@ -359,6 +381,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Tests for valid attempts to move a piece.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test
 	public void testValidAttemptsForPieceToWalk() throws HantoException {
@@ -391,6 +415,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Tests for invalid attempts to move a piece.
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testInvalidAttemptsForPieceToWalk() throws HantoException {
@@ -415,6 +441,8 @@ public class GammaHantoGameTest {
 
 	/**
 	 * Attempt to move a piece which is not on board
+	 * 
+	 * @throws HantoException
 	 */
 	@Test(expected = HantoException.class)
 	public void testAttemptToMovePieceNotOnBoard() throws HantoException {
@@ -436,6 +464,8 @@ public class GammaHantoGameTest {
 	/**
 	 * Test that ensures the board allows making move after both player finish placing pieces on
 	 * board
+	 * 
+	 * @throws HantoException
 	 * 
 	 */
 	@Test
@@ -483,6 +513,8 @@ public class GammaHantoGameTest {
 	 * Test that ensures the board allows making move after both player finish placing pieces on
 	 * board
 	 * 
+	 * @throws HantoException
+	 * 
 	 */
 	@Test(expected = HantoException.class)
 	public void testAttemptToPlaceExtraPiece() throws HantoException {
@@ -526,5 +558,26 @@ public class GammaHantoGameTest {
 	@Test(expected = HantoException.class)
 	public void testAttemptToPlaceCrab() throws HantoException {
 		game.makeMove(HantoPieceType.CRAB, null, new TestHantoCoordinate(0, 0));
+	}
+
+	/**
+	 * Check that pieces can only be placed next to their own pieces and not the opponent's
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testPiecePlacementAdjacentToItsOwnPieces() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(-1, 1));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(7);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		game.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(0, -1));
 	}
 }
