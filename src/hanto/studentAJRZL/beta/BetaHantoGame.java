@@ -23,7 +23,6 @@ import hanto.studentAJRZL.common.BaseHantoGame;
  * 
  */
 public class BetaHantoGame extends BaseHantoGame {
-	private final int MAX_TURN = 6;
 
 	/**
 	 * Constructor for beta hanto game
@@ -34,14 +33,7 @@ public class BetaHantoGame extends BaseHantoGame {
 		super(movesFirst);
 		NUM_BUTTERFLY_ALLOWED = 1;
 		NUM_SPARROW_ALLOWED = 5;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected int getMaxTurnOfGame() {
-		return MAX_TURN;
+		MAX_TURN = 6;
 	}
 
 	/**

@@ -17,8 +17,6 @@ import hanto.common.HantoPlayerColor;
 import hanto.studentAJRZL.common.BaseHantoGame;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
-import java.util.Collection;
-
 /**
  * Gamma Hanto Game class.
  * 
@@ -26,20 +24,12 @@ import java.util.Collection;
  * 
  */
 public class GammaHantoGame extends BaseHantoGame {
-	private final int MAX_TURN = 20;
 
 	public GammaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
+		MAX_TURN = 20;
 		NUM_BUTTERFLY_ALLOWED = 1;
 		NUM_SPARROW_ALLOWED = 5;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected int getMaxTurnOfGame() {
-		return MAX_TURN;
 	}
 
 	/**
@@ -88,30 +78,5 @@ public class GammaHantoGame extends BaseHantoGame {
 	@Override
 	protected int getAllowedWalkingDistance() {
 		return 1;
-	}
-
-	/**
-	 * Check if the walk is valid
-	 * 
-	 * @param from
-	 * @param to
-	 * @throws HantoException
-	 */
-	protected void validateWalk(HantoCoordinate from, HantoCoordinate to) throws HantoException {
-		boolean isWalkValid = false;
-		HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
-		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
-		Collection<HantoCoordinate> commonNeighbors = fromCoord.getCommonNeighbors(toCoord);
-
-		// check if either neighbor is not occupied
-		for (HantoCoordinate coord : commonNeighbors) {
-			if (board.get((HantoPieceCoordinate) coord) == null) {
-				isWalkValid = true;
-			}
-		}
-
-		if (!isWalkValid) {
-			throw new HantoException("Walk is not valid.");
-		}
 	}
 }

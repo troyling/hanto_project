@@ -38,6 +38,9 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected int NUM_CRANE_ALLOWED = 0;
 	protected int NUM_DOVE_ALLOWED = 0;
 	protected int NUM_HORSE_ALLOWED = 0;
+	
+	// no limit for turn
+	protected int MAX_TURN = Integer.MAX_VALUE;
 
 	protected HantoCoordinate blueButterflyCoordiate;
 	protected HantoCoordinate redButterflyCoordiate;
@@ -124,15 +127,6 @@ public abstract class BaseHantoGame implements HantoGame {
 					+ key.getY() + ")\n";
 		}
 		return printedBoard;
-	}
-
-	/**
-	 * Get the maximum number of pieces can placed on the board for a hanto game
-	 * 
-	 * @return the max size of the board
-	 */
-	protected int getMaxTurnOfGame() {
-		return Integer.MAX_VALUE;
 	}
 
 	/**
@@ -405,7 +399,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 
-		if (numTurns > getMaxTurnOfGame()) {
+		if (numTurns > MAX_TURN) {
 			result = MoveResult.DRAW;
 		}
 
@@ -577,4 +571,28 @@ public abstract class BaseHantoGame implements HantoGame {
 		return isSurrounded;
 	}
 
+	/**
+	 * Check if the walk is valid
+	 * 
+	 * @param from
+	 * @param to
+	 * @throws HantoException
+	 */
+	protected void validateWalk(HantoCoordinate from, HantoCoordinate to) throws HantoException {
+		boolean isWalkValid = false;
+		HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
+		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
+		Collection<HantoCoordinate> commonNeighbors = fromCoord.getCommonNeighbors(toCoord);
+
+		// check if either neighbor is not occupied
+		for (HantoCoordinate coord : commonNeighbors) {
+			if (board.get((HantoPieceCoordinate) coord) == null) {
+				isWalkValid = true;
+			}
+		}
+
+		if (!isWalkValid) {
+			throw new HantoException("Walk is not valid.");
+		}
+	}
 }
