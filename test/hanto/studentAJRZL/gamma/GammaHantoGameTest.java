@@ -283,6 +283,7 @@ public class GammaHantoGameTest {
 	@Test(expected = HantoException.class)
 	public void testMoveWrongPiece() throws HantoException {
 		// init test
+		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
 		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
