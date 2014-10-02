@@ -34,8 +34,8 @@ public class GammaHantoTestGame implements HantoTestGame {
 	 * Constructor of the GammaHantoTestGame
 	 */
 	public GammaHantoTestGame(HantoPlayerColor movesFirst) {
-		testGame = (GammaHantoGame) HantoGameFactory.getInstance()
-				.makeHantoGame(HantoGameID.GAMMA_HANTO, movesFirst);
+		testGame = (GammaHantoGame) HantoGameFactory.getInstance().makeHantoGame(
+				HantoGameID.GAMMA_HANTO, movesFirst);
 	}
 
 	@Override

@@ -161,5 +161,5 @@ public class DeltaHantoGame extends BaseHantoGame {
 			HantoCoordinate to) {
 		return pieceType == null && from == null && to == null;
 	}
-	
+
 }

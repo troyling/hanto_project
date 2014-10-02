@@ -181,10 +181,10 @@ public class GammaHantoGameTest {
 		game.setPlayerMoving(HantoPlayerColor.RED);
 
 		// both butterflies' move should be valid
-		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW,
-				new TestHantoCoordinate(2, 0), new TestHantoCoordinate(1, 0)));
-		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW,
-				new TestHantoCoordinate(2, -2), new TestHantoCoordinate(1, -2)));
+		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(
+				2, 0), new TestHantoCoordinate(1, 0)));
+		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(
+				2, -2), new TestHantoCoordinate(1, -2)));
 		assertEquals(MoveResult.RED_WINS, game.makeMove(HantoPieceType.SPARROW,
 				new TestHantoCoordinate(-1, 2), new TestHantoCoordinate(-1, 1)));
 	}
@@ -536,7 +536,7 @@ public class GammaHantoGameTest {
 
 		game.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(0, -1));
 	}
-	
+
 	/**
 	 * Check that pieces can only be placed next to their own pieces and not the opponent's
 	 * 

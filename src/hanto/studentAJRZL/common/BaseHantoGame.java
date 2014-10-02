@@ -38,7 +38,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected int NUM_CRANE_ALLOWED = 0;
 	protected int NUM_DOVE_ALLOWED = 0;
 	protected int NUM_HORSE_ALLOWED = 0;
-	
+
 	// no limit for turn
 	protected int MAX_TURN = Integer.MAX_VALUE;
 
