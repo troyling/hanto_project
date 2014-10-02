@@ -478,4 +478,85 @@ public class DeltaHantoGameTest {
 		assertEquals(MoveResult.RED_WINS, game.makeMove(HantoPieceType.SPARROW,
 				new TestHantoCoordinate(0, 2), new TestHantoCoordinate(1, -1)));
 	}
+	
+	/**
+	 * Test to make sure that players are not allowed to place more pieces than what the game allows
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptToPlaceMoreCrabsThanAllowed() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[8];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(1, 0));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(-1, 1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 2));
+		initialPieces[6] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(-1, 0));
+		initialPieces[7] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 3));
+		
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(5);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		game.makeMove(HantoPieceType.CRAB, null, new TestHantoCoordinate(0, 4));	
+	}
+	
+	/**
+	 * Test to make sure that players are not allowed to place more pieces than what the game allows
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptToPlaceMoreSparrowsThanAllowed() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[8];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(1, 0));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 2));
+		initialPieces[6] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 0));
+		initialPieces[7] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 3));
+		
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(5);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		game.makeMove(HantoPieceType.SPARROW, null, new TestHantoCoordinate(0, 4));	
+	}
+	
+	/**
+	 * Test to make sure that players are not allowed to place more pieces than what the game allows
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptToPlaceMoreButterflyThanAllowed() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
+		
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(2);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 2));	
+	}
 }
