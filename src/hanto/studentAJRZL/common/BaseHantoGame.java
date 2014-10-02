@@ -38,7 +38,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected int NUM_CRANE_ALLOWED = 0;
 	protected int NUM_DOVE_ALLOWED = 0;
 	protected int NUM_HORSE_ALLOWED = 0;
-	
+
 	protected HantoCoordinate blueButterflyCoordiate;
 	protected HantoCoordinate redButterflyCoordiate;
 
@@ -68,7 +68,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	public void setTurnNumber(int num) {
 		numTurns = num;
 	}
-	
+
 	/**
 	 * Set the current player color
 	 * 
@@ -157,7 +157,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	protected void postMakeMoveCheck() throws HantoException {
 		validatePiecesAreContiguous();
-		//validateNumPieceOnBoard();
+		// validateNumPieceOnBoard();
 	}
 
 	/**
@@ -258,11 +258,9 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param toCoord
 	 * @throws HantoException
 	 */
-	private void validateWalkDistance(HantoPieceType pieceType,
-			HantoCoordinate fromCoord, HantoCoordinate toCoord)
-			throws HantoException {
-		final int distance = ((HantoPieceCoordinate) fromCoord)
-				.getDistanceTo(toCoord);
+	private void validateWalkDistance(HantoPieceType pieceType, HantoCoordinate fromCoord,
+			HantoCoordinate toCoord) throws HantoException {
+		final int distance = ((HantoPieceCoordinate) fromCoord).getDistanceTo(toCoord);
 		if (distance > getAllowedWalkingDistance()) {
 			if (!isPieceAllowedToFly(pieceType)) {
 				throw new HantoException(
@@ -273,9 +271,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * Determine if the piece is allowed to fly. By default is false for all
-	 * pieces, hanto game variant which allows flying should override this
-	 * method.
+	 * Determine if the piece is allowed to fly. By default is false for all pieces, hanto game
+	 * variant which allows flying should override this method.
 	 * 
 	 * @param pieceType
 	 * @return true if so; flase otherwise
@@ -343,7 +340,7 @@ public abstract class BaseHantoGame implements HantoGame {
 		MoveResult result = MoveResult.OK;
 
 		if (numTurns > getMaxTurnOfGame()) {
-			//&& isGameEndedAfterPlacingAllPieces()
+			// && isGameEndedAfterPlacingAllPieces()
 			result = MoveResult.DRAW;
 		}
 
@@ -515,15 +512,15 @@ public abstract class BaseHantoGame implements HantoGame {
 		return isSurrounded;
 	}
 
-//	/**
-//	 * Check if there are more pieces placed than allowed
-//	 * 
-//	 * @throws HantoException
-//	 */
-//	private void validateNumPieceOnBoard() throws HantoException {
-//		if (board.size() > getMaxNumPiecesOnBoard()) {
-//			throw new HantoException("You can't place more pieces than allowed");
-//		}
-//	}
+	// /**
+	// * Check if there are more pieces placed than allowed
+	// *
+	// * @throws HantoException
+	// */
+	// private void validateNumPieceOnBoard() throws HantoException {
+	// if (board.size() > getMaxNumPiecesOnBoard()) {
+	// throw new HantoException("You can't place more pieces than allowed");
+	// }
+	// }
 
 }

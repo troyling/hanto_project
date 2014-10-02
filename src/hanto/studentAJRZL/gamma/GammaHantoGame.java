@@ -82,7 +82,7 @@ public class GammaHantoGame extends BaseHantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateWalk(HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	protected void validateWalk(HantoCoordinate from, HantoCoordinate to) throws HantoException {
 		boolean isWalkValid = false;
 		HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
 		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
@@ -99,5 +99,4 @@ public class GammaHantoGame extends BaseHantoGame {
 			throw new HantoException("Walk is not valid.");
 		}
 	}
-
 }
