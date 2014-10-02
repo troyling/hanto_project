@@ -23,6 +23,7 @@ import hanto.common.MoveResult;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 /**
  * Tests for delta hanto
  * 
@@ -69,7 +70,7 @@ public class DeltaHantoGameTest {
 			return y;
 		}
 	}
-	
+
 	private static HantoTestGameFactory factory;
 	private HantoTestGame game;
 
@@ -86,6 +87,177 @@ public class DeltaHantoGameTest {
 		game = factory.makeHantoTestGame(HantoGameID.DELTA_HANTO);
 	}
 
+	/**
+	 * Test valid crab walk
+	 * 
+	 * @throws HantoException
+	 */
+	@Test
+	public void testValidCrabWalkAttempts() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[4];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(1, 0));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(-1, 1));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(3);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.CRAB,
+				new TestHantoCoordinate(1, 0), new TestHantoCoordinate(1, -1)));
+	}
+
+	/**
+	 * Test invalid crab walk that causes disconnection between the pieces.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testInvalidCrabWalkDisconnection() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[6];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(-1, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(1, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 1));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, -1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(-1, 0));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(4);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		game.makeMove(HantoPieceType.CRAB, new TestHantoCoordinate(1, -1), new TestHantoCoordinate(
+				2, -2));
+	}
+
+	/**
+	 * Test invalid crab walk on crab that cannot move.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testInvalidCrabWalkAttempts() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[6];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(-1, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(1, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 1));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, -1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 2));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(4);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		game.makeMove(HantoPieceType.CRAB, new TestHantoCoordinate(0, 0), new TestHantoCoordinate(
+				-1, 0));
+	}
+
+	/**
+	 * Test valid butterfly walk
+	 * 
+	 * @throws HantoException
+	 */
+	@Test
+	public void testValidButterflyWalkAttempts() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 1));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(2);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.BUTTERFLY,
+				new TestHantoCoordinate(0, 0), new TestHantoCoordinate(0, 1)));
+	}
+
+	/**
+	 * Test invalid butterfly walk that causes disconnection between the pieces.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testInvalidButterflyWalkDisconnection() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[5];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(-1, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(1, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 1));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, -1));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(3);
+		game.setPlayerMoving(HantoPlayerColor.RED);
+
+		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(-1, 1),
+				new TestHantoCoordinate(-2, 2));
+	}
+
+	/**
+	 * Test invalid butterfly walk on butterfly that cannot move.
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testInvalidButterflyWalkAttempts() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[9];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(-1, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(1, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 1));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, -1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(1, 0));
+		initialPieces[6] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(1, -2));
+		initialPieces[7] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(2, 0));
+		initialPieces[8] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(2, -2));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(4);
+		game.setPlayerMoving(HantoPlayerColor.RED);
+
+		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(1, 0),
+				new TestHantoCoordinate(2, -1));
+	}
 
 	/**
 	 * Test that attempts to make crab fly
@@ -95,20 +267,18 @@ public class DeltaHantoGameTest {
 		// initial test hanto game
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(
-				HantoPlayerColor.BLUE, HantoPieceType.CRAB,
-				new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(
-				HantoPlayerColor.RED, HantoPieceType.CRAB,
-				new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 
 		// making moves
-		game.makeMove(HantoPieceType.CRAB, new TestHantoCoordinate(0, 0),
-				new TestHantoCoordinate(0, 2));
+		game.makeMove(HantoPieceType.CRAB, new TestHantoCoordinate(0, 0), new TestHantoCoordinate(
+				0, 2));
 	}
 
 	/**
@@ -119,20 +289,18 @@ public class DeltaHantoGameTest {
 		// initial test hanto game
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(
-				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
-				new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(
-				HantoPlayerColor.RED, HantoPieceType.SPARROW,
-				new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 
 		// making moves
-		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW,
-				new TestHantoCoordinate(0, 0), new TestHantoCoordinate(0, 2)));
+		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.SPARROW, new TestHantoCoordinate(
+				0, 0), new TestHantoCoordinate(0, 2)));
 
 	}
 
@@ -144,12 +312,10 @@ public class DeltaHantoGameTest {
 		// initial test hanto game
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(
-				HantoPlayerColor.BLUE, HantoPieceType.SPARROW,
-				new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(
-				HantoPlayerColor.RED, HantoPieceType.SPARROW,
-				new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
@@ -167,16 +333,13 @@ public class DeltaHantoGameTest {
 		// initial test hanto game
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[2];
 
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(
-				HantoPlayerColor.BLUE, HantoPieceType.CRAB,
-				new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(
-				HantoPlayerColor.RED, HantoPieceType.CRAB,
-				new TestHantoCoordinate(0, 1));
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(0, 1));
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 	}
-
 }
