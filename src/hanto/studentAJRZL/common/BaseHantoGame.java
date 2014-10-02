@@ -274,10 +274,21 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * Determine if the piece is allowed to fly. By default is false for all pieces, hanto game
 	 * variant which allows flying should override this method.
 	 * 
-	 * @param pieceType
-	 * @return true if so; flase otherwise
+	 * @param pieceType the piece type
+	 * @return true if so; false otherwise
 	 */
 	protected boolean isPieceAllowedToFly(HantoPieceType pieceType) {
+		return false;
+	}
+
+	/**
+	 * Determine if the piece is allowed to walk. By default is false for all pieces, hanto game
+	 * variant which allows walking should override this method.
+	 * 
+	 * @param pieceType the piece type
+	 * @return true if so, false otherwise
+	 */
+	protected boolean isPieceAllowedToWalk(HantoPieceType pieceType) {
 		return false;
 	}
 
