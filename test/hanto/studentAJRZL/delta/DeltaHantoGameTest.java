@@ -559,4 +559,36 @@ public class DeltaHantoGameTest {
 
 		game.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 2));	
 	}
+	
+	/**
+	 * Test for blue player attempts to move after red wins
+	 */
+	@Test(expected = HantoException.class)
+	public void testBlueAttemptsToMoveAfterRedWins() throws HantoException {
+		// initial test hanto game
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[7];
+
+		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
+		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 1));
+		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, -1));
+		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.CRAB, new TestHantoCoordinate(1, 0));
+		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 1));
+		initialPieces[5] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(0, 2));
+		initialPieces[6] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
+				HantoPieceType.SPARROW, new TestHantoCoordinate(-1, 0));
+
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(4);
+		game.setPlayerMoving(HantoPlayerColor.RED);
+
+		assertEquals(MoveResult.RED_WINS, game.makeMove(HantoPieceType.SPARROW,
+				new TestHantoCoordinate(0, 2), new TestHantoCoordinate(1, -1)));
+		game.makeMove(HantoPieceType.CRAB, null, new TestHantoCoordinate(0, -2));
+	}
 }

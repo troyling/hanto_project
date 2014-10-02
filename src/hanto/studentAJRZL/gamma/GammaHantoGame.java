@@ -48,11 +48,6 @@ public class GammaHantoGame extends BaseHantoGame {
 	@Override
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
-		// Make sure the game cannot continue after 20 turns.
-		if (numTurns > MAX_TURN) {
-			throw new HantoException("Game has already ended.");
-		}
-
 		if (from != null && to != null) {
 			validateWalk(from, to);
 		}
