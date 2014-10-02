@@ -21,12 +21,18 @@ import hanto.common.HantoTestGame;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.HantoGameFactory;
 
+/**
+ * Delta hanto test game class
+ * 
+ * @author anthonyjruffa
+ * 
+ */
 public class DeltaHantoTestGame implements HantoTestGame {
 
 	private final HantoGame testGame;
 
 	/**
-	 * Constructor of the GammaHantoTestGame
+	 * Constructor of the DeltaHantoTestGame
 	 */
 	public DeltaHantoTestGame(HantoPlayerColor movesFirst) {
 		testGame = HantoGameFactory.getInstance()

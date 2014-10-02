@@ -10,6 +10,65 @@
 
 package hanto.studentAJRZL.delta;
 
+import hanto.common.HantoCoordinate;
+import hanto.common.HantoPlayerColor;
+import hanto.common.HantoTestGame;
+
+import org.junit.Before;
+
+/**
+ * Tests for delta hanto
+ * 
+ * @author anthonyjruffa
+ * 
+ */
 public class DeltaHantoGameTest {
 
+	/**
+	 * Internal class for these test cases.
+	 * 
+	 * @version Sep 13, 2014
+	 */
+	class TestHantoCoordinate implements HantoCoordinate {
+		private final int x, y;
+
+		/**
+		 * Constructor for test coordinate
+		 * 
+		 * @param x
+		 * @param y
+		 */
+		TestHantoCoordinate(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		/*
+		 * 
+		 * @see hanto.common.HantoCoordinate#getX()
+		 */
+		@Override
+		public int getX() {
+			return x;
+		}
+
+		/*
+		 * 
+		 * @see hanto.common.HantoCoordinate#getY()
+		 */
+		@Override
+		public int getY() {
+			return y;
+		}
+	}
+
+	HantoTestGame game;
+
+	/**
+	 * Initialize fields for each test.
+	 */
+	@Before
+	public void init() {
+		game = new DeltaHantoTestGame(HantoPlayerColor.BLUE);
+	}
 }
