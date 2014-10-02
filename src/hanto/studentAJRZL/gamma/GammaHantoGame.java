@@ -14,7 +14,6 @@ import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.BaseHantoGame;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
@@ -27,7 +26,7 @@ import java.util.Collection;
  * 
  */
 public class GammaHantoGame extends BaseHantoGame {
-	private final int MAX_BOARD_SIZE = 12;
+	private final int MAX_TURN = 20;
 
 	public GammaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
@@ -37,8 +36,8 @@ public class GammaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected int getMaxNumPiecesOnBoard() {
-		return MAX_BOARD_SIZE;
+	protected int getMaxTurnOfGame() {
+		return MAX_TURN;
 	}
 
 	/**
@@ -47,8 +46,8 @@ public class GammaHantoGame extends BaseHantoGame {
 	@Override
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
-		// Make sure the game cannot continue after 20 moves.
-		if (numTurns == 20) {
+		// Make sure the game cannot continue after 20 turns.
+		if (numTurns > MAX_TURN) {
 			throw new HantoException("Game has already ended.");
 		}
 
@@ -101,14 +100,4 @@ public class GammaHantoGame extends BaseHantoGame {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected MoveResult checkGameStatus() {
-		if (numTurns == 20) {
-			return MoveResult.DRAW;
-		}
-		return super.checkGameStatus();
-	}
 }

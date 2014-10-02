@@ -25,9 +25,6 @@ import hanto.studentAJRZL.common.HantoPieceCoordinate;
  * 
  */
 public class DeltaHantoGame extends BaseHantoGame {
-	private final int MAX_BOARD_SIZE = 18;
-
-
 	/**
 	 * Constructor for delta hanto game
 	 * 
@@ -41,18 +38,13 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected int getMaxNumPiecesOnBoard() {
-		return MAX_BOARD_SIZE;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
-		if (pieceType != HantoPieceType.BUTTERFLY && pieceType != HantoPieceType.SPARROW
+	protected void validateAllowedPieceType(HantoPieceType pieceType)
+			throws HantoException {
+		if (pieceType != HantoPieceType.BUTTERFLY
+				&& pieceType != HantoPieceType.SPARROW
 				&& pieceType != HantoPieceType.CRAB) {
-			throw new HantoException("The piece you are trying to place is not allowed.");
+			throw new HantoException(
+					"The piece you are trying to place is not allowed.");
 		}
 
 	}
@@ -73,7 +65,7 @@ public class DeltaHantoGame extends BaseHantoGame {
 			HantoCoordinate to) throws HantoException {
 		MoveResult result = MoveResult.OK;
 		if (isPlayerResigning(pieceType, from, to)) {
-			if (currentPlayColor == HantoPlayerColor.BLUE) {
+			if (currentPlayerColor == HantoPlayerColor.BLUE) {
 				result = MoveResult.RED_WINS;
 			} else {
 				result = MoveResult.BLUE_WINS;
@@ -115,7 +107,7 @@ public class DeltaHantoGame extends BaseHantoGame {
 			}
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

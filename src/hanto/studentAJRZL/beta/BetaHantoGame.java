@@ -23,7 +23,7 @@ import hanto.studentAJRZL.common.BaseHantoGame;
  * 
  */
 public class BetaHantoGame extends BaseHantoGame {
-	private final int MAX_BOARD_SIZE = 12;
+	private final int MAX_TURN = 6;
 
 	/**
 	 * Constructor for beta hanto game
@@ -38,8 +38,8 @@ public class BetaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected int getMaxNumPiecesOnBoard() {
-		return MAX_BOARD_SIZE;
+	protected int getMaxTurnOfGame() {
+		return MAX_TURN;
 	}
 
 	/**
@@ -74,14 +74,6 @@ public class BetaHantoGame extends BaseHantoGame {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected int getAllowedWalkingDistance() {
-		return 0;
-	}
-
-	/**
 	 * Throws exception if the player attempts to place a piece other than
 	 * butterfly or sparrow
 	 * 
@@ -106,8 +98,8 @@ public class BetaHantoGame extends BaseHantoGame {
 			throws HantoException {
 		if ((board.size() == 6 || board.size() == 7)
 				&& pieceType != HantoPieceType.BUTTERFLY) {
-			if ((currentPlayColor == HantoPlayerColor.BLUE && blueButterflyCoordiate == null)
-					|| (currentPlayColor == HantoPlayerColor.RED && redButterflyCoordiate == null)) {
+			if ((currentPlayerColor == HantoPlayerColor.BLUE && blueButterflyCoordiate == null)
+					|| (currentPlayerColor == HantoPlayerColor.RED && redButterflyCoordiate == null)) {
 				throw new HantoException(
 						"Butterfly must be placed by 4th turn.");
 			}
