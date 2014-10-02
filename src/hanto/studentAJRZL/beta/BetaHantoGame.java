@@ -32,6 +32,8 @@ public class BetaHantoGame extends BaseHantoGame {
 	 */
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
+		NUM_BUTTERFLY_ALLOWED = 1;
+		NUM_SPARROW_ALLOWED = 5;
 	}
 
 	/**
