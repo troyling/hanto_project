@@ -281,11 +281,6 @@ public abstract class BaseHantoGame implements HantoGame {
 			}
 		}
 		numPieceWillBeOnBoard++; // assuming the piece has been placed on board
-
-		System.out.println("Type is: " + pieceType);
-		System.out.println("Already on board: " + getMaxNumAllowedForPiece(pieceType));
-		System.out.println("Wiil be on board: " + numPieceWillBeOnBoard);
-		System.out.println("Allowed: " + NUM_BUTTERFLY_ALLOWED);
 		
 		if (numPieceWillBeOnBoard > getMaxNumAllowedForPiece(pieceType)) {
 			throw new HantoException("You can't place more pieces than what's allowed.");
