@@ -11,10 +11,12 @@
 package hanto.studentAJRZL.delta;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoPlayerColor;
+import hanto.common.HantoGameID;
 import hanto.common.HantoTestGame;
+import hanto.common.HantoTestGameFactory;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  * Tests for delta hanto
@@ -62,13 +64,19 @@ public class DeltaHantoGameTest {
 		}
 	}
 
-	HantoTestGame game;
+	private static HantoTestGameFactory factory;
+	private HantoTestGame game;
+
+	@BeforeClass
+	public static void init() {
+		factory = HantoTestGameFactory.getInstance();
+	}
 
 	/**
 	 * Initialize fields for each test.
 	 */
 	@Before
-	public void init() {
-		game = new DeltaHantoTestGame(HantoPlayerColor.BLUE);
+	public void setup() {
+		game = factory.makeHantoTestGame(HantoGameID.DELTA_HANTO);
 	}
 }
