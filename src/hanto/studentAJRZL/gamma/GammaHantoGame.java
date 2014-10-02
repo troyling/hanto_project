@@ -48,7 +48,7 @@ public class GammaHantoGame extends BaseHantoGame {
 	@Override
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
-		if (numTurns > 2) {
+		if (numTurns > 1 && from == null) {
 			validatePiecePlacedNextToOwnColor(to);
 		}
 		if (from != null && to != null) {
