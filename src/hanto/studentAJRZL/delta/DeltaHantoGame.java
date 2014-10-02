@@ -102,10 +102,14 @@ public class DeltaHantoGame extends BaseHantoGame {
 		if (from != null && to != null) {
 			HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
 
-			if (pieceType == HantoPieceType.SPARROW) {
+			if (isPieceAllowedToFly(pieceType)) {
 				validateCanFly(pieceType, from, to);
 				return;
 			}
+			if (!isPieceAllowedToWalk(pieceType)) {
+				throw new HantoException("This piece is not allowed to walk.");
+			}
+
 			if (fromCoord.getDistanceTo(to) != getAllowedWalkingDistance()) {
 				throw new HantoException("Pieces can only walk one hex in delta hanto.");
 			} else {
@@ -129,7 +133,7 @@ public class DeltaHantoGame extends BaseHantoGame {
 
 			// check for flying
 			if (fromCoord.getDistanceTo(to) > getAllowedWalkingDistance()
-					&& pieceType != HantoPieceType.SPARROW) {
+					&& !isPieceAllowedToFly(pieceType)) {
 				throw new HantoException("Only sparrow can fly in delta hato game.");
 			}
 		}
@@ -141,6 +145,14 @@ public class DeltaHantoGame extends BaseHantoGame {
 	@Override
 	protected boolean isPieceAllowedToFly(HantoPieceType pieceType) {
 		return pieceType == HantoPieceType.SPARROW;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected boolean isPieceAllowedToWalk(HantoPieceType pieceType) {
+		return pieceType != HantoPieceType.SPARROW;
 	}
 
 	/**
