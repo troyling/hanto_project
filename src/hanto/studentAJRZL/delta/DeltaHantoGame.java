@@ -27,6 +27,7 @@ import java.util.Collection;
  * 
  */
 public class DeltaHantoGame extends BaseHantoGame {
+	
 	/**
 	 * Constructor for delta hanto game
 	 * 
@@ -34,6 +35,9 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 */
 	public DeltaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
+		NUM_BUTTERFLY_ALLOWED = 1;
+		NUM_SPARROW_ALLOWED = 4;
+		NUM_CRAB_ALLOWED = 4;
 	}
 
 	/**
@@ -45,7 +49,6 @@ public class DeltaHantoGame extends BaseHantoGame {
 				&& pieceType != HantoPieceType.CRAB) {
 			throw new HantoException("The piece you are trying to place is not allowed.");
 		}
-
 	}
 
 	/**

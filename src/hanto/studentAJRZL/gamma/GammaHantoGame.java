@@ -30,6 +30,8 @@ public class GammaHantoGame extends BaseHantoGame {
 
 	public GammaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
+		NUM_BUTTERFLY_ALLOWED = 1;
+		NUM_SPARROW_ALLOWED = 5;
 	}
 
 	/**

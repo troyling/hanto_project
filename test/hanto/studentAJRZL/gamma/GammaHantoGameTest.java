@@ -18,7 +18,6 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.HantoTestGame;
 import hanto.common.HantoTestGameFactory;
 import hanto.common.MoveResult;
-import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -140,10 +139,8 @@ public class GammaHantoGameTest {
 		game.setTurnNumber(3);
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 
-		System.out.println("Before moving:\n" + game.getPrintableBoard());
 		game.makeMove(HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0),
 				new TestHantoCoordinate(1, 0));
-		System.out.println("After moving:\n" + game.getPrintableBoard());
 	}
 
 	/**
@@ -177,12 +174,9 @@ public class GammaHantoGameTest {
 		game.setTurnNumber(5);
 		game.setPlayerMoving(HantoPlayerColor.RED);
 
-		System.out.println("Before moving:\n" + game.getPrintableBoard());
 		// both butterflies' move should be valid
 		assertEquals(MoveResult.RED_WINS, game.makeMove(HantoPieceType.SPARROW,
 				new TestHantoCoordinate(-1, -1), new TestHantoCoordinate(0, -1)));
-
-		System.out.println("After moving:\n" + game.getPrintableBoard());
 	}
 
 	/**
@@ -257,10 +251,6 @@ public class GammaHantoGameTest {
 
 	@Test(expected = HantoException.class)
 	public void testAttemptToMoveWhereNeighborsAreOccupied() throws HantoException {
-		HantoPieceCoordinate c1 = new HantoPieceCoordinate(0, 0);
-		HantoPieceCoordinate c2 = new HantoPieceCoordinate(2, 1);
-		System.out.println("Calced distance is: " + c1.getDistanceTo(c2));
-
 		// init test
 		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[6];
 
