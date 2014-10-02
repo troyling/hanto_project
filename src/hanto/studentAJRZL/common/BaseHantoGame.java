@@ -53,6 +53,15 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
+	 * Set the turn number
+	 * 
+	 * @param num the number to set it to
+	 */
+	public void setNumTurns(int num) {
+		numTurns = num;
+	}
+
+	/**
 	 * This method uses template method pattern to execute a move in the game. It is called for
 	 * every move that must be made.
 	 * 
