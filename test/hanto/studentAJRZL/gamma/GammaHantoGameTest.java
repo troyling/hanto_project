@@ -12,13 +12,16 @@ package hanto.studentAJRZL.gamma;
 import static org.junit.Assert.assertEquals;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
+import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.HantoTestGame;
+import hanto.common.HantoTestGameFactory;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -67,14 +70,20 @@ public class GammaHantoGameTest {
 		}
 	}
 
-	HantoTestGame game;
+	private static HantoTestGameFactory factory;
+	private HantoTestGame game;
+
+	@BeforeClass
+	public static void init() {
+		factory = HantoTestGameFactory.getInstance();
+	}
 
 	/**
 	 * Initialize fields needed for each test.
 	 */
 	@Before
-	public void init() {
-		game = new GammaHantoTestGame(HantoPlayerColor.BLUE);
+	public void setup() {
+		game = factory.makeHantoTestGame(HantoGameID.GAMMA_HANTO);
 	}
 
 	/**
