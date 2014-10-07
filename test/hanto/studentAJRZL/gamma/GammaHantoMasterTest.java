@@ -16,6 +16,7 @@ import static hanto.common.HantoPlayerColor.BLUE;
 import static hanto.common.HantoPlayerColor.RED;
 import static hanto.common.MoveResult.DRAW;
 import static hanto.common.MoveResult.OK;
+import static hanto.common.MoveResult.RED_WINS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import hanto.common.HantoCoordinate;
@@ -26,9 +27,9 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.HantoTestGame;
-import hanto.common.HantoTestGame.PieceLocationPair;
 import hanto.common.HantoTestGameFactory;
 import hanto.common.MoveResult;
+import hanto.studentAJRZL.HantoGameFactory;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -39,7 +40,7 @@ import org.junit.Test;
  * 
  * @version Sep 24, 2014
  */
-public class GammaHantoTestMaster {
+public class GammaHantoMasterTest {
 	/**
 	 * Internal class for these test cases.
 	 * 
@@ -117,7 +118,7 @@ public class GammaHantoTestMaster {
 
 	@Test
 	public void blueMovesSparrowUsingTestGame() throws HantoException {
-		final PieceLocationPair[] board = new PieceLocationPair[] {
+		final HantoTestGame.PieceLocationPair[] board = new HantoTestGame.PieceLocationPair[] {
 				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
 				plPair(BLUE, SPARROW, 0, -1), plPair(RED, SPARROW, 0, 2)
 
@@ -134,7 +135,7 @@ public class GammaHantoTestMaster {
 
 	@Test
 	public void gameEndsInDrawAfter20Moves() throws HantoException {
-		final PieceLocationPair[] board = new PieceLocationPair[] {
+		final HantoTestGame.PieceLocationPair[] board = new HantoTestGame.PieceLocationPair[] {
 				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
 				plPair(BLUE, SPARROW, 0, -1), plPair(RED, SPARROW, 0, 2)
 
@@ -177,6 +178,61 @@ public class GammaHantoTestMaster {
 		game.makeMove(SPARROW, makeCoordinate(0, 0), makeCoordinate(1, 0));
 	}
 
+	@Test(expected = HantoException.class)
+	public void attemptToPlacePieceNextToOpponentPiece() throws HantoException {
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1));
+		game.makeMove(SPARROW, null, makeCoordinate(0, 2));
+	}
+
+	@Test(expected = HantoException.class)
+	public void attemptToMoveWhenNotEnoughRoom() throws HantoException {
+		final HantoTestGame.PieceLocationPair[] board = new HantoTestGame.PieceLocationPair[] {
+				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
+				plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
+				plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1)
+
+		};
+		testGame.initializeBoard(board);
+		testGame.setPlayerMoving(BLUE);
+		testGame.setTurnNumber(3);
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(1, 0));
+	}
+
+	@Test(expected = HantoException.class)
+	public void attemptToMoveMoreThanOneHex() throws HantoException {
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(0, 2));
+	}
+
+	@Test
+	public void winOnTheFinalMove() throws HantoException {
+		final HantoTestGame.PieceLocationPair[] board = new HantoTestGame.PieceLocationPair[] {
+				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
+				plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
+				plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1),
+				plPair(RED, SPARROW, 1, 1)
+
+		};
+		testGame.initializeBoard(board);
+		testGame.setPlayerMoving(RED);
+		testGame.setTurnNumber(20);
+		assertEquals(RED_WINS, game.makeMove(SPARROW, makeCoordinate(1, 1), makeCoordinate(1, 0)));
+	}
+
+	@Test
+	public void testGameFactory() throws HantoException {
+		game = HantoGameFactory.getInstance().makeHantoGame(HantoGameID.GAMMA_HANTO, RED);
+		assertEquals(OK, game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0)));
+		assertEquals(BUTTERFLY, game.getPieceAt(makeCoordinate(0, 0)).getType());
+	}
+
+	@Test(expected = Exception.class)
+	public void blueResignsImmediately() throws HantoException {
+		assertEquals(RED_WINS, game.makeMove(null, null, null));
+	}
+
 	// Helper methods
 	private HantoCoordinate makeCoordinate(int x, int y) {
 		return new TestHantoCoordinate(x, y);
@@ -191,7 +247,8 @@ public class GammaHantoTestMaster {
 	 * @param y end location
 	 * @return
 	 */
-	private PieceLocationPair plPair(HantoPlayerColor player, HantoPieceType pieceType, int x, int y) {
-		return new PieceLocationPair(player, pieceType, new TestHantoCoordinate(x, y));
+	private HantoTestGame.PieceLocationPair plPair(HantoPlayerColor player,
+			HantoPieceType pieceType, int x, int y) {
+		return new HantoTestGame.PieceLocationPair(player, pieceType, new TestHantoCoordinate(x, y));
 	}
 }
