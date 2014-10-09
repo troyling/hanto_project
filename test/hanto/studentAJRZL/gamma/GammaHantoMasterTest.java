@@ -213,7 +213,6 @@ public class GammaHantoMasterTest {
 				plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
 				plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1),
 				plPair(RED, SPARROW, 1, 1)
-
 		};
 		testGame.initializeBoard(board);
 		testGame.setPlayerMoving(RED);
