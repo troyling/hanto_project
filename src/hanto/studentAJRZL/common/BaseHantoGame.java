@@ -66,7 +66,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	/**
 	 * Set the turn number
 	 * 
-	 * @param num the number to set it to
+	 * @param num
+	 *            the number to set it to
 	 */
 	public void setTurnNumber(int num) {
 		numTurns = num;
@@ -75,28 +76,36 @@ public abstract class BaseHantoGame implements HantoGame {
 	/**
 	 * Set the current player color
 	 * 
-	 * @param Color for the current player
+	 * @param Color
+	 *            for the current player
 	 */
 	public void setCurrentPlayerColor(HantoPlayerColor currentPlayerColor) {
 		this.currentPlayerColor = currentPlayerColor;
 	}
 
 	/**
-	 * This method uses template method pattern to execute a move in the game. It is called for
-	 * every move that must be made.
+	 * This method uses template method pattern to execute a move in the game.
+	 * It is called for every move that must be made.
 	 * 
-	 * @param pieceType the piece type that is being moved
-	 * @param from the coordinate where the piece begins. If the coordinate is null, then the piece
-	 *            begins off the board (that is, it is placed on the board in this move).
-	 * @param to the coordinated where the piece is after the move has been made.
+	 * @param pieceType
+	 *            the piece type that is being moved
+	 * @param from
+	 *            the coordinate where the piece begins. If the coordinate is
+	 *            null, then the piece begins off the board (that is, it is
+	 *            placed on the board in this move).
+	 * @param to
+	 *            the coordinated where the piece is after the move has been
+	 *            made.
 	 * @return the result of the move
-	 * @throws HantoException if there are any problems in making the move (such as specifying a
-	 *             coordinate that does not have the appropriate piece, or the color of the piece is
-	 *             not the color of the player who is moving.
+	 * @throws HantoException
+	 *             if there are any problems in making the move (such as
+	 *             specifying a coordinate that does not have the appropriate
+	 *             piece, or the color of the piece is not the color of the
+	 *             player who is moving.
 	 */
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
-			throws HantoException {
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
 		preMakeMoveCheck(pieceType, from, to);
 		movePiece(pieceType, from, to);
 		postMakeMoveCheck();
@@ -105,12 +114,15 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * @param where the coordinate to query
-	 * @return the piece at the specified coordinate or null if there is no piece at that position
+	 * @param where
+	 *            the coordinate to query
+	 * @return the piece at the specified coordinate or null if there is no
+	 *         piece at that position
 	 */
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(), where.getY());
+		HantoCoordinate coord = new HantoPieceCoordinate(where.getX(),
+				where.getY());
 		return board.get(coord);
 	}
 
@@ -123,55 +135,59 @@ public abstract class BaseHantoGame implements HantoGame {
 		String printedBoard = "";
 		for (HantoCoordinate key : board.keySet()) {
 			HantoPiece piece = board.get(key);
-			printedBoard += piece.getColor() + " " + piece.getType() + ": (" + key.getX() + ", "
-					+ key.getY() + ")\n";
+			printedBoard += piece.getColor() + " " + piece.getType() + ": ("
+					+ key.getX() + ", " + key.getY() + ")\n";
 		}
 		return printedBoard;
 	}
-	
+
 	/**
-	 * This method is used to place a piece on board 
+	 * This method is used to place a piece on board
 	 * 
 	 * @param pieceType
 	 * @param to
 	 */
-	public void placeHantoPieceOnBoard(HantoPieceType pieceType, HantoPlayerColor player, HantoCoordinate to) {
+	public void placeHantoPieceOnBoard(HantoPieceType pieceType,
+			HantoPlayerColor player, HantoCoordinate to) {
 		final HantoPiece newPiece = new HantoGamePiece(player, pieceType);
-		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(), to.getY());
-		
+		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(),
+				to.getY());
+
 		// store the coordinate if the piece is butterfly
 		if (pieceType == HantoPieceType.BUTTERFLY) {
 			switch (player) {
-				case BLUE:
-					blueButterflyCoordinate = toCoord;
-					break;
-				case RED:
-					redButterflyCoordinate = toCoord;
-					break;
-				default:
-					break;
+			case BLUE:
+				blueButterflyCoordinate = toCoord;
+				break;
+			case RED:
+				redButterflyCoordinate = toCoord;
+				break;
+			default:
+				break;
 			}
 		}
 		board.put(toCoord, newPiece);
 	}
 
 	/**
-	 * This function can be overridden by subclasses to add any necessary validation before actually
-	 * making the move. The overridden function should use super() to run the default validations.
+	 * This function can be overridden by subclasses to add any necessary
+	 * validation before actually making the move. The overridden function
+	 * should use super() to run the default validations.
 	 * 
 	 * @param pieceType
 	 * @param from
 	 * @param to
 	 * @throws HantoException
 	 */
-	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	protected void preMakeMoveCheck(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to) throws HantoException {
 		validateAllowedPieceType(pieceType);
 	}
 
 	/**
-	 * This function can be overridden by subclasses to add any necessary validation after making
-	 * the move. The overridden function should use super() to run the default validations.
+	 * This function can be overridden by subclasses to add any necessary
+	 * validation after making the move. The overridden function should use
+	 * super() to run the default validations.
 	 * 
 	 * @throws HantoException
 	 */
@@ -180,8 +196,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * This function should be overridden by subclasses to check for piece types that are allowed in
-	 * the game
+	 * This function should be overridden by subclasses to check for piece types
+	 * that are allowed in the game
 	 * 
 	 * @param pieceType
 	 * @throws HantoException
@@ -190,8 +206,8 @@ public abstract class BaseHantoGame implements HantoGame {
 			throws HantoException;
 
 	/**
-	 * This function should be overridden by subclasses to return the distance a hanto piece is
-	 * allowed to walk
+	 * This function should be overridden by subclasses to return the distance a
+	 * hanto piece is allowed to walk
 	 * 
 	 * @return the distance a hanto piece can walk.
 	 */
@@ -200,15 +216,16 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * Move the piece from the given source coordinate to the given destination coordinate
+	 * Move the piece from the given source coordinate to the given destination
+	 * coordinate
 	 * 
 	 * @param pieceType
 	 * @param from
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void movePiece(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
-			throws HantoException {
+	private void movePiece(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
 		// check if the game has already ended
 		validateGameInProgress();
 
@@ -217,8 +234,10 @@ public abstract class BaseHantoGame implements HantoGame {
 		}
 
 		// create objects to store into the board
-		final HantoPiece newPiece = new HantoGamePiece(currentPlayerColor, pieceType);
-		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(), to.getY());
+		final HantoPiece newPiece = new HantoGamePiece(currentPlayerColor,
+				pieceType);
+		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(),
+				to.getY());
 		HantoCoordinate fromCoord = null;
 
 		// first piece must be placed at origin
@@ -252,21 +271,21 @@ public abstract class BaseHantoGame implements HantoGame {
 		// store the coordinate if the piece is butterfly
 		if (pieceType == HantoPieceType.BUTTERFLY) {
 			switch (currentPlayerColor) {
-				case BLUE:
-					if (fromCoord == null) {
-						// placing a piece
-						validateButterflyExistence(blueButterflyCoordinate);
-					}
-					blueButterflyCoordinate = toCoord;
-					break;
-				case RED:
-					if (fromCoord == null) {
-						validateButterflyExistence(redButterflyCoordinate);
-					}
-					redButterflyCoordinate = toCoord;
-					break;
-				default:
-					throw new HantoException("Invalid color.");
+			case BLUE:
+				if (fromCoord == null) {
+					// placing a piece
+					validateButterflyExistence(blueButterflyCoordinate);
+				}
+				blueButterflyCoordinate = toCoord;
+				break;
+			case RED:
+				if (fromCoord == null) {
+					validateButterflyExistence(redButterflyCoordinate);
+				}
+				redButterflyCoordinate = toCoord;
+				break;
+			default:
+				throw new HantoException("Invalid color.");
 			}
 		}
 		// putting the piece on board
@@ -276,10 +295,12 @@ public abstract class BaseHantoGame implements HantoGame {
 	/**
 	 * Validates the maximum number of pieces are on the board
 	 * 
-	 * @param pieceType the piece type
+	 * @param pieceType
+	 *            the piece type
 	 * @throws HantoException
 	 */
-	private void validateNumMaxPiece(HantoPieceType pieceType) throws HantoException {
+	private void validateNumMaxPiece(HantoPieceType pieceType)
+			throws HantoException {
 		int numPieceWillBeOnBoard = 0;
 		for (HantoCoordinate coord : board.keySet()) {
 			HantoPiece p = board.get(coord);
@@ -290,38 +311,40 @@ public abstract class BaseHantoGame implements HantoGame {
 		numPieceWillBeOnBoard++; // assuming the piece has been placed on board
 
 		if (numPieceWillBeOnBoard > getMaxNumAllowedForPiece(pieceType)) {
-			throw new HantoException("You can't place more pieces than what's allowed.");
+			throw new HantoException(
+					"You can't place more pieces than what's allowed.");
 		}
 	}
 
 	/**
-	 * Return the maximum number of pieces allowed to place on board for the given type
+	 * Return the maximum number of pieces allowed to place on board for the
+	 * given type
 	 * 
 	 * @param pieceType
 	 */
 	private int getMaxNumAllowedForPiece(HantoPieceType pieceType) {
 		int max = 0;
 		switch (pieceType) {
-			case BUTTERFLY:
-				max = NUM_BUTTERFLY_ALLOWED;
-				break;
-			case CRAB:
-				max = NUM_CRAB_ALLOWED;
-				break;
-			case CRANE:
-				max = NUM_CRANE_ALLOWED;
-				break;
-			case DOVE:
-				max = NUM_DOVE_ALLOWED;
-				break;
-			case HORSE:
-				max = NUM_HORSE_ALLOWED;
-				break;
-			case SPARROW:
-				max = NUM_SPARROW_ALLOWED;
-				break;
-			default:
-				break;
+		case BUTTERFLY:
+			max = NUM_BUTTERFLY_ALLOWED;
+			break;
+		case CRAB:
+			max = NUM_CRAB_ALLOWED;
+			break;
+		case CRANE:
+			max = NUM_CRANE_ALLOWED;
+			break;
+		case DOVE:
+			max = NUM_DOVE_ALLOWED;
+			break;
+		case HORSE:
+			max = NUM_HORSE_ALLOWED;
+			break;
+		case SPARROW:
+			max = NUM_SPARROW_ALLOWED;
+			break;
+		default:
+			break;
 		}
 		return max;
 	}
@@ -334,9 +357,11 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param toCoord
 	 * @throws HantoException
 	 */
-	private void validateWalkDistance(HantoPieceType pieceType, HantoCoordinate fromCoord,
-			HantoCoordinate toCoord) throws HantoException {
-		final int distance = ((HantoPieceCoordinate) fromCoord).getDistanceTo(toCoord);
+	private void validateWalkDistance(HantoPieceType pieceType,
+			HantoCoordinate fromCoord, HantoCoordinate toCoord)
+			throws HantoException {
+		final int distance = ((HantoPieceCoordinate) fromCoord)
+				.getDistanceTo(toCoord);
 		if (distance > getAllowedWalkingDistance()) {
 			if (!isPieceAllowedToFly(pieceType)) {
 				throw new HantoException(
@@ -347,10 +372,12 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * Determine if the piece is allowed to fly. By default is false for all pieces, hanto game
-	 * variant which allows flying should override this method.
+	 * Determine if the piece is allowed to fly. By default is false for all
+	 * pieces, hanto game variant which allows flying should override this
+	 * method.
 	 * 
-	 * @param pieceType the piece type
+	 * @param pieceType
+	 *            the piece type
 	 * @return true if so; false otherwise
 	 */
 	protected boolean isPieceAllowedToFly(HantoPieceType pieceType) {
@@ -358,10 +385,12 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * Determine if the piece is allowed to walk. By default is false for all pieces, hanto game
-	 * variant which allows walking should override this method.
+	 * Determine if the piece is allowed to walk. By default is false for all
+	 * pieces, hanto game variant which allows walking should override this
+	 * method.
 	 * 
-	 * @param pieceType the piece type
+	 * @param pieceType
+	 *            the piece type
 	 * @return true if so, false otherwise
 	 */
 	protected boolean isPieceAllowedToWalk(HantoPieceType pieceType) {
@@ -375,8 +404,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param newPiece
 	 * @throws HantoException
 	 */
-	private void validatePieceAtFromCoordinate(HantoCoordinate coord, HantoPiece piece)
-			throws HantoException {
+	private void validatePieceAtFromCoordinate(HantoCoordinate coord,
+			HantoPiece piece) throws HantoException {
 		if (piece.getType() == null) {
 			throw new HantoException("Piece must not be null.");
 		}
@@ -384,7 +413,8 @@ public abstract class BaseHantoGame implements HantoGame {
 		final HantoPiece pieceOnBoard = board.get(coord);
 
 		if (pieceOnBoard == null) {
-			throw new HantoException("There is no hanto piece at this location.");
+			throw new HantoException(
+					"There is no hanto piece at this location.");
 		}
 
 		if (!isPieceEqual(pieceOnBoard, piece)) {
@@ -402,11 +432,13 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	// TODO move this method to HantoPiece class
 	private boolean isPieceEqual(HantoPiece piece1, HantoPiece piece2) {
-		return piece1.getColor() == piece2.getColor() && piece1.getType() == piece2.getType();
+		return piece1.getColor() == piece2.getColor()
+				&& piece1.getType() == piece2.getType();
 	}
 
 	/**
-	 * Throws exception if the player attempts to place more than one butterfly on board
+	 * Throws exception if the player attempts to place more than one butterfly
+	 * on board
 	 * 
 	 * @param butterflyCoordinate
 	 * @throws HantoException
@@ -414,7 +446,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	private void validateButterflyExistence(HantoCoordinate butterflyCoordinate)
 			throws HantoException {
 		if (butterflyCoordinate != null) {
-			throw new HantoException("Can't place more than one butterfly in beta hanto game.");
+			throw new HantoException(
+					"Can't place more than one butterfly in beta hanto game.");
 		}
 	}
 
@@ -423,7 +456,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * 
 	 * @return the result of a move
 	 */
-	protected MoveResult checkGameStatus() {	
+	protected MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 
 		if (numTurns > MAX_TURN) {
@@ -452,14 +485,14 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	private void alterPlayerTurn() throws HantoException {
 		switch (currentPlayerColor) {
-			case BLUE:
-				currentPlayerColor = HantoPlayerColor.RED;
-				break;
-			case RED:
-				currentPlayerColor = HantoPlayerColor.BLUE;
-				break;
-			default:
-				throw new HantoException("Invalid player color");
+		case BLUE:
+			currentPlayerColor = HantoPlayerColor.RED;
+			break;
+		case RED:
+			currentPlayerColor = HantoPlayerColor.BLUE;
+			break;
+		default:
+			throw new HantoException("Invalid player color");
 		}
 
 		// Increment the number of turns if the first player is moving again.
@@ -469,12 +502,14 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * Throws exception if the first move attempts to place piece at coordinate other than origin.
+	 * Throws exception if the first move attempts to place piece at coordinate
+	 * other than origin.
 	 * 
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateFirstMoveCoordinate(HantoCoordinate to) throws HantoException {
+	private void validateFirstMoveCoordinate(HantoCoordinate to)
+			throws HantoException {
 		if (board.size() == 0 && (to.getX() != 0 || to.getY() != 0)) {
 			throw new HantoException("First piece must be placed at origin");
 		}
@@ -486,7 +521,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param coord
 	 * @throws HantoException
 	 */
-	private void validateAdjacentCoordinate(HantoCoordinate coord) throws HantoException {
+	private void validateAdjacentCoordinate(HantoCoordinate coord)
+			throws HantoException {
 		if (!board.isEmpty() && !isAnyPieceAdjacentTo(coord)) {
 			throw new HantoException("A piece must be placed next to another.");
 		}
@@ -498,20 +534,24 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateDestinationCoordinate(HantoCoordinate coord) throws HantoException {
+	private void validateDestinationCoordinate(HantoCoordinate coord)
+			throws HantoException {
 		if (board.get(coord) != null) {
-			throw new HantoException("The given destination coordinate has been occupied.");
+			throw new HantoException(
+					"The given destination coordinate has been occupied.");
 		}
 	}
 
 	/**
-	 * Throws exception if the player attempts to make an action after the game ends
+	 * Throws exception if the player attempts to make an action after the game
+	 * ends
 	 * 
 	 * @throws HantoException
 	 */
 	private void validateGameInProgress() throws HantoException {
 		if (isGameEnded) {
-			throw new HantoException("Can't place a piece after the game is ended.");
+			throw new HantoException(
+					"Can't place a piece after the game is ended.");
 		}
 	}
 
@@ -539,37 +579,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @throws HantoException
 	 */
 	private void validatePiecesAreContiguous() throws HantoException {
-		HantoCoordinate start = null;
-
-		for (HantoCoordinate coord : board.keySet()) {
-			start = coord;
-			break;
-		}
-
-		Collection<HantoCoordinate> visited = new LinkedList<HantoCoordinate>();
-		Queue<HantoCoordinate> queue = new LinkedList<HantoCoordinate>();
-
-		visited.add(start);
-		queue.add(start);
-
-		while (!queue.isEmpty()) {
-			HantoPieceCoordinate c = (HantoPieceCoordinate) queue.poll();
-
-			if (!visited.contains(c)) {
-				visited.add(c);
-			}
-
-			for (HantoCoordinate coord : c.getAdjacentCoordinates()) {
-				if (board.get(coord) != null) {
-					if (!visited.contains(coord)) {
-						visited.add(coord);
-						queue.add(coord);
-					}
-				}
-			}
-		}
-
-		if (board.size() != visited.size()) {
+		if (!isBoardContiguous(board)) {
 			throw new HantoException("Pieces are not contiguous");
 		}
 	}
@@ -605,11 +615,13 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	protected void validateWalk(HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	protected void validateWalk(HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 		boolean isWalkValid = false;
 		HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
 		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
-		Collection<HantoCoordinate> commonNeighbors = fromCoord.getCommonNeighbors(toCoord);
+		Collection<HantoCoordinate> commonNeighbors = fromCoord
+				.getCommonNeighbors(toCoord);
 
 		// check if either neighbor is not occupied
 		for (HantoCoordinate coord : commonNeighbors) {
@@ -621,5 +633,122 @@ public abstract class BaseHantoGame implements HantoGame {
 		if (!isWalkValid) {
 			throw new HantoException("Walk is not valid.");
 		}
+	}
+
+	/**
+	 * Check if the current player intends to resign
+	 * 
+	 * @param pieceType
+	 * @param from
+	 * @param to
+	 * @return true if so; false otherwise
+	 * @throws HantoException
+	 */
+	protected boolean isPlayerResigning(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+		return pieceType == null && from == null && to == null;
+	}
+
+	/**
+	 * Determine if the current player can place any piece on board
+	 * 
+	 * @return true if so; false otherwise
+	 */
+	protected boolean isCurrentPlayerAllowedToPlacePiece() {
+		return getCurrentPlayerNumPiecesOnBoard() < getMaxNumPieceOnBoard();
+	}
+
+	/**
+	 * Determine if the current player can move any of his pieces on board
+	 * 
+	 * @return true if so; false otherwise
+	 */
+	protected boolean isCurrentPlayerAllowedToMoveAnyPiece() {
+		Map<HantoCoordinate, HantoPiece> testBoard;
+		
+		for (HantoCoordinate c : board.keySet()) {
+			HantoPiece p = board.get(c);
+			if (p.getColor() == currentPlayerColor) {
+				// check if the board would remain contiguous when the piece is
+				// removed from the board
+				testBoard = board;
+				testBoard.remove(c);
+				if (!isBoardContiguous(testBoard)) {
+					return false;
+				}
+			}
+		}
+		return true;
+
+	}
+
+	/**
+	 * Determine if the given board is contiguous
+	 * 
+	 * @param testBoard
+	 * @return true if it is contiguous; false otherwise
+	 */
+	private boolean isBoardContiguous(Map<HantoCoordinate, HantoPiece> testBoard) {
+		HantoCoordinate start = null;
+		boolean isContiguous = false;
+		
+		for (HantoCoordinate coord : testBoard.keySet()) {
+			start = coord;
+			break;
+		}
+
+		Collection<HantoCoordinate> visited = new LinkedList<HantoCoordinate>();
+		Queue<HantoCoordinate> queue = new LinkedList<HantoCoordinate>();
+
+		visited.add(start);
+		queue.add(start);
+
+		while (!queue.isEmpty()) {
+			HantoPieceCoordinate c = (HantoPieceCoordinate) queue.poll();
+
+			if (!visited.contains(c)) {
+				visited.add(c);
+			}
+
+			for (HantoCoordinate coord : c.getAdjacentCoordinates()) {
+				if (testBoard.get(coord) != null) {
+					if (!visited.contains(coord)) {
+						visited.add(coord);
+						queue.add(coord);
+					}
+				}
+			}
+		}
+
+		if (visited.size() == testBoard.size()) {
+			isContiguous = true;
+		}
+		return isContiguous;
+	}
+
+	/**
+	 * Return the total number of pieces the current player has placed
+	 * 
+	 * @return Number of pieces the current player placed
+	 */
+	private int getCurrentPlayerNumPiecesOnBoard() {
+		int numPieces = 0;
+		for (HantoCoordinate c : board.keySet()) {
+			HantoPiece p = board.get(c);
+			if (p.getColor() == currentPlayerColor) {
+				numPieces++;
+			}
+		}
+		return numPieces;
+	}
+
+	/**
+	 * Return the maximum number of pieces each player can place on board
+	 * 
+	 * @return number of pieces player can place
+	 */
+	private int getMaxNumPieceOnBoard() {
+		return NUM_BUTTERFLY_ALLOWED + NUM_SPARROW_ALLOWED + NUM_CRAB_ALLOWED
+				+ NUM_CRANE_ALLOWED + NUM_DOVE_ALLOWED + NUM_HORSE_ALLOWED;
 	}
 }

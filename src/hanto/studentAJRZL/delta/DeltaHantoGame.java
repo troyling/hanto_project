@@ -149,17 +149,6 @@ public class DeltaHantoGame extends BaseHantoGame {
 		return pieceType != HantoPieceType.SPARROW;
 	}
 
-	/**
-	 * Check if the current player intends to resign
-	 * 
-	 * @param pieceType
-	 * @param from
-	 * @param to
-	 * @return true if so; false otherwise
-	 */
-	private boolean isPlayerResigning(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) {
-		return pieceType == null && from == null && to == null;
-	}
+	
 
 }
