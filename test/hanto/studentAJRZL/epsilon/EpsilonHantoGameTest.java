@@ -108,7 +108,36 @@ public class EpsilonHantoGameTest {
 				game.makeMove(HantoPieceType.HORSE, makeCoordinate(0, 2), makeCoordinate(0, -3)));
 	}
 
+	/**
+	 * Test for an invalid horse jump
+	 * 
+	 * @throws HantoException
+	 * 
+	 */
+	@Test(expected = HantoException.class)
+	public void testInvalidHorseJumpAttempts() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[] {
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, 0, 0),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 1),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, -1),
+				plPair(HantoPlayerColor.RED, HantoPieceType.HORSE, 0, 2),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, -2)
+		};
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(3);
+		game.setPlayerMoving(HantoPlayerColor.RED);
+
+		game.makeMove(HantoPieceType.HORSE, makeCoordinate(0, 2), makeCoordinate(1, -2));
+	}
+
 	// Helper methods
+	/**
+	 * Make a test coordinate for testing.
+	 * 
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @return the new test coordinate
+	 */
 	private HantoCoordinate makeCoordinate(int x, int y) {
 		return new TestHantoCoordinate(x, y);
 	}
