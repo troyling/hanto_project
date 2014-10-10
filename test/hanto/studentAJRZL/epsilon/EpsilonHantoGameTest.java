@@ -93,24 +93,66 @@ public class EpsilonHantoGameTest {
 	 */
 	@Test
 	public void testValidHorseJumpAttempts() throws HantoException {
-		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[5];
-
-		initialPieces[0] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.BUTTERFLY, new TestHantoCoordinate(0, 0));
-		initialPieces[1] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.CRAB, new TestHantoCoordinate(0, 1));
-		initialPieces[2] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.HORSE, new TestHantoCoordinate(0, -1));
-		initialPieces[3] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.RED,
-				HantoPieceType.HORSE, new TestHantoCoordinate(0, 2));
-		initialPieces[4] = new HantoTestGame.PieceLocationPair(HantoPlayerColor.BLUE,
-				HantoPieceType.HORSE, new TestHantoCoordinate(0, -2));
-
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[] {
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, 0, 0),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 1),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, -1),
+				plPair(HantoPlayerColor.RED, HantoPieceType.HORSE, 0, 2),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, -2)
+		};
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(3);
 		game.setPlayerMoving(HantoPlayerColor.RED);
 
-		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.HORSE, new TestHantoCoordinate(0,
-				2), new TestHantoCoordinate(0, -3)));
+		assertEquals(MoveResult.OK,
+				game.makeMove(HantoPieceType.HORSE, makeCoordinate(0, 2), makeCoordinate(0, -3)));
+	}
+
+	/**
+	 * Test for an invalid horse jump
+	 * 
+	 * @throws HantoException
+	 * 
+	 */
+	@Test(expected = HantoException.class)
+	public void testInvalidHorseJumpAttempts() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[] {
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, 0, 0),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 1),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, -1),
+				plPair(HantoPlayerColor.RED, HantoPieceType.HORSE, 0, 2),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, -2)
+		};
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(3);
+		game.setPlayerMoving(HantoPlayerColor.RED);
+
+		game.makeMove(HantoPieceType.HORSE, makeCoordinate(0, 2), makeCoordinate(1, -2));
+	}
+
+	// Helper methods
+	/**
+	 * Make a test coordinate for testing.
+	 * 
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @return the new test coordinate
+	 */
+	private HantoCoordinate makeCoordinate(int x, int y) {
+		return new TestHantoCoordinate(x, y);
+	}
+
+	/**
+	 * Factory method to create a piece location pair.
+	 * 
+	 * @param player the player color
+	 * @param pieceType the piece type
+	 * @param x starting location
+	 * @param y end location
+	 * @return
+	 */
+	private HantoTestGame.PieceLocationPair plPair(HantoPlayerColor player,
+			HantoPieceType pieceType, int x, int y) {
+		return new HantoTestGame.PieceLocationPair(player, pieceType, new TestHantoCoordinate(x, y));
 	}
 }
