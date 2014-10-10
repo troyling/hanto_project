@@ -42,8 +42,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	// no limit for turn
 	protected int MAX_TURN = Integer.MAX_VALUE;
 
-	protected HantoCoordinate blueButterflyCoordiate;
-	protected HantoCoordinate redButterflyCoordiate;
+	protected HantoCoordinate blueButterflyCoordinate;
+	protected HantoCoordinate redButterflyCoordinate;
 
 	protected HantoPlayerColor currentPlayerColor;
 	protected HantoPlayerColor movesFirst;
@@ -127,6 +127,32 @@ public abstract class BaseHantoGame implements HantoGame {
 					+ key.getY() + ")\n";
 		}
 		return printedBoard;
+	}
+	
+	/**
+	 * This method is used to place a piece on board 
+	 * 
+	 * @param pieceType
+	 * @param to
+	 */
+	public void placeHantoPieceOnBoard(HantoPieceType pieceType, HantoPlayerColor player, HantoCoordinate to) {
+		final HantoPiece newPiece = new HantoGamePiece(player, pieceType);
+		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(), to.getY());
+		
+		// store the coordinate if the piece is butterfly
+		if (pieceType == HantoPieceType.BUTTERFLY) {
+			switch (player) {
+				case BLUE:
+					blueButterflyCoordinate = toCoord;
+					break;
+				case RED:
+					redButterflyCoordinate = toCoord;
+					break;
+				default:
+					break;
+			}
+		}
+		board.put(toCoord, newPiece);
 	}
 
 	/**
@@ -222,21 +248,22 @@ public abstract class BaseHantoGame implements HantoGame {
 			validateNumMaxPiece(pieceType);
 		}
 
+		// TODO We might want to get rid of code duplication
 		// store the coordinate if the piece is butterfly
 		if (pieceType == HantoPieceType.BUTTERFLY) {
 			switch (currentPlayerColor) {
 				case BLUE:
 					if (fromCoord == null) {
 						// placing a piece
-						validateButterflyExistence(blueButterflyCoordiate);
+						validateButterflyExistence(blueButterflyCoordinate);
 					}
-					blueButterflyCoordiate = toCoord;
+					blueButterflyCoordinate = toCoord;
 					break;
 				case RED:
 					if (fromCoord == null) {
-						validateButterflyExistence(redButterflyCoordiate);
+						validateButterflyExistence(redButterflyCoordinate);
 					}
-					redButterflyCoordiate = toCoord;
+					redButterflyCoordinate = toCoord;
 					break;
 				default:
 					throw new HantoException("Invalid color.");
@@ -396,18 +423,18 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * 
 	 * @return the result of a move
 	 */
-	protected MoveResult checkGameStatus() {
+	protected MoveResult checkGameStatus() {	
 		MoveResult result = MoveResult.OK;
 
 		if (numTurns > MAX_TURN) {
 			result = MoveResult.DRAW;
 		}
 
-		if (isPieceBeingSurrounded(blueButterflyCoordiate)) {
+		if (isPieceBeingSurrounded(blueButterflyCoordinate)) {
 			result = MoveResult.RED_WINS;
 		}
 
-		if (isPieceBeingSurrounded(redButterflyCoordiate)) {
+		if (isPieceBeingSurrounded(redButterflyCoordinate)) {
 			result = MoveResult.BLUE_WINS;
 		}
 

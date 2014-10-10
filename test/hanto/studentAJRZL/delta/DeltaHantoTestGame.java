@@ -57,11 +57,7 @@ public class DeltaHantoTestGame implements HantoTestGame {
 	@Override
 	public void initializeBoard(PieceLocationPair[] initialPieces) {
 		for (PieceLocationPair p : initialPieces) {
-			try {
-				makeMove(p.pieceType, null, p.location);
-			} catch (HantoException e) {
-				e.printStackTrace();
-			}
+			testGame.placeHantoPieceOnBoard(p.pieceType, p.player, p.location);
 		}
 	}
 

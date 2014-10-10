@@ -86,8 +86,8 @@ public class BetaHantoGame extends BaseHantoGame {
 			throws HantoException {
 		if ((board.size() == 6 || board.size() == 7)
 				&& pieceType != HantoPieceType.BUTTERFLY) {
-			if ((currentPlayerColor == HantoPlayerColor.BLUE && blueButterflyCoordiate == null)
-					|| (currentPlayerColor == HantoPlayerColor.RED && redButterflyCoordiate == null)) {
+			if ((currentPlayerColor == HantoPlayerColor.BLUE && blueButterflyCoordinate == null)
+					|| (currentPlayerColor == HantoPlayerColor.RED && redButterflyCoordinate == null)) {
 				throw new HantoException(
 						"Butterfly must be placed by 4th turn.");
 			}
