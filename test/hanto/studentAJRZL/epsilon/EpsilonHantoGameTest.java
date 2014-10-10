@@ -122,7 +122,7 @@ public class EpsilonHantoGameTest {
 				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, -1),
 				plPair(HantoPlayerColor.RED, HantoPieceType.HORSE, 0, 2),
 				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, -2)
-		};
+		};		
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(3);
 		game.setPlayerMoving(HantoPlayerColor.RED);
