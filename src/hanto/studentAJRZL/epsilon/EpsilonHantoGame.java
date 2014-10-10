@@ -22,7 +22,7 @@ import hanto.studentAJRZL.common.BaseHantoGame;
  * 
  */
 public class EpsilonHantoGame extends BaseHantoGame {
-	
+
 	/**
 	 * Constructor for delta hanto game
 	 * 
@@ -37,10 +37,7 @@ public class EpsilonHantoGame extends BaseHantoGame {
 	}
 
 	@Override
-	protected void validateAllowedPieceType(HantoPieceType pieceType)
-			throws HantoException {
-		// TODO Auto-generated method stub
-		
+	protected void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
 	}
 
 }

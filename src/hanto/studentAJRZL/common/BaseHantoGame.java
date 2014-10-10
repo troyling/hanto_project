@@ -128,17 +128,19 @@ public abstract class BaseHantoGame implements HantoGame {
 		}
 		return printedBoard;
 	}
-	
+
 	/**
-	 * This method is used to place a piece on board 
+	 * This method is used to place a piece on board
 	 * 
 	 * @param pieceType
+	 * @param player
 	 * @param to
 	 */
-	public void placeHantoPieceOnBoard(HantoPieceType pieceType, HantoPlayerColor player, HantoCoordinate to) {
+	public void placeHantoPieceOnBoard(HantoPieceType pieceType, HantoPlayerColor player,
+			HantoCoordinate to) {
 		final HantoPiece newPiece = new HantoGamePiece(player, pieceType);
 		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(), to.getY());
-		
+
 		// store the coordinate if the piece is butterfly
 		if (pieceType == HantoPieceType.BUTTERFLY) {
 			switch (player) {
@@ -423,7 +425,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * 
 	 * @return the result of a move
 	 */
-	protected MoveResult checkGameStatus() {	
+	protected MoveResult checkGameStatus() {
 		MoveResult result = MoveResult.OK;
 
 		if (numTurns > MAX_TURN) {
