@@ -104,8 +104,8 @@ public class EpsilonHantoGameTest {
 		game.setTurnNumber(3);
 		game.setPlayerMoving(HantoPlayerColor.RED);
 
-		assertEquals(MoveResult.OK, game.makeMove(HantoPieceType.HORSE, new TestHantoCoordinate(0,
-				2), new TestHantoCoordinate(0, -3)));
+		assertEquals(MoveResult.OK,
+				game.makeMove(HantoPieceType.HORSE, makeCoordinate(0, 2), makeCoordinate(0, -3)));
 	}
 
 	// Helper methods
