@@ -130,6 +130,47 @@ public class EpsilonHantoGameTest {
 		game.makeMove(HantoPieceType.HORSE, makeCoordinate(0, 2), makeCoordinate(1, -2));
 	}
 
+	/**
+	 * Test that piece movements walk within the limit
+	 * 
+	 * @throws HantoException
+	 */
+	@Test
+	public void testThatPieceMovementIsWithinLimit() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[] {
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, 0, 0),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 1),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, 0, -1),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 1, 0),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.CRAB, -1, 0),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 1, 1)
+		};
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(4);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+
+		assertEquals(MoveResult.OK,
+				game.makeMove(HantoPieceType.CRAB, makeCoordinate(1, 1), makeCoordinate(0, 2)));
+		assertEquals(MoveResult.OK,
+				game.makeMove(HantoPieceType.SPARROW, makeCoordinate(0, -1), makeCoordinate(2, 0)));
+	}
+
+	/**
+	 * Test that walking pieces that do not walk within the limit throw an exception
+	 */
+	@Test(expected = HantoException.class)
+	public void testThatExceedingWalkingLimitIsNotAllowed() {
+
+	}
+
+	/**
+	 * Test that flying pieces that do not walk within the limit throw an exception
+	 */
+	@Test(expected = HantoException.class)
+	public void testThatExceedingFlyingLimitIsNotAllowed() {
+
+	}
+
 	// Helper methods
 	/**
 	 * Make a test coordinate for testing.

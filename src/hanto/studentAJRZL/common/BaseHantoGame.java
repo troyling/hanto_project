@@ -145,14 +145,15 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * This method is used to place a piece on board
 	 * 
 	 * @param pieceType
+	 * @param player
 	 * @param to
 	 */
+
 	public void placeHantoPieceOnBoard(HantoPieceType pieceType,
 			HantoPlayerColor player, HantoCoordinate to) {
 		final HantoPiece newPiece = new HantoGamePiece(player, pieceType);
 		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(),
 				to.getY());
-
 		// store the coordinate if the piece is butterfly
 		if (pieceType == HantoPieceType.BUTTERFLY) {
 			switch (player) {
