@@ -28,20 +28,16 @@ public class EpsilonHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getPrintableBoard() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
