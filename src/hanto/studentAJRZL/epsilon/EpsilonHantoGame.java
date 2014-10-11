@@ -40,18 +40,15 @@ public class EpsilonHantoGame extends BaseHantoGame {
 	}
 
 	@Override
-	protected void validateAllowedPieceType(HantoPieceType pieceType)
-			throws HantoException {
-		// TODO Auto-generated method stub
-
+	protected void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void preMakeMoveCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
 		// TODO fill this in later
 	}
 
@@ -59,8 +56,8 @@ public class EpsilonHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
 		MoveResult result = MoveResult.OK;
 		if (isPlayerResigning(pieceType, from, to)) {
 			// check for premature resignation
@@ -77,21 +74,19 @@ public class EpsilonHantoGame extends BaseHantoGame {
 	}
 
 	/**
-	 * Check if the player is resigning at the right time. According to the
-	 * rule, a player can resign only when 1) the player can't place any
-	 * additional piece onto the board 2) moving any of the player's pieces will
-	 * result into disconnection
+	 * Check if the player is resigning at the right time. According to the rule, a player can
+	 * resign only when 1) the player can't place any additional piece onto the board 2) moving any
+	 * of the player's pieces will result into disconnection
 	 * 
 	 * @param pieceType
 	 * @param from
 	 * @param to
 	 * @throws HantoPrematureResignationException
 	 */
-	private void validateResignation(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
-		
-		if (isCurrentPlayerAllowedToPlacePiece() || 
-				isCurrentPlayerAllowedToMoveAnyPiece()) {
+	private void validateResignation(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoPrematureResignationException {
+
+		if (isCurrentPlayerAllowedToPlacePiece() || isCurrentPlayerAllowedToMoveAnyPiece()) {
 			throw new HantoPrematureResignationException();
 		}
 	}
