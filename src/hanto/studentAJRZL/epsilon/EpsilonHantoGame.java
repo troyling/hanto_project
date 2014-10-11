@@ -61,11 +61,11 @@ public class EpsilonHantoGame extends BaseHantoGame {
 			case HORSE:
 				validateJump(from, to);
 				break;
-			case BUTTERFLY:
-				validateWalk(from, to);
-				break;
 			case SPARROW:
 				validateFlying(from, to);
+				break;
+			case BUTTERFLY:
+				validateWalk(from, to);
 				break;
 			case CRAB:
 				validateWalk(from, to);
