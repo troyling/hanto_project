@@ -41,6 +41,38 @@ public class EpsilonHantoGame extends BaseHantoGame {
 
 	@Override
 	protected void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
+		if (pieceType != HantoPieceType.BUTTERFLY && pieceType != HantoPieceType.SPARROW
+				&& pieceType != HantoPieceType.CRAB && pieceType != HantoPieceType.HORSE) {
+			throw new HantoException("The piece you are trying to place is not allowed.");
+		}
+	}
+
+	/**
+	 * Validate if movement types based on piece type are valid
+	 * 
+	 * @param pieceType
+	 * @param from
+	 * @param to
+	 * @throws HantoException
+	 */
+	private void validateMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
+			throws HantoException {
+		switch (pieceType) {
+			case HORSE:
+				validateJump(from, to);
+				break;
+			case BUTTERFLY:
+				validateWalk(from, to);
+				break;
+			case SPARROW:
+				validateFlying(from, to);
+				break;
+			case CRAB:
+				validateWalk(from, to);
+				break;
+			default:
+				break;
+		}
 	}
 
 	/**
@@ -49,7 +81,28 @@ public class EpsilonHantoGame extends BaseHantoGame {
 	@Override
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
-		// TODO fill this in later
+		super.preMakeMoveCheck(pieceType, from, to);
+		validateMove(pieceType, from, to);
+	}
+
+	/**
+	 * Validate a jumping movement if applicable
+	 * 
+	 * @param from
+	 * @param to
+	 */
+	private void validateJump(HantoCoordinate from, HantoCoordinate to) {
+		// TODO implement this method
+	}
+
+	/**
+	 * Validates a flying movement if applicable
+	 * 
+	 * @param from
+	 * @param to
+	 */
+	private void validateFlying(HantoCoordinate from, HantoCoordinate to) {
+		// TODO implement this method
 	}
 
 	/**
