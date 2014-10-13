@@ -213,9 +213,9 @@ public class EpsilonHantoGameTest {
 				plPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, 1, -3) };
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(3);
-		game.setPlayerMoving(HantoPlayerColor.BLUE);
+		game.setPlayerMoving(HantoPlayerColor.RED);
 
-		game.makeMove(HantoPieceType.CRAB, makeCoordinate(1, -3),
+		game.makeMove(HantoPieceType.SPARROW, makeCoordinate(1, -3),
 				makeCoordinate(0, 3));
 	}
 
