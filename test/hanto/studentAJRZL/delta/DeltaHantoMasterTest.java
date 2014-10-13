@@ -27,6 +27,7 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.HantoTestGame;
+import hanto.common.HantoTestGame.PieceLocationPair;
 import hanto.common.HantoTestGameFactory;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.HantoGameFactory;
@@ -106,7 +107,7 @@ public class DeltaHantoMasterTest {
 
 	@Test(expected = HantoException.class)
 	public void attemptToMoveAfterGameIsOver() throws HantoException {
-		final HantoTestGame.PieceLocationPair[] board = new HantoTestGame.PieceLocationPair[] {
+		final PieceLocationPair[] board = new PieceLocationPair[] {
 				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
 				plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
 				plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1), plPair(RED, CRAB, 1, 1)
@@ -128,7 +129,7 @@ public class DeltaHantoMasterTest {
 
 	@Test
 	public void sparrowFliesMoreThanOneSpace() throws HantoException {
-		final HantoTestGame.PieceLocationPair[] board = new HantoTestGame.PieceLocationPair[] {
+		final PieceLocationPair[] board = new PieceLocationPair[] {
 				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
 				plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
 				plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1),
@@ -144,7 +145,7 @@ public class DeltaHantoMasterTest {
 
 	@Test(expected = HantoException.class)
 	public void sparrowFliesToInvalidLocation() throws HantoException {
-		final HantoTestGame.PieceLocationPair[] board = new HantoTestGame.PieceLocationPair[] {
+		final PieceLocationPair[] board = new PieceLocationPair[] {
 				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
 				plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1)
 		};
@@ -155,7 +156,7 @@ public class DeltaHantoMasterTest {
 
 	@Test(expected = HantoException.class)
 	public void crabWalksAndCreatesDisconnectedConfiguration() throws HantoException {
-		final HantoTestGame.PieceLocationPair[] board = new HantoTestGame.PieceLocationPair[] {
+		final PieceLocationPair[] board = new PieceLocationPair[] {
 				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
 				plPair(BLUE, SPARROW, -1, 0), plPair(RED, CRAB, 1, 0),
 				plPair(BLUE, SPARROW, -2, 0), plPair(RED, SPARROW, 2, 0),
@@ -175,7 +176,7 @@ public class DeltaHantoMasterTest {
 	@Test
 	public void moveByFlying() throws HantoException {
 
-		final HantoTestGame.PieceLocationPair[] board = new HantoTestGame.PieceLocationPair[] {
+		final PieceLocationPair[] board = new PieceLocationPair[] {
 				plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
 				plPair(BLUE, SPARROW, -1, 0), plPair(RED, SPARROW, 1, -1),
 				plPair(BLUE, SPARROW, -1, 1), plPair(RED, SPARROW, 0, -1),
@@ -202,8 +203,7 @@ public class DeltaHantoMasterTest {
 	 * @param y end location
 	 * @return
 	 */
-	private HantoTestGame.PieceLocationPair plPair(HantoPlayerColor player,
-			HantoPieceType pieceType, int x, int y) {
-		return new HantoTestGame.PieceLocationPair(player, pieceType, new TestHantoCoordinate(x, y));
+	private PieceLocationPair plPair(HantoPlayerColor player, HantoPieceType pieceType, int x, int y) {
+		return new PieceLocationPair(player, pieceType, new TestHantoCoordinate(x, y));
 	}
 }

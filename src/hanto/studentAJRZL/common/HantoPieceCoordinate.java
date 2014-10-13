@@ -166,6 +166,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 
 	/**
 	 * 
+	 * 
 	 * @param coord
 	 * @return
 	 */
