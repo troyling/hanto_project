@@ -153,15 +153,10 @@ public abstract class BaseHantoGame implements HantoGame {
 		final HantoCoordinate toCoord = new HantoPieceCoordinate(to.getX(), to.getY());
 		// store the coordinate if the piece is butterfly
 		if (pieceType == HantoPieceType.BUTTERFLY) {
-			switch (player) {
-				case BLUE:
-					blueButterflyCoordinate = toCoord;
-					break;
-				case RED:
-					redButterflyCoordinate = toCoord;
-					break;
-				default:
-					break;
+			if (player == HantoPlayerColor.BLUE) {
+				blueButterflyCoordinate = toCoord;
+			} else {
+				redButterflyCoordinate = toCoord;
 			}
 		}
 		board.put(toCoord, newPiece);
@@ -211,7 +206,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @return the distance a hanto piece can walk.
 	 */
 	protected int getAllowedWalkingDistance() {
-		return 0;
+		return 1;
 	}
 	
 	/**
@@ -465,17 +460,11 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @throws HantoException
 	 */
 	private void alterPlayerTurn() throws HantoException {
-		switch (currentPlayerColor) {
-			case BLUE:
-				currentPlayerColor = HantoPlayerColor.RED;
-				break;
-			case RED:
-				currentPlayerColor = HantoPlayerColor.BLUE;
-				break;
-			default:
-				throw new HantoException("Invalid player color");
+		if (currentPlayerColor == HantoPlayerColor.BLUE) {
+			currentPlayerColor = HantoPlayerColor.RED;
+		} else {
+			currentPlayerColor = HantoPlayerColor.BLUE;
 		}
-
 		// Increment the number of turns if the first player is moving again.
 		if (currentPlayerColor == movesFirst) {
 			numTurns++;
@@ -650,7 +639,6 @@ public abstract class BaseHantoGame implements HantoGame {
 			}
 		}
 		return true;
-
 	}
 
 	/**

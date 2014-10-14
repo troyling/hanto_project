@@ -53,14 +53,6 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected int getAllowedWalkingDistance() {
-		return 1;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
 		MoveResult result = MoveResult.OK;

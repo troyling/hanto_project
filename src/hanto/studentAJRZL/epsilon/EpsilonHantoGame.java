@@ -60,13 +60,6 @@ public class EpsilonHantoGame extends BaseHantoGame {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 */
-	protected int getAllowedWalkingDistance() {
-		return 1;
-	}
-	
-	/**
 	 * Validate if the jumping is valid
 	 * Jumping is valid when all of the followings are true
 	 * 1) both given coordinates are on the same line

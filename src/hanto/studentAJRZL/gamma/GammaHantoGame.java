@@ -49,12 +49,4 @@ public class GammaHantoGame extends BaseHantoGame {
 			throw new HantoException("The piece you are trying to place is not allowed.");
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected int getAllowedWalkingDistance() {
-		return 1;
-	}
 }
