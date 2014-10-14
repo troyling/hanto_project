@@ -116,7 +116,6 @@ public abstract class BaseHantoGame implements HantoGame {
 			throws HantoException {
 		preMakeMoveCheck(pieceType, from, to);
 		performMove(pieceType, from, to);
-		
 		postMakeMoveCheck();
 		alterPlayerTurn();
 		return checkGameStatus();
@@ -374,7 +373,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param piece
 	 * @return true if two pieces are equal. False otherwise.
 	 */
-	// TODO move this method to HantoPiece class
 	private boolean isPieceEqual(HantoPiece piece1, HantoPiece piece2) {
 		return piece1.getColor() == piece2.getColor() && piece1.getType() == piece2.getType();
 	}
