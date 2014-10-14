@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Base Hanto Game class.
@@ -598,6 +599,28 @@ public abstract class BaseHantoGame implements HantoGame {
 		}
 		return false;
 	}
+	
+	/**
+	 * @return all the coordinates of pieces that are able to move without causing disconneciton
+	 */
+	private Collection<HantoCoordinate> getMoveablePieceCoords() {
+		Collection<HantoCoordinate> moveablePieces = new ArrayList<HantoCoordinate>();
+		Map<HantoCoordinate, HantoPiece> testBoard;
+
+		for (HantoCoordinate c : board.keySet()) {
+			HantoPiece p = board.get(c);
+			if (p.getColor() == currentPlayerColor) {
+				// check if the board would remain contiguous when the piece is
+				// removed from the board
+				testBoard = new HashMap<HantoCoordinate, HantoPiece>(board);
+				testBoard.remove(c);
+				if (isBoardContiguous(testBoard)) {
+					moveablePieces.add(c);
+				}
+			}
+		}
+		return moveablePieces;
+	}
 
 	/**
 	 * Determine if the given board is contiguous
@@ -710,23 +733,53 @@ public abstract class BaseHantoGame implements HantoGame {
 		}
 	}
 	
-	public Collection<HantoMoveRecord> getPossibleMoves() {
-		Collection<HantoMoveRecord> moves = new ArrayList<HantoMoveRecord>();
+	public HantoMoveRecord getPossibleMove() {
+		HantoMoveRecord move = new HantoMoveRecord(null, null, null);
 		
 		if (!isCurrentPlayerAllowedToMoveAnyPiece() && !isCurrentPlayerAllowedToPlacePiece()) {
-			return moves;
+			return move;
 		} else if (isCurrentPlayerAllowedToMoveAnyPiece()) {
-			
+			Collection<HantoCoordinate> fromCoords = getMoveablePieceCoords();
+			Collection<HantoCoordinate> toCoords = getUnoccupiedCoords();
+			for (HantoCoordinate from : fromCoords) {
+				for (HantoCoordinate to : toCoords) {
+					try {
+						makeMove(getPieceAt(from).getType(), from, to);
+						return new HantoMoveRecord(getPieceAt(from).getType(), from, to);
+					} catch (HantoException e) {
+						// do nothing
+					}
+				}
+			}
 		} else if (isCurrentPlayerAllowedToPlacePiece()) {
 			// check to see what pieces are still available
 			// should have priority for the types
 			// look up coordinates
 			// add to the moves
+			
 		}
-		
-		
-		
-		
-		return moves;
+		return move;
+	}
+
+	/**
+	 * @return All unoccupied coordinates which are adjacent to the pieces on board
+	 */
+	private Collection<HantoCoordinate> getUnoccupiedCoords() {
+		Collection<HantoCoordinate> coords = new ArrayList<HantoCoordinate>();
+		Collection<HantoCoordinate> visited = new ArrayList<HantoCoordinate>();
+		for (HantoCoordinate c : board.keySet()) {
+			if (!visited.contains(c)) {
+				visited.add(c);
+				// check if the neighbors are occupied
+				Collection<HantoCoordinate> neighbors = ((HantoPieceCoordinate) c).getAdjacentCoordinates();
+				for (HantoCoordinate neighbor : neighbors) {
+					visited.add(neighbor); // speed up the looping
+					if (board.get(neighbor) == null) {
+						coords.add(neighbor);
+					}
+				}
+			}
+		}
+		return coords;
 	}
 }
