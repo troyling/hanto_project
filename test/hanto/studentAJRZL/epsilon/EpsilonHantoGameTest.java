@@ -315,6 +315,37 @@ public class EpsilonHantoGameTest {
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 		assertEquals(MoveResult.RED_WINS, game.makeMove(null, null, null));
 	}
+	
+	/**
+	 * Test that a valid resignation attempt will work properly for red player resigning
+	 * 
+	 * @throws HantoException
+	 */
+	@Test
+	public void testRedPlayerValidResignationAttempt() throws HantoException {
+		// Each allowed up to 6 crabs, 4 horses, 2 sparrows, and 1 butterfly
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[] {
+				plPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, 0, 0),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, 0, -1),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 1),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 2),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 3),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 4),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 5),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 0, 6),
+				plPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, 0, 7),
+				plPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, 0, 8),
+				plPair(HantoPlayerColor.RED, HantoPieceType.HORSE, 0, 9),
+				plPair(HantoPlayerColor.RED, HantoPieceType.HORSE, 0, 10),
+				plPair(HantoPlayerColor.RED, HantoPieceType.HORSE, 0, 11),
+				plPair(HantoPlayerColor.RED, HantoPieceType.HORSE, 0, 12),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.CRAB, 0, 13),
+		};
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(25);
+		game.setPlayerMoving(HantoPlayerColor.RED);
+		assertEquals(MoveResult.BLUE_WINS, game.makeMove(null, null, null));
+	}
 
 	// Helper methods
 	/**

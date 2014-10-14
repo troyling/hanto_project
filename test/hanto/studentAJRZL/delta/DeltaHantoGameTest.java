@@ -362,7 +362,10 @@ public class DeltaHantoGameTest {
 
 		game.initializeBoard(initialPieces);
 		game.setTurnNumber(2);
-		game.setPlayerMoving(HantoPlayerColor.BLUE);
+		game.setPlayerMoving(HantoPlayerColor.RED);
+		
+		// making moves
+		assertEquals(MoveResult.BLUE_WINS, game.makeMove(null, null, null));
 	}
 
 	/**

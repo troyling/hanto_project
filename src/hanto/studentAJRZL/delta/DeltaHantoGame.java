@@ -16,7 +16,6 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.BaseHantoGame;
-import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 /**
  * Class for the delta hanto game.
@@ -75,56 +74,8 @@ public class DeltaHantoGame extends BaseHantoGame {
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 		super.preMakeMoveCheck(pieceType, from, to);
-		validateMove(pieceType, from, to);
 	}
-
-	/**
-	 * Validate if walking is valid
-	 * 
-	 * @param pieceType
-	 * @param from
-	 * @param to
-	 * @throws HantoException
-	 */
-	private void validateMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
-			throws HantoException {
-		if (from != null && to != null) {
-			HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
-
-			if (isPieceAllowedToFly(pieceType)) {
-				validateCanFly(pieceType, from, to);
-				return;
-			}
-
-			if (fromCoord.getDistanceTo(to) > getAllowedWalkingDistance()) {
-				throw new HantoException("Pieces can only walk one hex in delta hanto.");
-			} else {
-				validateWalk(from, to);
-			}
-		}
-	}
-
-	/**
-	 * Validate if the flying is valid
-	 * 
-	 * @param pieceType the piece type
-	 * @param from the original coordinate
-	 * @param to the destination coordinate
-	 * @throws HantoException
-	 */
-	private void validateCanFly(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
-			throws HantoException {
-		if (from != null && to != null) {
-			HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
-
-			// check for flying
-			if (fromCoord.getDistanceTo(to) > getAllowedWalkingDistance()
-					&& !isPieceAllowedToFly(pieceType)) {
-				throw new HantoException("Only sparrow can fly in delta hato game.");
-			}
-		}
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
