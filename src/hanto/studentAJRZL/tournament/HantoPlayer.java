@@ -8,10 +8,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.tournament;
+package hanto.studentAJRZL.tournament;
 
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
+import hanto.tournament.HantoGamePlayer;
+import hanto.tournament.HantoMoveRecord;
 
 public class HantoPlayer implements HantoGamePlayer {
 
