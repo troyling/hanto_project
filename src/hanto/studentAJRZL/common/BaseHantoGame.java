@@ -741,6 +741,23 @@ public abstract class BaseHantoGame implements HantoGame {
 		
 		if (!isCurrentPlayerAllowedToMoveAnyPiece() && !isCurrentPlayerAllowedToPlacePiece()) {
 			return move;
+		} else if (isCurrentPlayerAllowedToPlacePiece()) {
+			Collection<HantoPieceType> types = getAvailableTypes();
+			Collection<HantoCoordinate> toCoords = getUnoccupiedCoords();
+			if (toCoords.isEmpty()) {
+				// first move
+				return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0, 0));
+			}
+			for (HantoCoordinate to : toCoords) {
+				for (HantoPieceType type : types) {
+					try {
+						makeMove(type, null, to);
+						return new HantoMoveRecord(type, null, to);
+					} catch (HantoException e) {
+						// do nothing
+					}
+				}
+			}			
 		} else if (isCurrentPlayerAllowedToMoveAnyPiece()) {
 			Collection<HantoCoordinate> fromCoords = getMoveablePieceCoords();
 			Collection<HantoCoordinate> toCoords = getUnoccupiedCoords();
@@ -754,19 +771,6 @@ public abstract class BaseHantoGame implements HantoGame {
 					}
 				}
 			}
-		} else if (isCurrentPlayerAllowedToPlacePiece()) {
-			Collection<HantoPieceType> types = getAvailableTypes();
-			Collection<HantoCoordinate> toCoords = getUnoccupiedCoords();
-			for (HantoCoordinate to : toCoords) {
-				for (HantoPieceType type : types) {
-					try {
-						makeMove(type, null, to);
-						return new HantoMoveRecord(type, null, to);
-					} catch (HantoException e) {
-						// do nothing
-					}
-				}
-			}			
 		}
 		return move;
 	}
@@ -791,7 +795,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * @return All unoccupied coordinates which are adjacent to the pieces on board
+	 * @return All unoccupied coordinates which are adjacent to the pieces on board. An empty collection would be returned when there is no piece on board.
 	 */
 	private Collection<HantoCoordinate> getUnoccupiedCoords() {
 		Collection<HantoCoordinate> coords = new ArrayList<HantoCoordinate>();
