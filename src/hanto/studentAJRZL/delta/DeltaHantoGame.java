@@ -33,9 +33,9 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 */
 	public DeltaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
-		NUM_BUTTERFLY_ALLOWED = 1;
-		NUM_SPARROW_ALLOWED = 4;
-		NUM_CRAB_ALLOWED = 4;
+		maxPiecesAllowed.put(HantoPieceType.BUTTERFLY, 1);
+		maxPiecesAllowed.put(HantoPieceType.SPARROW, 4);
+		maxPiecesAllowed.put(HantoPieceType.CRAB, 4);
 	}
 
 	/**

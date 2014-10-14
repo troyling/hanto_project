@@ -27,8 +27,8 @@ public class GammaHantoGame extends BaseHantoGame {
 	public GammaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
 		MAX_TURN = 20;
-		NUM_BUTTERFLY_ALLOWED = 1;
-		NUM_SPARROW_ALLOWED = 5;
+		maxPiecesAllowed.put(HantoPieceType.BUTTERFLY, 1);
+		maxPiecesAllowed.put(HantoPieceType.SPARROW, 5);
 	}
 
 	/**

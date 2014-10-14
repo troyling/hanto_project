@@ -31,9 +31,9 @@ public class BetaHantoGame extends BaseHantoGame {
 	 */
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
-		NUM_BUTTERFLY_ALLOWED = 1;
-		NUM_SPARROW_ALLOWED = 5;
 		MAX_TURN = 6;
+		maxPiecesAllowed.put(HantoPieceType.BUTTERFLY, 1);
+		maxPiecesAllowed.put(HantoPieceType.SPARROW, 5);
 	}
 
 	/**

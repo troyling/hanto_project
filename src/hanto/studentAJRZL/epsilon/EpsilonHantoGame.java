@@ -33,10 +33,10 @@ public class EpsilonHantoGame extends BaseHantoGame {
 	 */
 	public EpsilonHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
-		NUM_BUTTERFLY_ALLOWED = 1;
-		NUM_SPARROW_ALLOWED = 2;
-		NUM_CRAB_ALLOWED = 6;
-		NUM_HORSE_ALLOWED = 4;
+		maxPiecesAllowed.put(HantoPieceType.BUTTERFLY, 1);
+		maxPiecesAllowed.put(HantoPieceType.SPARROW, 2);
+		maxPiecesAllowed.put(HantoPieceType.CRAB, 6);
+		maxPiecesAllowed.put(HantoPieceType.HORSE, 4);
 	}
 
 	@Override

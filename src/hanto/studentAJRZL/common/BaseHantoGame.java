@@ -33,23 +33,18 @@ import java.util.Queue;
  */
 public abstract class BaseHantoGame implements HantoGame {
 	// pieces allowed
-	protected int NUM_BUTTERFLY_ALLOWED = 0;
-	protected int NUM_SPARROW_ALLOWED = 0;
-	protected int NUM_CRAB_ALLOWED = 0;
-	protected int NUM_CRANE_ALLOWED = 0;
-	protected int NUM_DOVE_ALLOWED = 0;
-	protected int NUM_HORSE_ALLOWED = 0;
+	protected Map<HantoPieceType, Integer> maxPiecesAllowed;
 
 	// no limit for turn
 	protected int MAX_TURN = Integer.MAX_VALUE;
 
 	protected HantoCoordinate blueButterflyCoordinate;
 	protected HantoCoordinate redButterflyCoordinate;
-
 	protected HantoPlayerColor currentPlayerColor;
 	protected HantoPlayerColor movesFirst;
 	protected boolean isGameEnded = false;
 	protected Map<HantoCoordinate, HantoPiece> board;
+	
 	protected int numTurns;
 
 	/**
@@ -62,6 +57,20 @@ public abstract class BaseHantoGame implements HantoGame {
 		currentPlayerColor = movesFirst;
 		board = new HashMap<HantoCoordinate, HantoPiece>();
 		numTurns = 1;
+		initPiecesAllowedOnBoard();
+	}
+	
+	/**
+	 * Initialize the table by setting the maximum of all pieces allowed to zero
+	 */
+	private void initPiecesAllowedOnBoard() {
+		maxPiecesAllowed = new HashMap<HantoPieceType, Integer>();
+		maxPiecesAllowed.put(HantoPieceType.BUTTERFLY, 0);
+		maxPiecesAllowed.put(HantoPieceType.SPARROW, 0);
+		maxPiecesAllowed.put(HantoPieceType.CRAB, 0);
+		maxPiecesAllowed.put(HantoPieceType.CRANE, 0);
+		maxPiecesAllowed.put(HantoPieceType.DOVE, 0);
+		maxPiecesAllowed.put(HantoPieceType.HORSE, 0);
 	}
 
 	/**
@@ -316,30 +325,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param pieceType
 	 */
 	private int getMaxNumAllowedForPiece(HantoPieceType pieceType) {
-		int max = 0;
-		switch (pieceType) {
-			case BUTTERFLY:
-				max = NUM_BUTTERFLY_ALLOWED;
-				break;
-			case CRAB:
-				max = NUM_CRAB_ALLOWED;
-				break;
-			case CRANE:
-				max = NUM_CRANE_ALLOWED;
-				break;
-			case DOVE:
-				max = NUM_DOVE_ALLOWED;
-				break;
-			case HORSE:
-				max = NUM_HORSE_ALLOWED;
-				break;
-			case SPARROW:
-				max = NUM_SPARROW_ALLOWED;
-				break;
-			default:
-				break;
-		}
-		return max;
+		return maxPiecesAllowed.get(pieceType);
 	}
 
 	/**
@@ -733,8 +719,11 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @return number of pieces player can place
 	 */
 	private int getMaxNumPieceOnBoard() {
-		return NUM_BUTTERFLY_ALLOWED + NUM_SPARROW_ALLOWED + NUM_CRAB_ALLOWED + NUM_CRANE_ALLOWED
-				+ NUM_DOVE_ALLOWED + NUM_HORSE_ALLOWED;
+		int max = 0;
+		for (HantoPieceType t : maxPiecesAllowed.keySet()) {
+			max += maxPiecesAllowed.get(t);
+		}
+		return max;
 	}
 	
 	/**
