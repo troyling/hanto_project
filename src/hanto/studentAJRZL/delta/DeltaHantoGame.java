@@ -140,15 +140,4 @@ public class DeltaHantoGame extends BaseHantoGame {
 	protected boolean isPieceAllowedToFly(HantoPieceType pieceType) {
 		return pieceType == HantoPieceType.SPARROW;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected boolean isPieceAllowedToWalk(HantoPieceType pieceType) {
-		return pieceType != HantoPieceType.SPARROW;
-	}
-
-	
-
 }

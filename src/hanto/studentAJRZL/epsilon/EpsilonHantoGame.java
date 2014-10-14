@@ -17,7 +17,6 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.BaseHantoGame;
-import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 /**
  * Class for the epsilon hanto game.

@@ -17,6 +17,7 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentAJRZL.beta.BetaHantoGame;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -168,6 +169,9 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
+		if (numTurns > 1 && from == null && !(this instanceof BetaHantoGame)) {
+			validatePiecePlacedNextToOwnColor(to);
+		}
 		validateAllowedPieceType(pieceType);
 	}
 
@@ -349,19 +353,24 @@ public abstract class BaseHantoGame implements HantoGame {
 	private void validateWalkDistance(HantoPieceType pieceType, HantoCoordinate fromCoord,
 			HantoCoordinate toCoord) throws HantoException {
 		final int distance = ((HantoPieceCoordinate) fromCoord).getDistanceTo(toCoord);
-		if (distance > getAllowedWalkingDistance()) {
-			if (isPieceAllowedToFly(pieceType)) {
-				if (distance > getAllowedFlyingDistance()) {
-					throw new HantoException(
-							"Invalid fly.");
-				}
-			} else if (isPieceAllowedToJump(pieceType)) {
-				if (!isLineContiguousTo(fromCoord, toCoord)) {
-					throw new HantoException("Invalid jump");
-				}
-			} else {
-				throw new HantoException("Can't walk further than allowed distance.");
+		if (isPieceAllowedToFly(pieceType)) {
+			if (distance > getAllowedFlyingDistance()) {
+				throw new HantoException(
+						"Invalid fly.");
 			}
+		} else if (isPieceAllowedToJump(pieceType)) {
+			if (!isLineContiguousTo(fromCoord, toCoord)) {
+				throw new HantoException("Invalid jump");
+			}
+		} else {
+			// walking
+			if (fromCoord != null && toCoord != null) {
+				validateWalk(fromCoord, toCoord);
+			}
+			
+			if (distance > getAllowedWalkingDistance()) {
+				throw new HantoException("Can't walk further than allowed distance.");
+			}	
 		}
 	}
 
@@ -384,17 +393,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @return true if so; false otherwise
 	 */
 	protected boolean isPieceAllowedToJump(HantoPieceType pieceType) {
-		return false;
-	}
-
-	/**
-	 * Determine if the piece is allowed to walk. By default is false for all pieces, hanto game
-	 * variant which allows walking should override this method.
-	 * 
-	 * @param pieceType the piece type
-	 * @return true if so, false otherwise
-	 */
-	protected boolean isPieceAllowedToWalk(HantoPieceType pieceType) {
 		return false;
 	}
 
@@ -764,5 +762,20 @@ public abstract class BaseHantoGame implements HantoGame {
 		}
 		
 		return isContiguous;
+	}
+	
+	/**
+	 * Check if the player is placing the piece only next to its own
+	 * 
+	 * @param to
+	 * @throws HantoException
+	 */
+	private void validatePiecePlacedNextToOwnColor(HantoCoordinate to) throws HantoException {
+		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
+		for (HantoCoordinate c : toCoord.getAdjacentCoordinates()) {
+			if (board.get(c) != null && board.get(c).getColor() != currentPlayerColor) {
+				throw new HantoException("You must not place a piece adjacent to other player's.");
+			}
+		}
 	}
 }

@@ -15,7 +15,6 @@ import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentAJRZL.common.BaseHantoGame;
-import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
 /**
  * Gamma Hanto Game class.
@@ -38,28 +37,7 @@ public class GammaHantoGame extends BaseHantoGame {
 	@Override
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
-		if (numTurns > 1 && from == null) {
-			validatePiecePlacedNextToOwnColor(to);
-		}
-		if (from != null && to != null) {
-			validateWalk(from, to);
-		}
 		super.preMakeMoveCheck(pieceType, from, to);
-	}
-
-	/**
-	 * Check if the player is placing the piece only next to its own
-	 * 
-	 * @param to
-	 * @throws HantoException
-	 */
-	private void validatePiecePlacedNextToOwnColor(HantoCoordinate to) throws HantoException {
-		HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
-		for (HantoCoordinate c : toCoord.getAdjacentCoordinates()) {
-			if (board.get(c) != null && board.get(c).getColor() != currentPlayerColor) {
-				throw new HantoException("You must not place a piece adjacent to other player's.");
-			}
-		}
 	}
 
 	/**
