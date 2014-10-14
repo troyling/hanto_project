@@ -42,7 +42,6 @@ public class BetaHantoGame extends BaseHantoGame {
 	@Override
 	protected void preMakeMoveCheck(HantoPieceType pieceType,
 			HantoCoordinate from, HantoCoordinate to) throws HantoException {
-		validatePieceType(pieceType);
 		validateMove(from);
 		validateBufferflyPresence(pieceType);
 		super.preMakeMoveCheck(pieceType, from, to);
@@ -58,21 +57,6 @@ public class BetaHantoGame extends BaseHantoGame {
 				&& pieceType != HantoPieceType.SPARROW) {
 			throw new HantoException(
 					"The piece you are trying to place is not allowed.");
-		}
-	}
-
-	/**
-	 * Throws exception if the player attempts to place a piece other than
-	 * butterfly or sparrow
-	 * 
-	 * @throws HantoException
-	 */
-	private void validatePieceType(HantoPieceType pieceType)
-			throws HantoException {
-		if (pieceType != HantoPieceType.BUTTERFLY
-				&& pieceType != HantoPieceType.SPARROW) {
-			throw new HantoException(
-					"Can't place piece other than butterfly or sparrow.");
 		}
 	}
 

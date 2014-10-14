@@ -127,6 +127,17 @@ public class BetaHantoGameTest {
 		assertEquals(HantoPlayerColor.BLUE, p.getColor());
 		assertEquals(HantoPieceType.BUTTERFLY, p.getType());
 	}
+	
+	/**
+	 * Test that attempts to place a crab on board
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class)
+	public void testAttemptToPlaceCrabOnBoard() throws HantoException {
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+		betaGame.makeMove(HantoPieceType.CRAB, null, new TestHantoCoordinate(0, 1));
+	}
 
 	/**
 	 * Attempt to place the first piece at place other than the origin. Exception is expected.
