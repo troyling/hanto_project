@@ -10,7 +10,6 @@
 
 package hanto.studentAJRZL.tournament;
 
-
 /**
  * This is the implementation of our AI for the Hanto project
  * 
@@ -24,6 +23,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.HantoGameFactory;
+import hanto.studentAJRZL.common.HantoPieceCoordinate;
 import hanto.studentAJRZL.epsilon.EpsilonHantoGame;
 import hanto.tournament.HantoGamePlayer;
 import hanto.tournament.HantoMoveRecord;
@@ -48,6 +48,11 @@ public class HantoPlayer implements HantoGamePlayer {
 
 	@Override
 	public HantoMoveRecord makeMove(HantoMoveRecord opponentsMove) {
+		if (opponentsMove == null) {
+			// we move first
+			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0,
+					0));
+		}
 		MoveResult result = MoveResult.OK;
 		HantoMoveRecord ourMove = new HantoMoveRecord(null, null, null);
 		HantoPieceType oppoPieceType = opponentsMove.getPiece();
@@ -59,11 +64,11 @@ public class HantoPlayer implements HantoGamePlayer {
 		} catch (HantoException e) {
 			e.printStackTrace();
 		}
-		
+
 		if (result == MoveResult.OK) {
 			ourMove = ((EpsilonHantoGame) game).getPossibleMove();
 		}
-		
+
 		return ourMove;
 	}
 }
