@@ -254,11 +254,11 @@ public class BetaHantoGameTest {
 		betaGame.makeMove(HantoPieceType.SPARROW, null, bottom);
 		betaGame.makeMove(HantoPieceType.SPARROW, null, topLeft);
 		// 3rd turn
-		betaGame.makeMove(HantoPieceType.SPARROW, null, topRight);
-		betaGame.makeMove(HantoPieceType.SPARROW, null, bottomRight);
-		// 4th turn
 		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, coord1);
 		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, coord2);
+		// 4th turn
+		betaGame.makeMove(HantoPieceType.SPARROW, null, topRight);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, bottomRight);
 		// 5th turn
 		betaGame.makeMove(HantoPieceType.SPARROW, null, bottomLeft);
 		betaGame.makeMove(HantoPieceType.SPARROW, null, coord3);

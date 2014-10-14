@@ -55,8 +55,7 @@ public class BetaHantoGame extends BaseHantoGame {
 	 */
 	private void validateBufferflyPresence(HantoPieceType pieceType)
 			throws HantoException {
-		if ((board.size() == 6 || board.size() == 7)
-				&& pieceType != HantoPieceType.BUTTERFLY) {
+		if (numTurns > 3) {
 			if ((currentPlayerColor == HantoPlayerColor.BLUE && blueButterflyCoordinate == null)
 					|| (currentPlayerColor == HantoPlayerColor.RED && redButterflyCoordinate == null)) {
 				throw new HantoException(
