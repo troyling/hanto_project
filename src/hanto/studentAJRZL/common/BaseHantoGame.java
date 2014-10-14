@@ -18,7 +18,9 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.beta.BetaHantoGame;
+import hanto.tournament.HantoMoveRecord;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -706,5 +708,25 @@ public abstract class BaseHantoGame implements HantoGame {
 				throw new HantoException("You must not place a piece adjacent to other player's.");
 			}
 		}
+	}
+	
+	public Collection<HantoMoveRecord> getPossibleMoves() {
+		Collection<HantoMoveRecord> moves = new ArrayList<HantoMoveRecord>();
+		
+		if (!isCurrentPlayerAllowedToMoveAnyPiece() && !isCurrentPlayerAllowedToPlacePiece()) {
+			return moves;
+		} else if (isCurrentPlayerAllowedToMoveAnyPiece()) {
+			
+		} else if (isCurrentPlayerAllowedToPlacePiece()) {
+			// check to see what pieces are still available
+			// should have priority for the types
+			// look up coordinates
+			// add to the moves
+		}
+		
+		
+		
+		
+		return moves;
 	}
 }

@@ -24,6 +24,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentAJRZL.HantoGameFactory;
+import hanto.studentAJRZL.epsilon.EpsilonHantoGame;
 import hanto.tournament.HantoGamePlayer;
 import hanto.tournament.HantoMoveRecord;
 
@@ -64,7 +65,7 @@ public class HantoPlayer implements HantoGamePlayer {
 		
 		if (result == MoveResult.OK) {
 			// figure out strategy
-			possibleMoves = game.getPossibleMoves();
+			possibleMoves = ((EpsilonHantoGame) game).getPossibleMoves();
 			if (possibleMoves.size() == 0) {
 				// Have to resign
 				ourMove = new HantoMoveRecord(null, null, null);
