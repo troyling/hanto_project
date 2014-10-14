@@ -41,17 +41,6 @@ public class DeltaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
-		if (pieceType != HantoPieceType.BUTTERFLY && pieceType != HantoPieceType.SPARROW
-				&& pieceType != HantoPieceType.CRAB) {
-			throw new HantoException("The piece you are trying to place is not allowed.");
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
 		MoveResult result = MoveResult.OK;

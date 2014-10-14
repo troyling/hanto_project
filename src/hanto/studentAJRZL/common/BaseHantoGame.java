@@ -32,21 +32,22 @@ import java.util.Queue;
  * 
  */
 public abstract class BaseHantoGame implements HantoGame {
-	// pieces allowed
-	protected Map<HantoPieceType, Integer> maxPiecesAllowed;
-
-	// no limit for turn
+	// Constants
 	protected int MAX_TURN = Integer.MAX_VALUE;
 	protected int MAX_WALKING_DISTANCE = 1;
 	protected int MAX_FLYING_DISTANCE = Integer.MAX_VALUE;
+	
+	// pieces allowed
+	protected Map<HantoPieceType, Integer> maxPiecesAllowed;
+	protected Map<HantoCoordinate, HantoPiece> board;
+	protected Map<HantoPieceType, Integer> redPieces;
+	protected Map<HantoPieceType, Integer> bluePieces;
 
 	protected HantoCoordinate blueButterflyCoordinate;
 	protected HantoCoordinate redButterflyCoordinate;
 	protected HantoPlayerColor currentPlayerColor;
 	protected HantoPlayerColor movesFirst;
 	protected boolean isGameEnded = false;
-	protected Map<HantoCoordinate, HantoPiece> board;
-	
 	protected int numTurns;
 
 	/**
@@ -59,20 +60,24 @@ public abstract class BaseHantoGame implements HantoGame {
 		currentPlayerColor = movesFirst;
 		board = new HashMap<HantoCoordinate, HantoPiece>();
 		numTurns = 1;
-		initPiecesAllowedOnBoard();
+		maxPiecesAllowed = initPiecesAllowedOnBoard();
+		redPieces = initPiecesAllowedOnBoard();
+		bluePieces = initPiecesAllowedOnBoard();
 	}
 	
 	/**
-	 * Initialize the table by setting the maximum of all pieces allowed to zero
+	 * 
+	 * @return Initialized map with all pieces allowed set to zero
 	 */
-	private void initPiecesAllowedOnBoard() {
-		maxPiecesAllowed = new HashMap<HantoPieceType, Integer>();
-		maxPiecesAllowed.put(HantoPieceType.BUTTERFLY, 0);
-		maxPiecesAllowed.put(HantoPieceType.SPARROW, 0);
-		maxPiecesAllowed.put(HantoPieceType.CRAB, 0);
-		maxPiecesAllowed.put(HantoPieceType.CRANE, 0);
-		maxPiecesAllowed.put(HantoPieceType.DOVE, 0);
-		maxPiecesAllowed.put(HantoPieceType.HORSE, 0);
+	private Map<HantoPieceType, Integer> initPiecesAllowedOnBoard() {
+		Map<HantoPieceType, Integer> map = new HashMap<HantoPieceType, Integer>();
+		map.put(HantoPieceType.BUTTERFLY, 0);
+		map.put(HantoPieceType.SPARROW, 0);
+		map.put(HantoPieceType.CRAB, 0);
+		map.put(HantoPieceType.CRANE, 0);
+		map.put(HantoPieceType.DOVE, 0);
+		map.put(HantoPieceType.HORSE, 0);
+		return map;
 	}
 
 	/**
@@ -110,10 +115,31 @@ public abstract class BaseHantoGame implements HantoGame {
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
 		preMakeMoveCheck(pieceType, from, to);
-		placeHantoPieceOnBoard(pieceType, currentPlayerColor, to);
+		performMove(pieceType, from, to);
+		
 		postMakeMoveCheck();
 		alterPlayerTurn();
 		return checkGameStatus();
+	}
+
+	private void performMove(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) {
+		final HantoCoordinate toCoord = new HantoPieceCoordinate(to);
+		if (from == null) {
+			// placing piece
+			if (currentPlayerColor == HantoPlayerColor.BLUE) {
+				if (pieceType == HantoPieceType.BUTTERFLY) {
+					blueButterflyCoordinate = toCoord;
+				}
+				bluePieces.put(pieceType, bluePieces.get(pieceType) + 1);
+			} else {
+				if (pieceType == HantoPieceType.BUTTERFLY) {
+					redButterflyCoordinate = toCoord;
+				}
+				redPieces.put(pieceType, redPieces.get(pieceType) + 1);
+			}
+		}
+		placePiece(pieceType, currentPlayerColor, to);	
 	}
 
 	/**
@@ -151,16 +177,33 @@ public abstract class BaseHantoGame implements HantoGame {
 	public void placeHantoPieceOnBoard(HantoPieceType pieceType, HantoPlayerColor player,
 			HantoCoordinate to) {
 		// create objects to store into the board
-		final HantoPiece newPiece = new HantoGamePiece(player, pieceType);
 		final HantoCoordinate toCoord = new HantoPieceCoordinate(to);
 		// store the coordinate if the piece is butterfly
-		if (pieceType == HantoPieceType.BUTTERFLY) {
-			if (player == HantoPlayerColor.BLUE) {
+		if (player == HantoPlayerColor.BLUE) {
+			if (pieceType == HantoPieceType.BUTTERFLY) {
 				blueButterflyCoordinate = toCoord;
-			} else {
+			}
+			bluePieces.put(pieceType, bluePieces.get(pieceType) + 1);
+		} else {
+			if (pieceType == HantoPieceType.BUTTERFLY) {
 				redButterflyCoordinate = toCoord;
 			}
+			redPieces.put(pieceType, redPieces.get(pieceType) + 1);
 		}
+		placePiece(pieceType, player, to);
+	}
+	
+	/**
+	 * Actually put the piece on board
+	 * 
+	 * @param pieceType
+	 * @param player
+	 * @param to
+	 */
+	private void placePiece(HantoPieceType pieceType, HantoPlayerColor player,
+			HantoCoordinate to) {
+		final HantoPiece newPiece = new HantoGamePiece(player, pieceType);
+		final HantoCoordinate toCoord = new HantoPieceCoordinate(to);
 		board.put(toCoord, newPiece);
 	}
 
@@ -175,11 +218,10 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
+		// places are not allowed to place next to the other players' after Beta
 		if (numTurns > 1 && from == null && !(this instanceof BetaHantoGame)) {
-			// places are not allowed to place next to the other players' after Beta
 			validatePiecePlacedNextToOwnColor(to);
 		}
-		validateAllowedPieceType(pieceType);
 		validateGameInProgress();
 		validateDestinationCoordinate(to);
 		validateFirstMoveCoordinate(to);
@@ -190,14 +232,7 @@ public abstract class BaseHantoGame implements HantoGame {
 			board.remove(new HantoPieceCoordinate(from));
 		} else {
 			// placing a piece
-			validateNumMaxPiece(pieceType);
-			if (pieceType == HantoPieceType.BUTTERFLY) {
-				if (currentPlayerColor == HantoPlayerColor.BLUE) {
-					validateButterflyExistence(blueButterflyCoordinate);
-				} else {
-					validateButterflyExistence(redButterflyCoordinate);
-				}
-			}
+			validateAllowedPieceType(pieceType);
 		}
 	}
 
@@ -212,14 +247,24 @@ public abstract class BaseHantoGame implements HantoGame {
 	}
 
 	/**
-	 * This function should be overridden by subclasses to check for piece types that are allowed in
-	 * the game
+	 * Validate if the player can place the given piece
 	 * 
 	 * @param pieceType
 	 * @throws HantoException
 	 */
-	protected abstract void validateAllowedPieceType(HantoPieceType pieceType)
-			throws HantoException;
+	private void validateAllowedPieceType(HantoPieceType pieceType) throws HantoException {
+		boolean isAllowed = true;
+		if (currentPlayerColor == HantoPlayerColor.BLUE) {
+			isAllowed = bluePieces.get(pieceType) + 1 <= maxPiecesAllowed.get(pieceType);
+		} else {
+			isAllowed = redPieces.get(pieceType) + 1 <= maxPiecesAllowed.get(pieceType);
+		}
+		
+		if (!isAllowed) {
+			throw new HantoException("The piece you are trying to place is not allowed.");
+		}
+	}
+			
 
 	/**
 	 * Check if player's attempt to move a piece is valid
@@ -242,37 +287,7 @@ public abstract class BaseHantoGame implements HantoGame {
 		validatePieceAtFromCoordinate(fromCoord, newPiece);
 		validateWalkDistance(pieceType, fromCoord, toCoord);
 	}
-
-	/**
-	 * Validates the maximum number of pieces are on the board
-	 * 
-	 * @param pieceType the piece type
-	 * @throws HantoException
-	 */
-	private void validateNumMaxPiece(HantoPieceType pieceType) throws HantoException {
-		int numPieceWillBeOnBoard = 0;
-		for (HantoCoordinate coord : board.keySet()) {
-			HantoPiece p = board.get(coord);
-			if (p.getType() == pieceType && p.getColor() == currentPlayerColor) {
-				numPieceWillBeOnBoard++;
-			}
-		}
-		numPieceWillBeOnBoard++; // assuming the piece has been placed on board
-
-		if (numPieceWillBeOnBoard > getMaxNumAllowedForPiece(pieceType)) {
-			throw new HantoException("You can't place more pieces than what's allowed.");
-		}
-	}
-
-	/**
-	 * Return the maximum number of pieces allowed to place on board for the given type
-	 * 
-	 * @param pieceType
-	 */
-	private int getMaxNumAllowedForPiece(HantoPieceType pieceType) {
-		return maxPiecesAllowed.get(pieceType);
-	}
-
+	
 	/**
 	 * Check if the walk is within the allowed distance
 	 * 
@@ -362,19 +377,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	// TODO move this method to HantoPiece class
 	private boolean isPieceEqual(HantoPiece piece1, HantoPiece piece2) {
 		return piece1.getColor() == piece2.getColor() && piece1.getType() == piece2.getType();
-	}
-
-	/**
-	 * Throws exception if the player attempts to place more than one butterfly on board
-	 * 
-	 * @param butterflyCoordinate
-	 * @throws HantoException
-	 */
-	private void validateButterflyExistence(HantoCoordinate butterflyCoordinate)
-			throws HantoException {
-		if (butterflyCoordinate != null) {
-			throw new HantoException("Can't place more than one butterfly in beta hanto game.");
-		}
 	}
 
 	/**

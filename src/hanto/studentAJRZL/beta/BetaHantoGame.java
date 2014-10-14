@@ -48,19 +48,6 @@ public class BetaHantoGame extends BaseHantoGame {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void validateAllowedPieceType(HantoPieceType pieceType)
-			throws HantoException {
-		if (pieceType != HantoPieceType.BUTTERFLY
-				&& pieceType != HantoPieceType.SPARROW) {
-			throw new HantoException(
-					"The piece you are trying to place is not allowed.");
-		}
-	}
-
-	/**
 	 * Throw exception if butterfly is not placed by the end of 4th turn.
 	 * 
 	 * @param pieceType
