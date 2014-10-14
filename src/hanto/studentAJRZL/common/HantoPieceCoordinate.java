@@ -165,13 +165,13 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	}
 
 	/**
-	 * 
+	 * Return the coordinates in between this coordinate and the given coordinate
 	 * 
 	 * @param coord
-	 * @return
+	 * @return a collection of coordinates
 	 */
-	private Collection<HantoCoordinate> getCoordOnTheLineTo(HantoCoordinate coord) {
-		Collection<HantoCoordinate> coordsOnTheLine = new ArrayList<HantoCoordinate>();
+	public Collection<HantoCoordinate> getCoordOnTheLineTo(HantoCoordinate coord) {
+		Collection<HantoCoordinate> coordsOnLine = new ArrayList<HantoCoordinate>();
 		
 		if (isCoordinateOnSameLine(coord)) {
 			final HantoPieceCoordinate destCoord = new HantoPieceCoordinate(
@@ -188,7 +188,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 					nextCoord = new HantoPieceCoordinate(nextCoord.getX(),
 							nextCoord.getY() + increment);
 					if (!nextCoord.equals(destCoord)) {
-						coordsOnTheLine.add(nextCoord);
+						coordsOnLine.add(nextCoord);
 					}
 				}
 			} else if (delY == 0) {
@@ -199,7 +199,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 					nextCoord = new HantoPieceCoordinate(nextCoord.getX() + increment,
 							nextCoord.getY());
 					if (!nextCoord.equals(destCoord)) {
-						coordsOnTheLine.add(nextCoord);
+						coordsOnLine.add(nextCoord);
 					}
 				}
 			} else {
@@ -211,11 +211,11 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 					nextCoord = new HantoPieceCoordinate(nextCoord.getX() + incrementX,
 							nextCoord.getY() + incrementY);
 					if (!nextCoord.equals(destCoord)) {
-						coordsOnTheLine.add(nextCoord);
+						coordsOnLine.add(nextCoord);
 					}
 				}
 			}
 		}
-		return coordsOnTheLine;
+		return coordsOnLine;
 	}
 }

@@ -19,8 +19,6 @@ import hanto.common.MoveResult;
 import hanto.studentAJRZL.common.BaseHantoGame;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 
-import java.util.Collection;
-
 /**
  * Class for the epsilon hanto game.
  * 
@@ -53,29 +51,57 @@ public class EpsilonHantoGame extends BaseHantoGame {
 					"The piece you are trying to place is not allowed.");
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void preMakeMoveCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
-		validateJumping(from, to);
-		super.preMakeMoveCheck(pieceType, from, to);
+	protected boolean isPieceAllowedToFly(HantoPieceType pieceType) {
+		return pieceType == HantoPieceType.SPARROW;
 	}
- 
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected int getAllowedWalkingDistance() {
+		return 1;
+	}
+	
 	/**
 	 * Validate if the jumping is valid
+	 * Jumping is valid when all of the followings are true
+	 * 1) both given coordinates are on the same line
+	 * 2) other coordinates on the line between the given ones must be occupied
+	 * 3) distance between the given coordinates must be less than 5
 	 * 
 	 * @param from
 	 * @param to
 	 * @throws HantoException
 	 */
-	private void validateJumping(HantoCoordinate from, HantoCoordinate to)
-			throws HantoException {
-		// TODO add test logic here
+//	private void validateJumping(HantoCoordinate from, HantoCoordinate to)
+//			throws HantoException {
+//		final HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
+//		final HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
+//		if (!isLineContiguousTo(fromCoord, toCoord)) {
+//			throw new HantoException("Jump invalid");
+//		}
+//	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected boolean isPieceAllowedToJump(HantoPieceType pieceType) {
+		return pieceType == HantoPieceType.HORSE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected int getAllowedFlyingDistance() {
+		return 4;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

@@ -200,6 +200,16 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected int getAllowedWalkingDistance() {
 		return 0;
 	}
+	
+	/**
+	 * This function should be overridden by subclasses to return the distance a hanto piece is
+	 * allowed to fly
+	 * 
+	 * @return the distance a hanto piece can walk.
+	 */
+	protected int getAllowedFlyingDistance() {
+		return Integer.MAX_VALUE;
+	}
 
 	/**
 	 * Move the piece from the given source coordinate to the given destination coordinate
@@ -340,10 +350,17 @@ public abstract class BaseHantoGame implements HantoGame {
 			HantoCoordinate toCoord) throws HantoException {
 		final int distance = ((HantoPieceCoordinate) fromCoord).getDistanceTo(toCoord);
 		if (distance > getAllowedWalkingDistance()) {
-			if (!isPieceAllowedToFly(pieceType)) {
-				throw new HantoException(
-						"Can't walk further than allowed distance. Only sparrow can fly in delta hato game.");
-
+			if (isPieceAllowedToFly(pieceType)) {
+				if (distance > getAllowedFlyingDistance()) {
+					throw new HantoException(
+							"Invalid fly.");
+				}
+			} else if (isPieceAllowedToJump(pieceType)) {
+				if (!isLineContiguousTo(fromCoord, toCoord)) {
+					throw new HantoException("Invalid jump");
+				}
+			} else {
+				throw new HantoException("Can't walk further than allowed distance.");
 			}
 		}
 	}
@@ -356,6 +373,17 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @return true if so; false otherwise
 	 */
 	protected boolean isPieceAllowedToFly(HantoPieceType pieceType) {
+		return false;
+	}
+	
+	/**
+	 * Determine if the piece is allowed to jump. By default is false for all pieces, hanto game
+	 * variant which allows flying should override this method.
+	 * 
+	 * @param pieceType the piece type
+	 * @return true if so; false otherwise
+	 */
+	protected boolean isPieceAllowedToJump(HantoPieceType pieceType) {
 		return false;
 	}
 
@@ -709,5 +737,32 @@ public abstract class BaseHantoGame implements HantoGame {
 	private int getMaxNumPieceOnBoard() {
 		return NUM_BUTTERFLY_ALLOWED + NUM_SPARROW_ALLOWED + NUM_CRAB_ALLOWED + NUM_CRANE_ALLOWED
 				+ NUM_DOVE_ALLOWED + NUM_HORSE_ALLOWED;
+	}
+	
+	/**
+	 * Determine if the given hex coordinates are on the same line 
+	 * and the coordinates between them are all occupied by pieces.
+	 * 
+	 * @param from
+	 * @param to
+	 * @return true if so; false otherwise
+	 */
+	protected boolean isLineContiguousTo(HantoCoordinate from, HantoCoordinate to) {
+		boolean isContiguous = false;
+		final HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
+		final Collection<HantoCoordinate> coordsOnLine = fromCoord.getCoordOnTheLineTo(to);
+		
+		// only check when the the coordinates are on the same line
+		if (fromCoord.getDistanceTo(to) > 1 && coordsOnLine.size() > 0) {
+			isContiguous = true;
+			for (HantoCoordinate c : coordsOnLine) {
+				if (board.get(c) == null) {
+					isContiguous = false;
+					break;
+				}
+			}
+		}
+		
+		return isContiguous;
 	}
 }
