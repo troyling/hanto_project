@@ -28,8 +28,6 @@ import hanto.studentAJRZL.epsilon.EpsilonHantoGame;
 import hanto.tournament.HantoGamePlayer;
 import hanto.tournament.HantoMoveRecord;
 
-import java.util.Collection;
-
 public class HantoPlayer implements HantoGamePlayer {
 	HantoPlayerColor myColor;
 	HantoGame game;

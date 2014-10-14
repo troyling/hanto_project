@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 
 /**
  * Base Hanto Game class.
@@ -733,6 +732,10 @@ public abstract class BaseHantoGame implements HantoGame {
 		}
 	}
 	
+	/**
+	 * Find the first available move on the game 
+	 * @return the HantoMoveRecord with our move record
+	 */
 	public HantoMoveRecord getPossibleMove() {
 		HantoMoveRecord move = new HantoMoveRecord(null, null, null);
 		
@@ -752,13 +755,39 @@ public abstract class BaseHantoGame implements HantoGame {
 				}
 			}
 		} else if (isCurrentPlayerAllowedToPlacePiece()) {
-			// check to see what pieces are still available
-			// should have priority for the types
-			// look up coordinates
-			// add to the moves
-			
+			Collection<HantoPieceType> types = getAvailableTypes();
+			Collection<HantoCoordinate> toCoords = getUnoccupiedCoords();
+			for (HantoCoordinate to : toCoords) {
+				for (HantoPieceType type : types) {
+					try {
+						makeMove(type, null, to);
+						return new HantoMoveRecord(type, null, to);
+					} catch (HantoException e) {
+						// do nothing
+					}
+				}
+			}			
 		}
 		return move;
+	}
+
+	/**
+	 * @return Types of hanto pieces which are allowed to place for the current player
+	 */
+	private Collection<HantoPieceType> getAvailableTypes() {
+		Collection<HantoPieceType> types = new ArrayList<HantoPieceType>();
+		for (HantoPieceType t : maxPiecesAllowed.keySet()) {
+			if (currentPlayerColor == HantoPlayerColor.BLUE) {
+				if (maxPiecesAllowed.get(t) > bluePieces.get(t)) {
+					types.add(t);
+				}
+			} else {
+				if (maxPiecesAllowed.get(t) > redPieces.get(t)) {
+					types.add(t);
+				}
+			}
+		}
+		return types;
 	}
 
 	/**
