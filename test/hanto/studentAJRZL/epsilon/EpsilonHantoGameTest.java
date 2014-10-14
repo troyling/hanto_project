@@ -284,6 +284,37 @@ public class EpsilonHantoGameTest {
 
 		game.makeMove(null, null, null);
 	}
+	
+	/**
+	 * Test that an invalid resignation attempt throws the proper exception
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoPrematureResignationException.class)
+	public void testPrematureResignationAttemptWithNoPieceToPlace() throws HantoException {
+		HantoTestGame.PieceLocationPair[] initialPieces = new HantoTestGame.PieceLocationPair[] {
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, 0, 0),
+				plPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, -1, 1),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.CRAB, 0, 1),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.CRAB, 0, 2),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.CRAB, 0, 3),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.CRAB, 0, 4),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.CRAB, 0, 5),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.CRAB, 0, 6),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, 0, 7),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, 0, 8),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, 9),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, 10),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, 11),
+				plPair(HantoPlayerColor.BLUE, HantoPieceType.HORSE, 0, 12),
+				plPair(HantoPlayerColor.RED, HantoPieceType.CRAB, 1, 0),
+		};
+		game.initializeBoard(initialPieces);
+		game.setTurnNumber(25);
+		game.setPlayerMoving(HantoPlayerColor.BLUE);
+		game.makeMove(null, null, null);
+
+	}
 
 	/**
 	 * Test that a valid resignation attempt will work properly

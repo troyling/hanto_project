@@ -37,6 +37,7 @@ public class EpsilonHantoGame extends BaseHantoGame {
 		maxPiecesAllowed.put(HantoPieceType.SPARROW, 2);
 		maxPiecesAllowed.put(HantoPieceType.CRAB, 6);
 		maxPiecesAllowed.put(HantoPieceType.HORSE, 4);
+		MAX_FLYING_DISTANCE = 4;
 	}
 
 	@Override
@@ -60,38 +61,10 @@ public class EpsilonHantoGame extends BaseHantoGame {
 	}
 	
 	/**
-	 * Validate if the jumping is valid
-	 * Jumping is valid when all of the followings are true
-	 * 1) both given coordinates are on the same line
-	 * 2) other coordinates on the line between the given ones must be occupied
-	 * 3) distance between the given coordinates must be less than 5
-	 * 
-	 * @param from
-	 * @param to
-	 * @throws HantoException
-	 */
-//	private void validateJumping(HantoCoordinate from, HantoCoordinate to)
-//			throws HantoException {
-//		final HantoPieceCoordinate fromCoord = new HantoPieceCoordinate(from);
-//		final HantoPieceCoordinate toCoord = new HantoPieceCoordinate(to);
-//		if (!isLineContiguousTo(fromCoord, toCoord)) {
-//			throw new HantoException("Jump invalid");
-//		}
-//	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	protected boolean isPieceAllowedToJump(HantoPieceType pieceType) {
 		return pieceType == HantoPieceType.HORSE;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected int getAllowedFlyingDistance() {
-		return 4;
 	}
 	
 	/**
@@ -129,7 +102,6 @@ public class EpsilonHantoGame extends BaseHantoGame {
 	private void validateResignation(HantoPieceType pieceType,
 			HantoCoordinate from, HantoCoordinate to)
 			throws HantoPrematureResignationException {
-
 		if (isCurrentPlayerAllowedToPlacePiece()
 				|| isCurrentPlayerAllowedToMoveAnyPiece()) {
 			throw new HantoPrematureResignationException();

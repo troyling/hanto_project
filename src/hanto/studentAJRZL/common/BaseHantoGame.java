@@ -37,6 +37,8 @@ public abstract class BaseHantoGame implements HantoGame {
 
 	// no limit for turn
 	protected int MAX_TURN = Integer.MAX_VALUE;
+	protected int MAX_WALKING_DISTANCE = 1;
+	protected int MAX_FLYING_DISTANCE = Integer.MAX_VALUE;
 
 	protected HantoCoordinate blueButterflyCoordinate;
 	protected HantoCoordinate redButterflyCoordinate;
@@ -146,7 +148,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param player
 	 * @param to
 	 */
-
 	public void placeHantoPieceOnBoard(HantoPieceType pieceType, HantoPlayerColor player,
 			HantoCoordinate to) {
 		final HantoPiece newPiece = new HantoGamePiece(player, pieceType);
@@ -174,6 +175,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 		if (numTurns > 1 && from == null && !(this instanceof BetaHantoGame)) {
+			// places are not allowed to place next to the other players' after Beta
 			validatePiecePlacedNextToOwnColor(to);
 		}
 		validateAllowedPieceType(pieceType);
@@ -198,26 +200,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	protected abstract void validateAllowedPieceType(HantoPieceType pieceType)
 			throws HantoException;
-
-	/**
-	 * This function should be overridden by subclasses to return the distance a hanto piece is
-	 * allowed to walk
-	 * 
-	 * @return the distance a hanto piece can walk.
-	 */
-	protected int getAllowedWalkingDistance() {
-		return 1;
-	}
-	
-	/**
-	 * This function should be overridden by subclasses to return the distance a hanto piece is
-	 * allowed to fly
-	 * 
-	 * @return the distance a hanto piece can walk.
-	 */
-	protected int getAllowedFlyingDistance() {
-		return Integer.MAX_VALUE;
-	}
 
 	/**
 	 * Move the piece from the given source coordinate to the given destination coordinate
@@ -335,7 +317,7 @@ public abstract class BaseHantoGame implements HantoGame {
 			HantoCoordinate toCoord) throws HantoException {
 		final int distance = ((HantoPieceCoordinate) fromCoord).getDistanceTo(toCoord);
 		if (isPieceAllowedToFly(pieceType)) {
-			if (distance > getAllowedFlyingDistance()) {
+			if (distance > MAX_FLYING_DISTANCE) {
 				throw new HantoException(
 						"Invalid fly.");
 			}
@@ -349,7 +331,7 @@ public abstract class BaseHantoGame implements HantoGame {
 				validateWalk(fromCoord, toCoord);
 			}
 			
-			if (distance > getAllowedWalkingDistance()) {
+			if (distance > MAX_WALKING_DISTANCE) {
 				throw new HantoException("Can't walk further than allowed distance.");
 			}	
 		}
@@ -631,14 +613,14 @@ public abstract class BaseHantoGame implements HantoGame {
 			if (p.getColor() == currentPlayerColor) {
 				// check if the board would remain contiguous when the piece is
 				// removed from the board
-				testBoard = board;
+				testBoard = new HashMap<HantoCoordinate, HantoPiece>(board);
 				testBoard.remove(c);
-				if (!isBoardContiguous(testBoard)) {
-					return false;
+				if (isBoardContiguous(testBoard)) {
+					return true;
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/**
