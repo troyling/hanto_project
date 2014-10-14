@@ -50,7 +50,8 @@ public class HantoPlayer implements HantoGamePlayer {
 	@Override
 	public HantoMoveRecord makeMove(HantoMoveRecord opponentsMove) {
 		MoveResult result = MoveResult.OK;
-		Collection<HantoCoordinate> availableCoords;
+		Collection<HantoMoveRecord> possibleMoves;
+		HantoMoveRecord ourMove;
 		HantoPieceType oppoPieceType = opponentsMove.getPiece();
 		HantoCoordinate oppoFrom = opponentsMove.getFrom();
 		HantoCoordinate oppoTo = opponentsMove.getTo();
@@ -63,9 +64,16 @@ public class HantoPlayer implements HantoGamePlayer {
 		
 		if (result == MoveResult.OK) {
 			// figure out strategy
-			
+			possibleMoves = game.getPossibleMoves();
+			if (possibleMoves.size() == 0) {
+				// Have to resign
+				ourMove = new HantoMoveRecord(null, null, null);
+			} else {
+				// Randomly make a move
+				
+			}
 		}
 		
-		return null;
+		return ourMove;
 	}
 }
