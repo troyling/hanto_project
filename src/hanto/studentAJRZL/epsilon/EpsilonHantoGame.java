@@ -39,18 +39,6 @@ public class EpsilonHantoGame extends BaseHantoGame {
 		maxPiecesAllowed.put(HantoPieceType.HORSE, 4);
 		MAX_FLYING_DISTANCE = 4;
 	}
-
-	@Override
-	protected void validateAllowedPieceType(HantoPieceType pieceType)
-			throws HantoException {
-		if (pieceType != HantoPieceType.BUTTERFLY
-				&& pieceType != HantoPieceType.SPARROW
-				&& pieceType != HantoPieceType.CRAB
-				&& pieceType != HantoPieceType.HORSE) {
-			throw new HantoException(
-					"The piece you are trying to place is not allowed.");
-		}
-	}
 	
 	/**
 	 * {@inheritDoc}

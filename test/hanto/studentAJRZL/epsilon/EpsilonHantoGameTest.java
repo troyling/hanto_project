@@ -346,7 +346,7 @@ public class EpsilonHantoGameTest {
 		game.setPlayerMoving(HantoPlayerColor.BLUE);
 		assertEquals(MoveResult.RED_WINS, game.makeMove(null, null, null));
 	}
-	
+
 	/**
 	 * Test that a valid resignation attempt will work properly for red player resigning
 	 * 
