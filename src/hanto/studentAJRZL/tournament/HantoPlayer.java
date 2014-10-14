@@ -50,6 +50,11 @@ public class HantoPlayer implements HantoGamePlayer {
 	public HantoMoveRecord makeMove(HantoMoveRecord opponentsMove) {
 		if (opponentsMove == null) {
 			// we move first
+			try {
+				game.makeMove(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0, 0));
+			} catch (HantoException e) {
+				// do nothing
+			}
 			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0,
 					0));
 		}
@@ -62,7 +67,7 @@ public class HantoPlayer implements HantoGamePlayer {
 		try {
 			result = game.makeMove(oppoPieceType, oppoFrom, oppoTo);
 		} catch (HantoException e) {
-			e.printStackTrace();
+			// do nothing
 		}
 
 		if (result == MoveResult.OK) {
