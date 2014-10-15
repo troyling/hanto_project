@@ -114,8 +114,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	 * @param coord
 	 * @return common neighbors
 	 */
-	public Collection<HantoCoordinate> getCommonNeighbors(
-			HantoPieceCoordinate coord) {
+	public Collection<HantoCoordinate> getCommonNeighbors(HantoPieceCoordinate coord) {
 		Collection<HantoCoordinate> commonNeighbors = new LinkedList<HantoCoordinate>();
 		Collection<HantoCoordinate> neighbors1 = getAdjacentCoordinates();
 		Collection<HantoCoordinate> neighbors2 = coord.getAdjacentCoordinates();
@@ -140,14 +139,12 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 		int z1 = 0 - x - y;
 		int z2 = 0 - coord.getX() - coord.getY();
 
-		return (Math.abs(x - coord.getX()) + Math.abs(y - coord.getY()) + Math
-				.abs(z1 - z2)) / 2;
+		return (Math.abs(x - coord.getX()) + Math.abs(y - coord.getY()) + Math.abs(z1 - z2)) / 2;
 
 	}
 
 	/**
-	 * Determine if the given coordinate is on the same line with this
-	 * coordinate
+	 * Determine if the given coordinate is on the same line with this coordinate
 	 * 
 	 * @param coord
 	 * @return true if so; false otherwise
@@ -172,21 +169,20 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 	 */
 	public Collection<HantoCoordinate> getCoordOnTheLineTo(HantoCoordinate coord) {
 		Collection<HantoCoordinate> coordsOnLine = new ArrayList<HantoCoordinate>();
-		
+
 		if (isCoordinateOnSameLine(coord)) {
-			final HantoPieceCoordinate destCoord = new HantoPieceCoordinate(
-					coord);
+			final HantoPieceCoordinate destCoord = new HantoPieceCoordinate(coord);
 			HantoPieceCoordinate nextCoord = this;
 			int delX = destCoord.getX() - x;
 			int delY = destCoord.getY() - y;
 			if (delX == 0) {
-				
+
 				// vertical
 				int increment = delY / Math.abs(delY);
-				
+
 				while (!nextCoord.equals(destCoord)) {
-					nextCoord = new HantoPieceCoordinate(nextCoord.getX(),
-							nextCoord.getY() + increment);
+					nextCoord = new HantoPieceCoordinate(nextCoord.getX(), nextCoord.getY()
+							+ increment);
 					if (!nextCoord.equals(destCoord)) {
 						coordsOnLine.add(nextCoord);
 					}
@@ -194,7 +190,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 			} else if (delY == 0) {
 				// bottom left to upper right
 				int increment = delX / Math.abs(delX);
-				
+
 				while (!nextCoord.equals(destCoord)) {
 					nextCoord = new HantoPieceCoordinate(nextCoord.getX() + increment,
 							nextCoord.getY());
@@ -207,7 +203,7 @@ public class HantoPieceCoordinate implements HantoCoordinate {
 				while (!nextCoord.equals(destCoord)) {
 					int incrementX = delX / Math.abs(delX);
 					int incrementY = -1 * incrementX;
-					
+
 					nextCoord = new HantoPieceCoordinate(nextCoord.getX() + incrementX,
 							nextCoord.getY() + incrementY);
 					if (!nextCoord.equals(destCoord)) {

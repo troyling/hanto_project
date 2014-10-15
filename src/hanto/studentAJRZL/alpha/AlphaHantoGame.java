@@ -106,7 +106,7 @@ public class AlphaHantoGame implements HantoGame {
 		if (to == null) {
 			throw new HantoException("You must actually make a move.");
 		}
-		
+
 		if (from != null) {
 			throw new HantoException("Can't move piece in alpha game.");
 		}

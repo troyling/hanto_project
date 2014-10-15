@@ -40,8 +40,8 @@ public class BetaHantoGame extends BaseHantoGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void preMakeMoveCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
 		validateMove(from);
 		validateBufferflyPresence(pieceType);
 		super.preMakeMoveCheck(pieceType, from, to);
@@ -53,13 +53,11 @@ public class BetaHantoGame extends BaseHantoGame {
 	 * @param pieceType
 	 * @throws HantoException
 	 */
-	private void validateBufferflyPresence(HantoPieceType pieceType)
-			throws HantoException {
+	private void validateBufferflyPresence(HantoPieceType pieceType) throws HantoException {
 		if (numTurns > 3) {
 			if ((currentPlayerColor == HantoPlayerColor.BLUE && blueButterflyCoordinate == null)
 					|| (currentPlayerColor == HantoPlayerColor.RED && redButterflyCoordinate == null)) {
-				throw new HantoException(
-						"Butterfly must be placed by 4th turn.");
+				throw new HantoException("Butterfly must be placed by 4th turn.");
 			}
 		}
 	}

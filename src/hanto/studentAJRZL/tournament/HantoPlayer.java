@@ -32,19 +32,15 @@ public class HantoPlayer implements HantoGamePlayer {
 	HantoGame game;
 
 	@Override
-	public void startGame(HantoGameID version, HantoPlayerColor myColor,
-			boolean doIMoveFirst) {
+	public void startGame(HantoGameID version, HantoPlayerColor myColor, boolean doIMoveFirst) {
 		this.myColor = myColor;
 		if (doIMoveFirst) {
-			game = HantoGameFactory.getInstance().makeHantoGame(version,
-					myColor);
+			game = HantoGameFactory.getInstance().makeHantoGame(version, myColor);
 		} else {
 			if (myColor == HantoPlayerColor.BLUE) {
-				game = HantoGameFactory.getInstance().makeHantoGame(version,
-						HantoPlayerColor.RED);
+				game = HantoGameFactory.getInstance().makeHantoGame(version, HantoPlayerColor.RED);
 			} else {
-				game = HantoGameFactory.getInstance().makeHantoGame(version,
-						HantoPlayerColor.BLUE);
+				game = HantoGameFactory.getInstance().makeHantoGame(version, HantoPlayerColor.BLUE);
 			}
 		}
 	}
@@ -54,14 +50,13 @@ public class HantoPlayer implements HantoGamePlayer {
 		if (opponentsMove == null) {
 			// we move first
 			try {
-				game.makeMove(HantoPieceType.BUTTERFLY, null,
-						new HantoPieceCoordinate(0, 0));
+				game.makeMove(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0, 0));
 			} catch (HantoException e) {
 				// do nothing
 				e.getMessage();
 			}
-			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null,
-					new HantoPieceCoordinate(0, 0));
+			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0,
+					0));
 		}
 		HantoPieceType oppoPieceType = opponentsMove.getPiece();
 		HantoCoordinate oppoFrom = opponentsMove.getFrom();

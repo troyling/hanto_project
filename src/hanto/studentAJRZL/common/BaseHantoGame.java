@@ -255,7 +255,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @param to
 	 * @throws HantoException
 	 */
-	protected void postMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	protected void postMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
 		validatePiecesAreContiguous(pieceType, from, to);
 	}
 
@@ -507,7 +508,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * 
 	 * @throws HantoException
 	 */
-	private void validatePiecesAreContiguous(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	private void validatePiecesAreContiguous(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
 		if (!isBoardContiguous(board)) {
 			// restore the board
 			HantoPiece p = board.get(to);
