@@ -21,7 +21,6 @@ import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.common.MoveResult;
 import hanto.studentAJRZL.HantoGameFactory;
 import hanto.studentAJRZL.common.HantoPieceCoordinate;
 import hanto.studentAJRZL.epsilon.EpsilonHantoGame;
@@ -58,22 +57,17 @@ public class HantoPlayer implements HantoGamePlayer {
 			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0,
 					0));
 		}
-		MoveResult result = MoveResult.OK;
-		HantoMoveRecord ourMove = new HantoMoveRecord(null, null, null);
+
 		HantoPieceType oppoPieceType = opponentsMove.getPiece();
 		HantoCoordinate oppoFrom = opponentsMove.getFrom();
 		HantoCoordinate oppoTo = opponentsMove.getTo();
 
 		try {
-			result = game.makeMove(oppoPieceType, oppoFrom, oppoTo);
+			game.makeMove(oppoPieceType, oppoFrom, oppoTo);
 		} catch (HantoException e) {
 			// do nothing
 		}
 
-		if (result == MoveResult.OK) {
-			ourMove = ((EpsilonHantoGame) game).getPossibleMove();
-		}
-
-		return ourMove;
+		return ((EpsilonHantoGame) game).getPossibleMove();
 	}
 }

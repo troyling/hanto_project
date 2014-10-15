@@ -120,7 +120,7 @@ public abstract class BaseHantoGame implements HantoGame {
 			throws HantoException {
 		preMakeMoveCheck(pieceType, from, to);
 		performMove(pieceType, from, to);
-		postMakeMoveCheck();
+		postMakeMoveCheck(pieceType, from, to);
 		alterPlayerTurn();
 		return checkGameStatus();
 	}
@@ -243,8 +243,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * 
 	 * @throws HantoException
 	 */
-	protected void postMakeMoveCheck() throws HantoException {
-		validatePiecesAreContiguous();
+	protected void postMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) throws HantoException {
+		validatePiecesAreContiguous(pieceType, from, to);
 	}
 
 	/**
@@ -497,8 +497,12 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * 
 	 * @throws HantoException
 	 */
-	private void validatePiecesAreContiguous() throws HantoException {
+	private void validatePiecesAreContiguous(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) throws HantoException {
 		if (!isBoardContiguous(board)) {
+			// restore the board
+			HantoPiece p = board.get(to);
+			board.put(from, p);
+			board.remove(to);
 			throw new HantoException("Pieces are not contiguous");
 		}
 	}
@@ -739,8 +743,10 @@ public abstract class BaseHantoGame implements HantoGame {
 		HantoMoveRecord move = new HantoMoveRecord(null, null, null);
 
 		if (!isCurrentPlayerAllowedToMoveAnyPiece() && !isCurrentPlayerAllowedToPlacePiece()) {
+			System.out.println("Bug11111111");
 			return move;
 		} else if (isCurrentPlayerAllowedToPlacePiece()) {
+			// placing a piece
 			Collection<HantoPieceType> types = getAvailableTypes();
 			List<HantoCoordinate> toCoords = getUnoccupiedCoords();
 			Collections.shuffle(toCoords); // shuffle to guarantee randomness
@@ -764,6 +770,7 @@ public abstract class BaseHantoGame implements HantoGame {
 				}
 			}
 		} else if (isCurrentPlayerAllowedToMoveAnyPiece()) {
+			// moving a piece
 			Collection<HantoCoordinate> fromCoords = getMoveablePieceCoords();
 			Collection<HantoCoordinate> toCoords = getUnoccupiedCoords();
 			for (HantoCoordinate from : fromCoords) {
@@ -778,6 +785,7 @@ public abstract class BaseHantoGame implements HantoGame {
 				}
 			}
 		}
+		System.out.println("Bug2222222222");
 		return move;
 	}
 
