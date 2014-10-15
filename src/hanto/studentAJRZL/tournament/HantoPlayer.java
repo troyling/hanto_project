@@ -34,14 +34,14 @@ public class HantoPlayer implements HantoGamePlayer {
 	@Override
 	public void startGame(HantoGameID version, HantoPlayerColor myColor, boolean doIMoveFirst) {
 		this.myColor = myColor;
+		HantoPlayerColor movesFirst;
 		if (doIMoveFirst) {
 			game = HantoGameFactory.getInstance().makeHantoGame(version, myColor);
 		} else {
-			if (myColor == HantoPlayerColor.BLUE) {
-				game = HantoGameFactory.getInstance().makeHantoGame(version, HantoPlayerColor.RED);
-			} else {
-				game = HantoGameFactory.getInstance().makeHantoGame(version, HantoPlayerColor.BLUE);
-			}
+			// Set the color that moves first.
+			movesFirst = (myColor == HantoPlayerColor.BLUE) ? HantoPlayerColor.RED
+					: HantoPlayerColor.BLUE;
+			game = HantoGameFactory.getInstance().makeHantoGame(version, movesFirst);
 		}
 	}
 
