@@ -57,17 +57,14 @@ public class HantoPlayer implements HantoGamePlayer {
 			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0,
 					0));
 		}
-
 		HantoPieceType oppoPieceType = opponentsMove.getPiece();
 		HantoCoordinate oppoFrom = opponentsMove.getFrom();
 		HantoCoordinate oppoTo = opponentsMove.getTo();
-
 		try {
 			game.makeMove(oppoPieceType, oppoFrom, oppoTo);
 		} catch (HantoException e) {
 			// do nothing
 		}
-
 		return ((EpsilonHantoGame) game).getPossibleMove();
 	}
 }

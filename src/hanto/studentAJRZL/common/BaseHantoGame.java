@@ -125,19 +125,29 @@ public abstract class BaseHantoGame implements HantoGame {
 		return checkGameStatus();
 	}
 
+	/**
+	 * This methods put the piece on our tracking map and then place the piece on board
+	 * 
+	 * @param pieceType
+	 * @param from
+	 * @param to
+	 */
 	private void performMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) {
 		final HantoCoordinate toCoord = new HantoPieceCoordinate(to);
-		if (from == null) {
-			// placing piece
-			if (currentPlayerColor == HantoPlayerColor.BLUE) {
-				if (pieceType == HantoPieceType.BUTTERFLY) {
-					blueButterflyCoordinate = toCoord;
-				}
+		if (currentPlayerColor == HantoPlayerColor.BLUE) {
+			if (pieceType == HantoPieceType.BUTTERFLY) {
+				blueButterflyCoordinate = toCoord;
+			}
+			if (from == null) {
+				// placing piece
 				bluePieces.put(pieceType, bluePieces.get(pieceType) + 1);
-			} else {
-				if (pieceType == HantoPieceType.BUTTERFLY) {
-					redButterflyCoordinate = toCoord;
-				}
+			}
+		} else {
+			if (pieceType == HantoPieceType.BUTTERFLY) {
+				redButterflyCoordinate = toCoord;
+			}
+			if (from == null) {
+				// placing piece
 				redPieces.put(pieceType, redPieces.get(pieceType) + 1);
 			}
 		}
@@ -604,8 +614,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	/**
 	 * @return all the coordinates of pieces that are able to move without causing disconneciton
 	 */
-	private Collection<HantoCoordinate> getMoveablePieceCoords() {
-		Collection<HantoCoordinate> moveablePieces = new ArrayList<HantoCoordinate>();
+	private List<HantoCoordinate> getMoveablePieceCoords() {
+		List<HantoCoordinate> moveablePieces = new ArrayList<HantoCoordinate>();
 		Map<HantoCoordinate, HantoPiece> testBoard;
 
 		for (HantoCoordinate c : board.keySet()) {
@@ -742,10 +752,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	public HantoMoveRecord getPossibleMove() {
 		HantoMoveRecord move = new HantoMoveRecord(null, null, null);
 
-		if (!isCurrentPlayerAllowedToMoveAnyPiece() && !isCurrentPlayerAllowedToPlacePiece()) {
-			System.out.println("Bug11111111");
-			return move;
-		} else if (isCurrentPlayerAllowedToPlacePiece()) {
+		if (isCurrentPlayerAllowedToPlacePiece()) {
 			// placing a piece
 			Collection<HantoPieceType> types = getAvailableTypes();
 			List<HantoCoordinate> toCoords = getUnoccupiedCoords();
@@ -771,8 +778,9 @@ public abstract class BaseHantoGame implements HantoGame {
 			}
 		} else if (isCurrentPlayerAllowedToMoveAnyPiece()) {
 			// moving a piece
-			Collection<HantoCoordinate> fromCoords = getMoveablePieceCoords();
-			Collection<HantoCoordinate> toCoords = getUnoccupiedCoords();
+			List<HantoCoordinate> fromCoords = getMoveablePieceCoords();
+			List<HantoCoordinate> toCoords = getUnoccupiedCoords();
+			Collections.shuffle(fromCoords); // guarantee randomness
 			for (HantoCoordinate from : fromCoords) {
 				for (HantoCoordinate to : toCoords) {
 					try {
@@ -780,12 +788,10 @@ public abstract class BaseHantoGame implements HantoGame {
 						makeMove(type, from, to);
 						return new HantoMoveRecord(type, from, to);
 					} catch (HantoException e) {
-						// do nothing
 					}
 				}
 			}
 		}
-		System.out.println("Bug2222222222");
 		return move;
 	}
 
