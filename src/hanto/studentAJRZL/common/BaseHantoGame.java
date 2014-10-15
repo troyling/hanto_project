@@ -17,7 +17,6 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentAJRZL.beta.BetaHantoGame;
 import hanto.tournament.HantoMoveRecord;
 
 import java.util.ArrayList;
