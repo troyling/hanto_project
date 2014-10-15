@@ -741,23 +741,22 @@ public abstract class BaseHantoGame implements HantoGame {
 		} else if (isCurrentPlayerAllowedToPlacePiece()) {
 			Collection<HantoPieceType> types = getAvailableTypes();
 			Collection<HantoCoordinate> toCoords = getUnoccupiedCoords();
-			System.out.println("types: " + types + "Size: " + types.size());
-			System.out.println("tocoords: " + toCoords + "Size: " + toCoords.size());
-			if (toCoords.isEmpty()) {
-				// first move
-				return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null,
-						new HantoPieceCoordinate(0, 0));
-			}
 			for (HantoCoordinate to : toCoords) {
-				for (HantoPieceType type : types) {
+				if (types.contains(HantoPieceType.BUTTERFLY)) {
 					try {
-						MoveResult r = makeMove(type, null, to);
-						System.out.println("Result: " + r);
-						System.out.println("whatever: " + type + " (" + to.getX() + "," + to.getY()
-								+ ")");
-						return new HantoMoveRecord(type, null, to);
+						makeMove(HantoPieceType.BUTTERFLY, null, to);
+						return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, to);
 					} catch (HantoException e) {
 						// do nothing
+					}
+				} else {
+					for (HantoPieceType type : types) {
+						try {
+							makeMove(type, null, to);
+							return new HantoMoveRecord(type, null, to);
+						} catch (HantoException e) {
+							// do nothing
+						}
 					}
 				}
 			}
@@ -767,8 +766,9 @@ public abstract class BaseHantoGame implements HantoGame {
 			for (HantoCoordinate from : fromCoords) {
 				for (HantoCoordinate to : toCoords) {
 					try {
-						makeMove(getPieceAt(from).getType(), from, to);
-						return new HantoMoveRecord(getPieceAt(from).getType(), from, to);
+						HantoPieceType type = getPieceAt(from).getType();
+						makeMove(type, from, to);
+						return new HantoMoveRecord(type, from, to);
 					} catch (HantoException e) {
 						// do nothing
 					}
@@ -811,7 +811,6 @@ public abstract class BaseHantoGame implements HantoGame {
 				Collection<HantoCoordinate> neighbors = ((HantoPieceCoordinate) c)
 						.getAdjacentCoordinates();
 				for (HantoCoordinate neighbor : neighbors) {
-					visited.add(neighbor); // speed up the looping
 					if (board.get(neighbor) == null) {
 						coords.add(neighbor);
 					}
