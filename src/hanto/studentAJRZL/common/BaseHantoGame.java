@@ -230,7 +230,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 		// places are not allowed to place next to the other players' after Beta
-		if (numTurns > 1 && from == null && !(this instanceof BetaHantoGame)) {
+		if (numTurns > 1 && from == null && MAX_TURN != 6) {
 			validatePiecePlacedNextToOwnColor(to);
 		}
 		validateGameInProgress();
@@ -251,6 +251,9 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * This function can be overridden by subclasses to add any necessary validation after making
 	 * the move. The overridden function should use super() to run the default validations.
 	 * 
+	 * @param pieceType
+	 * @param from
+	 * @param to
 	 * @throws HantoException
 	 */
 	protected void postMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) throws HantoException {
@@ -416,10 +419,8 @@ public abstract class BaseHantoGame implements HantoGame {
 
 	/**
 	 * Alternate the player turn for next move
-	 * 
-	 * @throws HantoException
 	 */
-	private void alterPlayerTurn() throws HantoException {
+	private void alterPlayerTurn() {
 		if (currentPlayerColor == HantoPlayerColor.BLUE) {
 			currentPlayerColor = HantoPlayerColor.RED;
 		} else {
@@ -764,6 +765,7 @@ public abstract class BaseHantoGame implements HantoGame {
 						return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, to);
 					} catch (HantoException e) {
 						// do nothing
+						e.getMessage();
 					}
 				} else {
 					for (HantoPieceType type : types) {
@@ -772,6 +774,7 @@ public abstract class BaseHantoGame implements HantoGame {
 							return new HantoMoveRecord(type, null, to);
 						} catch (HantoException e) {
 							// do nothing
+							e.getMessage();
 						}
 					}
 				}
@@ -788,6 +791,7 @@ public abstract class BaseHantoGame implements HantoGame {
 						makeMove(type, from, to);
 						return new HantoMoveRecord(type, from, to);
 					} catch (HantoException e) {
+						e.getMessage();
 					}
 				}
 			}

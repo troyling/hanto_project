@@ -55,15 +55,6 @@ public class DeltaHantoGame extends BaseHantoGame {
 		}
 		return result;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
-		super.preMakeMoveCheck(pieceType, from, to);
-	}
 	
 	/**
 	 * {@inheritDoc}

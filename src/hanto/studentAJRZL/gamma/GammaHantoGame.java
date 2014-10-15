@@ -10,8 +10,6 @@
 
 package hanto.studentAJRZL.gamma;
 
-import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentAJRZL.common.BaseHantoGame;
@@ -29,14 +27,5 @@ public class GammaHantoGame extends BaseHantoGame {
 		MAX_TURN = 20;
 		maxPiecesAllowed.put(HantoPieceType.BUTTERFLY, 1);
 		maxPiecesAllowed.put(HantoPieceType.SPARROW, 5);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void preMakeMoveCheck(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
-		super.preMakeMoveCheck(pieceType, from, to);
 	}
 }

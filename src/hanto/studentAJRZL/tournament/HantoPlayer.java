@@ -10,11 +10,6 @@
 
 package hanto.studentAJRZL.tournament;
 
-/**
- * This is the implementation of our AI for the Hanto project
- * 
- * @author troyling
- */
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
@@ -27,20 +22,29 @@ import hanto.studentAJRZL.epsilon.EpsilonHantoGame;
 import hanto.tournament.HantoGamePlayer;
 import hanto.tournament.HantoMoveRecord;
 
+/**
+ * This is the implementation of our AI for the Hanto project
+ * 
+ * @author troyling
+ */
 public class HantoPlayer implements HantoGamePlayer {
 	HantoPlayerColor myColor;
 	HantoGame game;
 
 	@Override
-	public void startGame(HantoGameID version, HantoPlayerColor myColor, boolean doIMoveFirst) {
+	public void startGame(HantoGameID version, HantoPlayerColor myColor,
+			boolean doIMoveFirst) {
 		this.myColor = myColor;
 		if (doIMoveFirst) {
-			game = HantoGameFactory.getInstance().makeHantoGame(version, myColor);
+			game = HantoGameFactory.getInstance().makeHantoGame(version,
+					myColor);
 		} else {
 			if (myColor == HantoPlayerColor.BLUE) {
-				game = HantoGameFactory.getInstance().makeHantoGame(version, HantoPlayerColor.RED);
+				game = HantoGameFactory.getInstance().makeHantoGame(version,
+						HantoPlayerColor.RED);
 			} else {
-				game = HantoGameFactory.getInstance().makeHantoGame(version, HantoPlayerColor.BLUE);
+				game = HantoGameFactory.getInstance().makeHantoGame(version,
+						HantoPlayerColor.BLUE);
 			}
 		}
 	}
@@ -50,12 +54,14 @@ public class HantoPlayer implements HantoGamePlayer {
 		if (opponentsMove == null) {
 			// we move first
 			try {
-				game.makeMove(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0, 0));
+				game.makeMove(HantoPieceType.BUTTERFLY, null,
+						new HantoPieceCoordinate(0, 0));
 			} catch (HantoException e) {
 				// do nothing
+				e.getMessage();
 			}
-			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPieceCoordinate(0,
-					0));
+			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null,
+					new HantoPieceCoordinate(0, 0));
 		}
 		HantoPieceType oppoPieceType = opponentsMove.getPiece();
 		HantoCoordinate oppoFrom = opponentsMove.getFrom();
@@ -63,7 +69,7 @@ public class HantoPlayer implements HantoGamePlayer {
 		try {
 			game.makeMove(oppoPieceType, oppoFrom, oppoTo);
 		} catch (HantoException e) {
-			// do nothing
+			System.out.println(e.getMessage());
 		}
 		return ((EpsilonHantoGame) game).getPossibleMove();
 	}
