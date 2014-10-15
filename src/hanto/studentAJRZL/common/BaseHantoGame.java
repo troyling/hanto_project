@@ -22,8 +22,10 @@ import hanto.tournament.HantoMoveRecord;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
@@ -740,7 +742,8 @@ public abstract class BaseHantoGame implements HantoGame {
 			return move;
 		} else if (isCurrentPlayerAllowedToPlacePiece()) {
 			Collection<HantoPieceType> types = getAvailableTypes();
-			Collection<HantoCoordinate> toCoords = getUnoccupiedCoords();
+			List<HantoCoordinate> toCoords = getUnoccupiedCoords();
+			Collections.shuffle(toCoords); // shuffle to guarantee randomness
 			for (HantoCoordinate to : toCoords) {
 				if (types.contains(HantoPieceType.BUTTERFLY)) {
 					try {
@@ -801,8 +804,8 @@ public abstract class BaseHantoGame implements HantoGame {
 	 * @return All unoccupied coordinates which are adjacent to the pieces on board. An empty
 	 *         collection would be returned when there is no piece on board.
 	 */
-	private Collection<HantoCoordinate> getUnoccupiedCoords() {
-		Collection<HantoCoordinate> coords = new ArrayList<HantoCoordinate>();
+	private List<HantoCoordinate> getUnoccupiedCoords() {
+		List<HantoCoordinate> coords = new ArrayList<HantoCoordinate>();
 		Collection<HantoCoordinate> visited = new ArrayList<HantoCoordinate>();
 		for (HantoCoordinate c : board.keySet()) {
 			if (!visited.contains(c)) {
